@@ -9,7 +9,7 @@ public class DBConstants {
     static final String PARKED_TABLE = "parkedcars";
     static final String PARKED_FIRST_COLUMN = "ID";
     static final String PARKED_SECOND_COLUMN = "EntranceTime";
-    static final String PARKED_THIRD_COLUMN = "ExitTime";
+    static final String PARKED_THIRD_COLUMN = "PaymentTime";
     static final String PARKED_FOURTH_COLUMN = "Paid";
     static final int ID_LENGTH = 8;
 
