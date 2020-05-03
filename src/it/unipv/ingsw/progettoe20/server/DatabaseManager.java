@@ -5,6 +5,7 @@ JDBC: https://www.tutorialspoint.com/jdbc/
 Database Connection Pooling: https://devcenter.heroku.com/articles/database-connection-pooling-with-java
 BasicDataSource Doc: https://commons.apache.org/proper/commons-dbcp/api-1.2.2/org/apache/commons/dbcp/BasicDataSource.html
 Statement execute/executeQuery/executeUpdate: https://www.edureka.co/community/12548/java-execute-vs-executequery-vs-executeupdate
+ PreparedStatement usage: https://www.javatpoint.com/PreparedStatement-interface
  */
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -40,7 +41,7 @@ private BasicDataSource connectionPool;
         // Creates database
         Statement stmt = connection.createStatement();
         System.out.print("Creating database \"" + DBConstants.DB_NAME + "\"...");
-        int rs = stmt.executeUpdate(Queries.CREATE_DB);
+        stmt.executeUpdate(Queries.CREATE_DB);
         System.out.println("done");
 
         // Create table
@@ -62,4 +63,24 @@ private BasicDataSource connectionPool;
         return response;
     }
 
+    public void newRecord(String id) throws SQLException, IllegalArgumentException {
+        checkInjection(id);
+        if (id.length() != DBConstants.ID_LENGTH) {
+            throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
+        }
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+        System.out.println("Added new record with ID = " + id);
+    }
+
+    public void checkInjection(String string) throws IllegalArgumentException {
+        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
+            throw new IllegalArgumentException("Nice try");
+        }
+    }
 }

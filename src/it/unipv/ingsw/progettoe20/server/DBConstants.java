@@ -7,10 +7,10 @@ public class DBConstants {
     static final String PASS = "kekkek";    //hardcoded password = bad
     static final String DB_NAME = "parking";
     static final String PARKED_TABLE = "parkedcars";
-    static final String PARKED_TABLE_FIRST = "ID";
-    static final String PARKED_TABLE_SECOND = "EntranceTime";
-    static final String PARKED_TABLE_THIRD = "ExitTime";
-    static final String PARKED_TABLE_FOURTH = "Paid";
+    static final String PARKED_FIRST_COLUMN = "ID";
+    static final String PARKED_SECOND_COLUMN = "EntranceTime";
+    static final String PARKED_THIRD_COLUMN = "ExitTime";
+    static final String PARKED_FOURTH_COLUMN = "Paid";
     static final int ID_LENGTH = 8;
 
 }
