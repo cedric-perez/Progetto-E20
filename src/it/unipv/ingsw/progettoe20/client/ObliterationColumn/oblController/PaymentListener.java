@@ -38,7 +38,7 @@ public class PaymentListener implements ActionListener {
             oblgui.getIdinput().requestFocus();
         }
         else {
-            JOptionPane.showMessageDialog(null, "An error occurred: failed payment");
+            JOptionPane.showMessageDialog(null, "An error occurred: failed payment" , "Error", 1 , new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
             paygui.dispose();
 
             oblgui.setVisible(true);

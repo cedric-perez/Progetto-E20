@@ -32,7 +32,7 @@ public class ButtonListener implements ActionListener {
            oblgui.setVisible(false);
            oblgui.getIdinput().setText("");
         } else {
-            JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made");
+            JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made" , "Error" , 1 , new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
             oblgui.getIdinput().setText("");
             oblgui.getIdinput().requestFocus();
         }
