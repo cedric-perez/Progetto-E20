@@ -9,10 +9,12 @@ package it.unipv.ingsw.progettoe20.client.ExitColumn.Model;
 public class ExitColumn {
 
 
-    //Metodo che richiede la conferma di obliterazione
+    //Metodo che richiede la conferma di obliterazione e ritorna un booleano
     public Boolean checkObliteration(String id) {
 
-        return false;
+        if (id.equals("prova1")) return true; //Ticket corretto per test
+        else return false;
+
     }
 
 }
