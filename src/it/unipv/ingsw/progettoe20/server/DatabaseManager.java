@@ -13,12 +13,15 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DatabaseManager{
 
 private BasicDataSource connectionPool;
 
     public DatabaseManager() {
+        passwordInit();
+
         String dbUrl = DBConstants.DB_URL;
         connectionPool = new BasicDataSource();
         connectionPool.setUsername(DBConstants.USER);
@@ -28,6 +31,34 @@ private BasicDataSource connectionPool;
         System.out.print("Connecting...");
         connectionPool.setInitialSize(1);
         System.out.println("done");
+    }
+
+    private void passwordInit() {
+        String password;
+
+        do {
+            password = askPassword();
+        } while (!checkPassword(password));
+    }
+
+    private String askPassword() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter database password for user " + DBConstants.USER + ":");
+        return scanner.nextLine();
+    }
+
+    private boolean checkPassword(String password) {
+        try {
+            Class.forName(DBConstants.JDBC_DRIVER);
+            Connection connection = DriverManager.getConnection(DBConstants.DB_URL, DBConstants.USER, password);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException sqle) {
+            System.out.println("Password is incorrect, please try again");
+            return false;
+        }
+        DBConstants.PASS = password;
+        return true;
     }
 
     public void initDatabase() throws SQLException {
