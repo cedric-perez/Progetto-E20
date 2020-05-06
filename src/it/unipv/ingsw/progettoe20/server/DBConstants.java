@@ -2,7 +2,7 @@ package it.unipv.ingsw.progettoe20.server;
 
 public class DBConstants {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306"; // for testing purposes, will change when ready
+    static final String DB_URL = "jdbc:mysql://pusi77.ddns.net:33077"; // for testing purposes, will change when ready
     static final String USER = "root";  // for testing purposes, will change when ready
     static String PASS;
     static final String DB_NAME = "parking";
