@@ -30,8 +30,10 @@ private EnterColumnGui g;
 	            	    public void run() {  
 	            	    	g.updateAvailability();
 	            	        g.getShowTicketId().setText(String.valueOf(""));
+	            	        g.setTransitionObject();
 	            	        }
 	            	}, 10000 );
+	              
 	              
 	              }
 	              else {
