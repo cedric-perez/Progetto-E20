@@ -5,7 +5,7 @@ JDBC: https://www.tutorialspoint.com/jdbc/
 Database Connection Pooling: https://devcenter.heroku.com/articles/database-connection-pooling-with-java
 BasicDataSource Doc: https://commons.apache.org/proper/commons-dbcp/api-1.2.2/org/apache/commons/dbcp/BasicDataSource.html
 Statement execute/executeQuery/executeUpdate: https://www.edureka.co/community/12548/java-execute-vs-executequery-vs-executeupdate
- PreparedStatement usage: https://www.javatpoint.com/PreparedStatement-interface
+PreparedStatement usage: https://www.javatpoint.com/PreparedStatement-interface
  */
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -82,7 +82,7 @@ public class DatabaseManager{
 
     /**
      * Inizializza il database, se non presente. Controlla la presenza del database, se assente crea il database e la table.
-     * @throws SQLException
+     * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     void initDatabase() throws SQLException {
         // Checks if database already exist
@@ -108,7 +108,7 @@ public class DatabaseManager{
     /**
      * Restituisce un ArrayList di stringhe con i nomi dei database presenti.
      * @return un ArrayList di stringhe con i nomi dei database presenti.
-     * @throws SQLException
+     * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     List<String> getDatabaseList() throws SQLException {
         ArrayList<String> response = new ArrayList<>();
@@ -125,7 +125,7 @@ public class DatabaseManager{
     /**
      * Crea un nuovo record sul database. Necessita dell'ID come chiave primaria. L'ora d'ingresso è impostata all'istante della richiesta al database.
      * @param id identificatore del record.
-     * @throws SQLException
+     * @throws SQLException se ci sono problemi nell'accesso al database.
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
     void newRecord(String id) throws SQLException, IllegalArgumentException {
@@ -152,5 +152,34 @@ public class DatabaseManager{
         if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
             throw new IllegalArgumentException("Nice try");
         }
+    }
+
+    void setPaymentTime(String id) throws SQLException {
+        if (!checkID(id)) {
+            System.out.println("No record with ID = " + id + " found");
+            throw new IllegalArgumentException("ID not found");
+        }
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.SET_PAYMENT);
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+        System.out.println("Payment time for " + id + " set");
+    }
+
+    private boolean checkID(String id) throws SQLException {
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.CHECK_ID_EXISTENCE);
+        pstmt.setString(1, id);
+        ResultSet result = pstmt.executeQuery();
+        if (result.next()) {
+            return true;
+        }
+        return false;
     }
 }

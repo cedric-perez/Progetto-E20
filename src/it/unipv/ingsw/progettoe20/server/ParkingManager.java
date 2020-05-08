@@ -1,6 +1,5 @@
 package it.unipv.ingsw.progettoe20.server;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import java.sql.SQLException;
 
@@ -12,9 +11,7 @@ public class ParkingManager {
         // Some tests to check database, delete when writing this class
         try {
             dbManager.initDatabase();
-            dbManager.newRecord("test5678");
-        } catch (MySQLIntegrityConstraintViolationException sqle) {
-            System.out.println("..il record con quella primarykey c'è già, questo non succederà quando introdurremo una generazione intelligente degli ID");
+            dbManager.setPaymentTime("test5678");
         } catch (SQLException e) {
             e.printStackTrace();
         }
