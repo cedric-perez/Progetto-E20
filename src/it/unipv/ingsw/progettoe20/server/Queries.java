@@ -17,10 +17,12 @@ public class Queries {
             DBConstants.PARKED_SECOND_COLUMN + ", " +
             DBConstants.PARKED_FOURTH_COLUMN + ") " +
             "VALUES (?, NOW(), FALSE)";
-    static final String CHECK_ID_EXISTENCE = "SELECT * FROM " + DBConstants.PARKED_TABLE + " " +
+    static final String PARKED_CHECK_ID_EXISTENCE = "SELECT * FROM " + DBConstants.PARKED_TABLE + " " +
             "WHERE " + DBConstants.PARKED_FIRST_COLUMN + " = ?";
-    static final String SET_PAYMENT = "UPDATE " + DBConstants.PARKED_TABLE + " " +
+    static final String PARKED_SET_PAYMENT = "UPDATE " + DBConstants.PARKED_TABLE + " " +
             "SET " + DBConstants.PARKED_THIRD_COLUMN + " = NOW(), " +
             DBConstants.PARKED_FOURTH_COLUMN + " = TRUE " +
+            "WHERE " + DBConstants.PARKED_FIRST_COLUMN + " = ?";
+    static final String PARKED_REMOVE_RECORD = "DELETE FROM " + DBConstants.PARKED_TABLE + " " +
             "WHERE " + DBConstants.PARKED_FIRST_COLUMN + " = ?";
 }

@@ -69,7 +69,7 @@ public class DatabaseManager{
     private boolean checkPassword(String password) {
         try {
             Class.forName(DBConstants.JDBC_DRIVER);
-            Connection connection = DriverManager.getConnection(DBConstants.DB_URL, DBConstants.USER, password);
+            DriverManager.getConnection(DBConstants.DB_URL, DBConstants.USER, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException sqle) {
@@ -160,37 +160,52 @@ public class DatabaseManager{
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     void setPaymentTime(String id) throws SQLException {
-        if (!checkID(id)) {
-            System.out.println("No record with ID = " + id + " found");
-            throw new IllegalArgumentException("ID not found");
-        }
+        checkID(id);
+
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
         stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.SET_PAYMENT);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_SET_PAYMENT);
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Payment time for " + id + " set");
     }
 
     /**
-     * Controlla che un ID sia presente nella table.
+     * Controlla che un ID sia presente nella table. Se non è presente lancia un'eccezione.
      * @param id identificatore del record.
-     * @return true se è presente, false altrimenti.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    private boolean checkID(String id) throws SQLException {
+    private void checkID(String id) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
         stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.CHECK_ID_EXISTENCE);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_CHECK_ID_EXISTENCE);
         pstmt.setString(1, id);
         ResultSet result = pstmt.executeQuery();
-        if (result.next()) {
-            return true;
+        if (!result.next()) {
+            System.out.println("No record with ID = " + id + " found");
+            throw new IllegalArgumentException("ID not found");
         }
-        return false;
+    }
+
+    /**
+     * Rimuove il record con un certo ID dal database.
+     * @param id identificatore del record.
+     * @throws SQLException se ci sono problemi nell'accesso al database.
+     */
+    void removeRecord(String id) throws SQLException {
+        checkID(id);
+
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+        System.out.println(id + " removed from database");
     }
 }
