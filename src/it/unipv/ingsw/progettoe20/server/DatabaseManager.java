@@ -15,10 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Gestisce la connessione al database.
+ */
 public class DatabaseManager{
 
-private BasicDataSource connectionPool;
+    private BasicDataSource connectionPool;
 
+    /**
+     * Costruisce un nuovo DatabaseManager. Chiede la password del database, la contorlla e inizializza la connessione.
+     *      Il pool di connessioni viene inizializzato ad una connessione.
+     */
     public DatabaseManager() {
         passwordInit();
 
@@ -33,6 +40,9 @@ private BasicDataSource connectionPool;
         System.out.println("done");
     }
 
+    /**
+     * Chiede e controlla la password inserita finché non è corretta.
+     */
     private void passwordInit() {
         String password;
 
@@ -41,12 +51,21 @@ private BasicDataSource connectionPool;
         } while (!checkPassword(password));
     }
 
+    /**
+     * Legge la password da riga di comando.
+     * @return password inserita.
+     */
     private String askPassword() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter database password for user " + DBConstants.USER + ":");
         return scanner.nextLine();
     }
 
+    /**
+     * Controlla che la password del database sia corretta. Per fare ciò tenta una connessione al database.
+     * @param password La password da controllare.
+     * @return true se la password è corretta, false altrimenti.
+     */
     private boolean checkPassword(String password) {
         try {
             Class.forName(DBConstants.JDBC_DRIVER);
@@ -61,7 +80,11 @@ private BasicDataSource connectionPool;
         return true;
     }
 
-    public void initDatabase() throws SQLException {
+    /**
+     * Inizializza il database, se non presente. Controlla la presenza del database, se assente crea il database e la table.
+     * @throws SQLException
+     */
+    void initDatabase() throws SQLException {
         // Checks if database already exist
         if (getDatabaseList().contains(DBConstants.DB_NAME)) {
             System.out.println("Database \"" + DBConstants.DB_NAME + "\" already exist, nothing done");
@@ -82,7 +105,12 @@ private BasicDataSource connectionPool;
         System.out.println("done");
     }
 
-    public List<String> getDatabaseList() throws SQLException {
+    /**
+     * Restituisce un ArrayList di stringhe con i nomi dei database presenti.
+     * @return un ArrayList di stringhe con i nomi dei database presenti.
+     * @throws SQLException
+     */
+    List<String> getDatabaseList() throws SQLException {
         ArrayList<String> response = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -94,7 +122,13 @@ private BasicDataSource connectionPool;
         return response;
     }
 
-    public void newRecord(String id) throws SQLException, IllegalArgumentException {
+    /**
+     * Crea un nuovo record sul database. Necessita dell'ID come chiave primaria. L'ora d'ingresso è impostata all'istante della richiesta al database.
+     * @param id identificatore del record.
+     * @throws SQLException
+     * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
+     */
+    void newRecord(String id) throws SQLException, IllegalArgumentException {
         checkInjection(id);
         if (id.length() != DBConstants.ID_LENGTH) {
             throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
@@ -109,7 +143,12 @@ private BasicDataSource connectionPool;
         System.out.println("Added new record with ID = " + id);
     }
 
-    public void checkInjection(String string) throws IllegalArgumentException {
+    /**
+     * Semplice controllo dei casi comuni di code injection.
+     * @param string stringa da controllare.
+     * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
+     */
+    void checkInjection(String string) throws IllegalArgumentException {
         if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
             throw new IllegalArgumentException("Nice try");
         }
