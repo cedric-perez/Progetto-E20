@@ -154,6 +154,11 @@ public class DatabaseManager{
         }
     }
 
+    /**
+     * Imposta il PaymentTime di un record e ne setta il flag a true.
+     * @param id identificatore del record.
+     * @throws SQLException se ci sono problemi nell'accesso al database.
+     */
     void setPaymentTime(String id) throws SQLException {
         if (!checkID(id)) {
             System.out.println("No record with ID = " + id + " found");
@@ -169,6 +174,12 @@ public class DatabaseManager{
         System.out.println("Payment time for " + id + " set");
     }
 
+    /**
+     * Controlla che un ID sia presente nella table.
+     * @param id identificatore del record.
+     * @return true se è presente, false altrimenti.
+     * @throws SQLException se ci sono problemi nell'accesso al database.
+     */
     private boolean checkID(String id) throws SQLException {
         Connection connection = connectionPool.getConnection();
 
