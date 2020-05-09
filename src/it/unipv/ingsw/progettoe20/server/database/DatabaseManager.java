@@ -1,4 +1,4 @@
-package it.unipv.ingsw.progettoe20.server;
+package it.unipv.ingsw.progettoe20.server.database;
 
 /*  Resources
 JDBC: https://www.tutorialspoint.com/jdbc/
@@ -82,9 +82,10 @@ public class DatabaseManager{
 
     /**
      * Inizializza il database, se non presente. Controlla la presenza del database, se assente crea il database e la table.
+     *
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void initDatabase() throws SQLException {
+    public void initDatabase() throws SQLException {
         // Checks if database already exist
         if (getDatabaseList().contains(DBConstants.DB_NAME)) {
             System.out.println("Database \"" + DBConstants.DB_NAME + "\" already exist, nothing done");
@@ -124,11 +125,12 @@ public class DatabaseManager{
 
     /**
      * Crea un nuovo record sul database. Necessita dell'ID come chiave primaria. L'ora d'ingresso è impostata all'istante della richiesta al database.
+     *
      * @param id identificatore del record.
-     * @throws SQLException se ci sono problemi nell'accesso al database.
+     * @throws SQLException             se ci sono problemi nell'accesso al database.
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
-    void newRecord(String id) throws SQLException, IllegalArgumentException {
+    public void newRecord(String id) throws SQLException, IllegalArgumentException {
         checkInjection(id);
         if (id.length() != DBConstants.ID_LENGTH) {
             throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
@@ -156,10 +158,11 @@ public class DatabaseManager{
 
     /**
      * Imposta il PaymentTime di un record e ne setta il flag a true.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void setPaymentTime(String id) throws SQLException {
+    public void setPaymentTime(String id) throws SQLException {
         checkID(id);
 
         Connection connection = connectionPool.getConnection();
@@ -193,10 +196,11 @@ public class DatabaseManager{
 
     /**
      * Rimuove il record con un certo ID dal database.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void removeRecord(String id) throws SQLException {
+    public void removeRecord(String id) throws SQLException {
         checkID(id);
 
         Connection connection = connectionPool.getConnection();

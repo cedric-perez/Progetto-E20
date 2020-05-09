@@ -1,4 +1,4 @@
-package it.unipv.ingsw.progettoe20.server;
+package it.unipv.ingsw.progettoe20.server.database;
 
 public class DBConstants {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

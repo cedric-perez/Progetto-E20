@@ -1,4 +1,4 @@
-package it.unipv.ingsw.progettoe20.server;
+package it.unipv.ingsw.progettoe20.server.database;
 
 
 public class Queries {
