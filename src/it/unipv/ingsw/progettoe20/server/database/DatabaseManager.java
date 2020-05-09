@@ -131,8 +131,9 @@ public class DatabaseManager{
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
     public void newRecord(String id) throws SQLException {
+        try{
         checkInjection(id);
-        try {
+
             if (id.length() != DBConstants.ID_LENGTH) {
                 throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
             }
@@ -155,8 +156,8 @@ public class DatabaseManager{
      * @param string stringa da controllare.
      * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
      */
-    void checkInjection(String string) throws IllegalArgumentException  {
-        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
+    void checkInjection(String string)  throws IllegalArgumentException {
+        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")||string.contains(" ")) {
             throw new IllegalArgumentException("Nice try");
         }
     }
