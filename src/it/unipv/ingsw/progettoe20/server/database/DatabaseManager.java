@@ -130,19 +130,24 @@ public class DatabaseManager{
      * @throws SQLException             se ci sono problemi nell'accesso al database.
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
-    public void newRecord(String id) throws SQLException, IllegalArgumentException {
+    public void newRecord(String id) throws SQLException {
         checkInjection(id);
-        if (id.length() != DBConstants.ID_LENGTH) {
-            throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
-        }
-        Connection connection = connectionPool.getConnection();
+        try {
+            if (id.length() != DBConstants.ID_LENGTH) {
+                throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
+            }
+            Connection connection = connectionPool.getConnection();
 
-        Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
-        pstmt.setString(1, id);
-        pstmt.executeUpdate();
-        System.out.println("Added new record with ID = " + id);
+            Statement stmt = connection.createStatement();
+            stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+            PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            System.out.println("Added new record with ID = " + id);
+        }
+        catch(IllegalArgumentException i){
+            System.out.println("rip");
+        }
     }
 
     /**
@@ -150,7 +155,7 @@ public class DatabaseManager{
      * @param string stringa da controllare.
      * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
      */
-    void checkInjection(String string) throws IllegalArgumentException {
+    void checkInjection(String string) throws IllegalArgumentException  {
         if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
             throw new IllegalArgumentException("Nice try");
         }
@@ -201,15 +206,20 @@ public class DatabaseManager{
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     public void removeRecord(String id) throws SQLException {
-        checkID(id);
+        try {
+            checkID(id);
 
-        Connection connection = connectionPool.getConnection();
+            Connection connection = connectionPool.getConnection();
 
-        Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
-        pstmt.setString(1, id);
-        pstmt.executeUpdate();
-        System.out.println(id + " removed from database");
+            Statement stmt = connection.createStatement();
+            stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+            PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            System.out.println(id + " removed from database");
+        }
+        catch( IllegalArgumentException i){
+            System.out.println("rip");
+        }
     }
 }

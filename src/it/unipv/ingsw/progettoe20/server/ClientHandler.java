@@ -87,7 +87,7 @@ public class ClientHandler extends Thread {
 
         switch (parts[0]) {
             case (Protocol.REQUEST_GENERATE_ID):
-                // TODO
+                dbManager.newRecord(parts[1]);
                 break;
             case (Protocol.REQUEST_PAY_AMOUNT):
                 // TODO
