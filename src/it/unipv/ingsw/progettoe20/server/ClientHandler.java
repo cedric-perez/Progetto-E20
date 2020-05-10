@@ -95,6 +95,15 @@ public class ClientHandler extends Thread {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
                 }
                 break;
+            case(Protocol.REQUEST_ID):
+                try{
+                    dbManager.checkID(parts[1]);
+                    out.println(Protocol.RESPONSE_OK);
+                } catch(IllegalArgumentException i ) {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
+                }
+                break;
             case (Protocol.REQUEST_PAY_AMOUNT):
                 // TODO
                 break;

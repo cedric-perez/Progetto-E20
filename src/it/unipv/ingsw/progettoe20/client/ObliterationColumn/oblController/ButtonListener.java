@@ -1,5 +1,6 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController;
 
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.PayGui;
 
@@ -15,16 +16,18 @@ import java.awt.event.ActionListener;
  */
 public class ButtonListener implements ActionListener {
     private OblGui oblgui;
+    private ObliterationColumn oc;
 
-    public ButtonListener(OblGui oblgui){
+    public ButtonListener(OblGui oblgui, ObliterationColumn oc){
         this.oblgui = oblgui;
+        this.oc = oc;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String idcheck = oblgui.getIdinput().getText();
 
-        if (idcheck.equals("test")) {
+        if (oc.checkId(idcheck)) {
            PayGui payGui = new PayGui();
             payGui.setVisible(true);
             PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);

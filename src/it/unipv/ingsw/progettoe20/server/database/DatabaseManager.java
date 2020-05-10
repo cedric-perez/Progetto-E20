@@ -186,7 +186,7 @@ public class DatabaseManager {
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    private void checkID(String id) throws SQLException, IllegalArgumentException {
+    public void checkID(String id) throws SQLException, IllegalArgumentException {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();

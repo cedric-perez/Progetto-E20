@@ -1,6 +1,7 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn;
 
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController.OblController;
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 
 
@@ -9,7 +10,8 @@ import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 public class Tester {
     public static void main(String[] args){
 
+        ObliterationColumn oc = new ObliterationColumn();
         OblGui oblgui = new OblGui();
-        OblController oblc = new OblController(oblgui);
+        OblController oblc = new OblController(oblgui, oc);
     }
 }
