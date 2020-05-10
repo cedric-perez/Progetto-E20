@@ -47,6 +47,7 @@ public class EnterColumnGui extends JFrame{
 	      wIcon1 = new JLabel();
 	      wIcon2 = new JLabel();
 	      panel = new JPanel();
+	    
 	      message= new Label("", Label.RIGHT);
 	      
 		  //label setting
@@ -69,7 +70,7 @@ public class EnterColumnGui extends JFrame{
 	      Font f = new Font("TimesRoman", Font.BOLD+Font.ITALIC, 20);
 	      Border bWhiteLine = BorderFactory.createLineBorder(Color.white, 4, true); 
 	      LotAvailability.setBorder(bWhiteLine);
-	      LotAvailability.setForeground(new java.awt.Color(000,064,128));
+	      LotAvailability.setForeground(new java.awt.Color(143,0,255));
 	      LotAvailability.setFont(new Font("TimesRoman", Font.BOLD, 25));
 	      
 	      getTicket.setFont(new Font("TimesRoman", Font.BOLD, 18));
@@ -77,11 +78,12 @@ public class EnterColumnGui extends JFrame{
 	      setResizable(false); 
 	      //panel setting    
 	      panel.setFont(f);
-	      panel.setBackground(new Color(225,225,225));      
+	      panel.setBackground(new Color(92,92,92));      
 	      panel.setLocation(100, 100);
-	      panel.setLayout(new GridLayout(4, 2, 10, 10));
+	      panel.setLayout(new GridLayout(5, 2, 0, 50));
 	      panel.add(wIcon1);
-	      panel.add(new Label("Get your parking Ticket here !", Label.CENTER));
+	      panel.add(new Label("Enter Column ", Label.LEFT));
+	     
 	      panel.add(new Label(" Lot available: ", Label.RIGHT));
 	      panel.add(LotAvailability);	// indicazione posti disponibili
 	      panel.add(new Label("", Label.RIGHT));
