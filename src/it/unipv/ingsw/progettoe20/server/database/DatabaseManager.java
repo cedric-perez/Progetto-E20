@@ -18,13 +18,13 @@ import java.util.Scanner;
 /**
  * Gestisce la connessione al database.
  */
-public class DatabaseManager{
+public class DatabaseManager {
 
     private BasicDataSource connectionPool;
 
     /**
      * Costruisce un nuovo DatabaseManager. Chiede la password del database, la contorlla e inizializza la connessione.
-     *      Il pool di connessioni viene inizializzato ad una connessione.
+     * Il pool di connessioni viene inizializzato ad una connessione.
      */
     public DatabaseManager() {
         passwordInit();
@@ -53,6 +53,7 @@ public class DatabaseManager{
 
     /**
      * Legge la password da riga di comando.
+     *
      * @return password inserita.
      */
     private String askPassword() {
@@ -63,6 +64,7 @@ public class DatabaseManager{
 
     /**
      * Controlla che la password del database sia corretta. Per fare ciò tenta una connessione al database.
+     *
      * @param password La password da controllare.
      * @return true se la password è corretta, false altrimenti.
      */
@@ -101,13 +103,14 @@ public class DatabaseManager{
 
         // Create table
         stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        System.out.print("Created table \n" + DBConstants.PARKED_TABLE +"...");
+        System.out.print("Created table \n" + DBConstants.PARKED_TABLE + "...");
         stmt.executeUpdate(Queries.CREATE_TABLE);
         System.out.println("done");
     }
 
     /**
      * Restituisce un ArrayList di stringhe con i nomi dei database presenti.
+     *
      * @return un ArrayList di stringhe con i nomi dei database presenti.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
@@ -130,34 +133,30 @@ public class DatabaseManager{
      * @throws SQLException             se ci sono problemi nell'accesso al database.
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
-    public void newRecord(String id) throws SQLException {
-        try{
+    public void newRecord(String id) throws SQLException, IllegalArgumentException {
         checkInjection(id);
 
-            if (id.length() != DBConstants.ID_LENGTH) {
-                throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
-            }
-            Connection connection = connectionPool.getConnection();
+        if (id.length() != DBConstants.ID_LENGTH) {
+            throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
+        }
+        Connection connection = connectionPool.getConnection();
 
-            Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-            PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
-            pstmt.setString(1, id);
-            pstmt.executeUpdate();
-            System.out.println("Added new record with ID = " + id);
-        }
-        catch(IllegalArgumentException i){
-            System.out.println("rip");
-        }
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+        System.out.println("Added new record with ID = " + id);
     }
 
     /**
      * Semplice controllo dei casi comuni di code injection.
+     *
      * @param string stringa da controllare.
      * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
      */
-    void checkInjection(String string)  throws IllegalArgumentException {
-        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")||string.contains(" ")) {
+    void checkInjection(String string) throws IllegalArgumentException {
+        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-") || string.contains(" ")) {
             throw new IllegalArgumentException("Nice try");
         }
     }
@@ -168,7 +167,7 @@ public class DatabaseManager{
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    public void setPaymentTime(String id) throws SQLException {
+    public void setPaymentTime(String id) throws SQLException, IllegalArgumentException {
         checkID(id);
 
         Connection connection = connectionPool.getConnection();
@@ -183,10 +182,11 @@ public class DatabaseManager{
 
     /**
      * Controlla che un ID sia presente nella table. Se non è presente lancia un'eccezione.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    private void checkID(String id) throws SQLException {
+    private void checkID(String id) throws SQLException, IllegalArgumentException {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
@@ -206,21 +206,16 @@ public class DatabaseManager{
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    public void removeRecord(String id) throws SQLException {
-        try {
-            checkID(id);
+    public void removeRecord(String id) throws SQLException, IllegalArgumentException {
+        checkID(id);
 
-            Connection connection = connectionPool.getConnection();
+        Connection connection = connectionPool.getConnection();
 
-            Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-            PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
-            pstmt.setString(1, id);
-            pstmt.executeUpdate();
-            System.out.println(id + " removed from database");
-        }
-        catch( IllegalArgumentException i){
-            System.out.println("rip");
-        }
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
+        pstmt.setString(1, id);
+        pstmt.executeUpdate();
+        System.out.println(id + " removed from database");
     }
 }
