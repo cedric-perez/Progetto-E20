@@ -38,19 +38,18 @@ public class ObliterationColumn  {
      */
     public boolean checkId(String id){
         try {
-            System.out.println("id:"+id);
-            out.println("id:"+ id);//testing
+            out.println("id:"+ id);
             String answer = in.readLine();
-            System.out.println(answer);//testing
+            System.out.println(answer);
             if (answer.equals("done")) {
-                socket.close();
                 return true;
             } else return false;
         }
-        catch (IOException i){
+        catch (IOException | NullPointerException e){
             return false;
         }
     }
+
 
     /**
      *Metodo che conferma il pagamento
