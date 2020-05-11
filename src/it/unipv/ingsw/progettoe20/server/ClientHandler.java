@@ -39,8 +39,10 @@ public class ClientHandler extends Thread {
                 String request = listenSocket(socket.getInputStream());
                  end = requestHandler.handle(request);
             }
-        } catch (IOException | SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException ie) {
+            System.out.println(ie.getMessage());
         }
 
         try {

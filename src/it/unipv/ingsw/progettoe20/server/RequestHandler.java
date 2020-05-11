@@ -29,8 +29,8 @@ public class RequestHandler {
      * @return true se il client ha richiesto la chiusura della connessione, false altrimenti.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    public boolean handle(String request) throws SQLException {    // please find a better name, also can this be an independent class?
-        String[] parts = request.split(Protocol.SEPARATOR);    // split request into 'command' and 'ID'
+    public boolean handle(String request) throws SQLException, IllegalArgumentException {    // please find a better name, also can this be an independent class?
+        String[] parts = splitRequest(request);
 
         switch (parts[0]) {
             // New ID generation requested
@@ -51,11 +51,6 @@ public class RequestHandler {
                 } catch(IllegalArgumentException i ) {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
-                }
-                //serve per il bottone di obliterazione se non si scrive l'id
-                catch(ArrayIndexOutOfBoundsException a){
-                    System.out.println(a.getMessage());
-                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + a.getMessage());
                 }
                 break;
             // Pay amount calculation requested
@@ -81,5 +76,20 @@ public class RequestHandler {
                 return true;
         }
         return false;
+    }
+
+    private String[] splitRequest(String request) {
+        String[] out = new String[2];
+        String[] parts = request.split(Protocol.SEPARATOR);    // split request into 'command' and 'ID'
+        if (parts.length != 2) {
+            if (parts.length == 1) {
+                out[0] = parts[0];
+                return out;
+            }
+            else {
+                throw new IllegalArgumentException("Request is not protocol compliant!");
+            }
+        }
+        return parts;
     }
 }
