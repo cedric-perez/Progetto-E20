@@ -52,6 +52,7 @@ public class ObliterationColumn  {
             return false;
         }
         catch ( NullPointerException n){
+            onlineFlag = false;
             return false;
         }
     }
