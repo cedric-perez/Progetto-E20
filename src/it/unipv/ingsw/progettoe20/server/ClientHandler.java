@@ -103,6 +103,11 @@ public class ClientHandler extends Thread {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
+                    // per evitare che si blocchi tutto se si preme il bottone senza aver scritto niente nella obl cloumn
+                    catch(ArrayIndexOutOfBoundsException a){
+                        System.out.println(a.getMessage());
+                        out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + a.getMessage());
+                }
                 break;
             case (Protocol.REQUEST_PAY_AMOUNT):
                 // TODO

@@ -27,18 +27,21 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String idcheck = oblgui.getIdinput().getText();
 
-        if (oc.checkId(idcheck)) {
-           PayGui payGui = new PayGui();
-            payGui.setVisible(true);
-            PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);
-            payGui.getPayb().addActionListener(paymentListener);
-           oblgui.setVisible(false);
-           oblgui.getIdinput().setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made" , "Error" , 1 , new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
-            oblgui.getIdinput().setText("");
-            oblgui.getIdinput().requestFocus();
+        if(oc.getOnlineFlag()) {
+            if (oc.checkId(idcheck)) {
+                PayGui payGui = new PayGui();
+                payGui.setVisible(true);
+                PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);
+                payGui.getPayb().addActionListener(paymentListener);
+                oblgui.setVisible(false);
+                oblgui.getIdinput().setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+                oblgui.getIdinput().setText("");
+                oblgui.getIdinput().requestFocus();
+            }
         }
+        else {JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));}
     }
 
 }
