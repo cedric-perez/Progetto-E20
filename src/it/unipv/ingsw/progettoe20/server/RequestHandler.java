@@ -52,6 +52,11 @@ public class RequestHandler {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
+                //serve per il bottone di obliterazione se non si scrive l'id
+                catch(ArrayIndexOutOfBoundsException a){
+                    System.out.println(a.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + a.getMessage());
+                }
                 break;
             // Pay amount calculation requested
             case (Protocol.REQUEST_PAY_AMOUNT):
