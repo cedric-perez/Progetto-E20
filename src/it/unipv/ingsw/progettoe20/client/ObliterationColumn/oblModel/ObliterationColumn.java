@@ -16,6 +16,7 @@ public class ObliterationColumn  {
     private Socket socket;
     private BufferedReader in;
     private  PrintWriter out;
+    private Boolean onlineFlag;
 
     /**
      * metodo che inizializza la classe Obliteration column come client
@@ -25,8 +26,10 @@ public class ObliterationColumn  {
             socket = new Socket("localhost", 9000);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
+            onlineFlag = true;
         } catch(IOException i){
             System.out.println("rip");
+            onlineFlag = false;
         }
     }
 
@@ -45,7 +48,11 @@ public class ObliterationColumn  {
                 return true;
             } else return false;
         }
-        catch (IOException | NullPointerException e){
+        catch (IOException i){
+            return false;
+        }
+        catch ( NullPointerException n){
+            onlineFlag = false;
             return false;
         }
     }
@@ -59,5 +66,10 @@ public class ObliterationColumn  {
     public static boolean pay(String id){
 
         return true;
+    }
+
+
+    public Boolean getOnlineFlag() {
+        return onlineFlag;
     }
 }
