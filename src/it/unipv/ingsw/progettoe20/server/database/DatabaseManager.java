@@ -1,4 +1,4 @@
-package it.unipv.ingsw.progettoe20.server;
+package it.unipv.ingsw.progettoe20.server.database;
 
 /*  Resources
 JDBC: https://www.tutorialspoint.com/jdbc/
@@ -18,13 +18,13 @@ import java.util.Scanner;
 /**
  * Gestisce la connessione al database.
  */
-public class DatabaseManager{
+public class DatabaseManager {
 
     private BasicDataSource connectionPool;
 
     /**
      * Costruisce un nuovo DatabaseManager. Chiede la password del database, la contorlla e inizializza la connessione.
-     *      Il pool di connessioni viene inizializzato ad una connessione.
+     * Il pool di connessioni viene inizializzato ad una connessione.
      */
     public DatabaseManager() {
         passwordInit();
@@ -53,6 +53,7 @@ public class DatabaseManager{
 
     /**
      * Legge la password da riga di comando.
+     *
      * @return password inserita.
      */
     private String askPassword() {
@@ -63,6 +64,7 @@ public class DatabaseManager{
 
     /**
      * Controlla che la password del database sia corretta. Per fare ciò tenta una connessione al database.
+     *
      * @param password La password da controllare.
      * @return true se la password è corretta, false altrimenti.
      */
@@ -82,9 +84,10 @@ public class DatabaseManager{
 
     /**
      * Inizializza il database, se non presente. Controlla la presenza del database, se assente crea il database e la table.
+     *
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void initDatabase() throws SQLException {
+    public void initDatabase() throws SQLException {
         // Checks if database already exist
         if (getDatabaseList().contains(DBConstants.DB_NAME)) {
             System.out.println("Database \"" + DBConstants.DB_NAME + "\" already exist, nothing done");
@@ -100,13 +103,14 @@ public class DatabaseManager{
 
         // Create table
         stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        System.out.print("Created table \n" + DBConstants.PARKED_TABLE +"...");
+        System.out.print("Created table \n" + DBConstants.PARKED_TABLE + "...");
         stmt.executeUpdate(Queries.CREATE_TABLE);
         System.out.println("done");
     }
 
     /**
      * Restituisce un ArrayList di stringhe con i nomi dei database presenti.
+     *
      * @return un ArrayList di stringhe con i nomi dei database presenti.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
@@ -124,12 +128,14 @@ public class DatabaseManager{
 
     /**
      * Crea un nuovo record sul database. Necessita dell'ID come chiave primaria. L'ora d'ingresso è impostata all'istante della richiesta al database.
+     *
      * @param id identificatore del record.
-     * @throws SQLException se ci sono problemi nell'accesso al database.
+     * @throws SQLException             se ci sono problemi nell'accesso al database.
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
-    void newRecord(String id) throws SQLException, IllegalArgumentException {
+    public void newRecord(String id) throws SQLException, IllegalArgumentException {
         checkInjection(id);
+
         if (id.length() != DBConstants.ID_LENGTH) {
             throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
         }
@@ -145,21 +151,23 @@ public class DatabaseManager{
 
     /**
      * Semplice controllo dei casi comuni di code injection.
+     *
      * @param string stringa da controllare.
      * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
      */
     void checkInjection(String string) throws IllegalArgumentException {
-        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-")) {
+        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-") || string.contains(" ")) {
             throw new IllegalArgumentException("Nice try");
         }
     }
 
     /**
      * Imposta il PaymentTime di un record e ne setta il flag a true.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void setPaymentTime(String id) throws SQLException {
+    public void setPaymentTime(String id) throws SQLException, IllegalArgumentException {
         checkID(id);
 
         Connection connection = connectionPool.getConnection();
@@ -174,10 +182,11 @@ public class DatabaseManager{
 
     /**
      * Controlla che un ID sia presente nella table. Se non è presente lancia un'eccezione.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    private void checkID(String id) throws SQLException {
+    public void checkID(String id) throws SQLException, IllegalArgumentException {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
@@ -193,10 +202,11 @@ public class DatabaseManager{
 
     /**
      * Rimuove il record con un certo ID dal database.
+     *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    void removeRecord(String id) throws SQLException {
+    public void removeRecord(String id) throws SQLException, IllegalArgumentException {
         checkID(id);
 
         Connection connection = connectionPool.getConnection();

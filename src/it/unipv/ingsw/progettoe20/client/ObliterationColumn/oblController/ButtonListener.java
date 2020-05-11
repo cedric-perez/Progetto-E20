@@ -1,5 +1,6 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController;
 
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.PayGui;
 
@@ -15,27 +16,32 @@ import java.awt.event.ActionListener;
  */
 public class ButtonListener implements ActionListener {
     private OblGui oblgui;
+    private ObliterationColumn oc;
 
-    public ButtonListener(OblGui oblgui){
+    public ButtonListener(OblGui oblgui, ObliterationColumn oc){
         this.oblgui = oblgui;
+        this.oc = oc;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String idcheck = oblgui.getIdinput().getText();
 
-        if (idcheck.equals("test")) {
-           PayGui payGui = new PayGui();
-            payGui.setVisible(true);
-            PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);
-            payGui.getPayb().addActionListener(paymentListener);
-           oblgui.setVisible(false);
-           oblgui.getIdinput().setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made" , "Error" , 1 , new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
-            oblgui.getIdinput().setText("");
-            oblgui.getIdinput().requestFocus();
+        if(oc.getOnlineFlag()) {
+            if (oc.checkId(idcheck)) {
+                PayGui payGui = new PayGui();
+                payGui.setVisible(true);
+                PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);
+                payGui.getPayb().addActionListener(paymentListener);
+                oblgui.setVisible(false);
+                oblgui.getIdinput().setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+                oblgui.getIdinput().setText("");
+                oblgui.getIdinput().requestFocus();
+            }
         }
+        else {JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));}
     }
 
 }
