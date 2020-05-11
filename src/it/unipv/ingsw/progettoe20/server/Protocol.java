@@ -2,7 +2,7 @@ package it.unipv.ingsw.progettoe20.server;
 
 /**
  * Definisce il protocollo a livello applicazione utilizzato. Consiste in una semplice stringa formata da comando:ID.
- * In questa classe sono definiti i comandi utilizzabili.
+ * In questa classe sono definiti i comandi utilizzabili e le possibili risposte.
  */
 public class Protocol {
     public static final String SEPARATOR = ":";
