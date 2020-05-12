@@ -14,8 +14,9 @@ public class RequestHandler {
 
     /**
      * Costruisce un RequestHandler.
+     *
      * @param dbManager reference al DatabaseManager.
-     * @param out reference PrintWriter sulla socket associata.
+     * @param out       reference PrintWriter sulla socket associata.
      */
     public RequestHandler(DatabaseManager dbManager, PrintWriter out) {
         this.dbManager = dbManager;
@@ -44,11 +45,11 @@ public class RequestHandler {
                 }
                 break;
             // ID existence check requested
-            case(Protocol.REQUEST_ID):
-                try{
+            case (Protocol.REQUEST_ID):
+                try {
                     dbManager.checkID(parts[1]);
                     out.println(Protocol.RESPONSE_OK);
-                } catch(IllegalArgumentException i ) {
+                } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
@@ -65,6 +66,16 @@ public class RequestHandler {
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
+                }
+                break;
+            // Controllo flag di pagamento
+            case (Protocol.REQUEST_PAYMENT_CHECK):
+                try {
+                    dbManager.checkPayment(parts[1]);
+                    out.println(Protocol.RESPONSE_OK);
+                } catch (IllegalArgumentException i) {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
             // A friendly ping
@@ -85,8 +96,7 @@ public class RequestHandler {
             if (parts.length == 1) {
                 out[0] = parts[0];
                 return out;
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException("Request is not protocol compliant!");
             }
         }

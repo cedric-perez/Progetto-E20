@@ -25,4 +25,6 @@ public class Queries {
             "WHERE " + DBConstants.PARKED_FIRST_COLUMN + " = ?";
     static final String PARKED_REMOVE_RECORD = "DELETE FROM " + DBConstants.PARKED_TABLE + " " +
             "WHERE " + DBConstants.PARKED_FIRST_COLUMN + " = ?";
+    static final String PARKED_CHECK_PAYMENT = PARKED_CHECK_ID_EXISTENCE + " AND "+
+            DBConstants.PARKED_FOURTH_COLUMN+" = TRUE ";
 }

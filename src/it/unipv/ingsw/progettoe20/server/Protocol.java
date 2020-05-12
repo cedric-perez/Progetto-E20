@@ -13,6 +13,7 @@ public class Protocol {
     public static final String REQUEST_DELETE_ID = "delete";
     public static final String REQUEST_END = "end";
     public static final String REQUEST_ID = "id";
+    public static final String REQUEST_PAYMENT_CHECK = "paid";
 
     // Responses
     public static final String RESPONSE_OK = "done";

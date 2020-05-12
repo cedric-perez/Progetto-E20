@@ -218,4 +218,26 @@ public class DatabaseManager {
         pstmt.executeUpdate();
         System.out.println(id + " removed from database");
     }
+
+    /**
+     * Controlla se l'id ha il flag di pagamento.
+     *
+     * @param id identificatore del record.
+     * @throws SQLException se ci sono problemi nell'accesso al database.
+     */
+    public void checkPayment(String id) throws SQLException, IllegalArgumentException {
+        checkID(id);
+
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_CHECK_PAYMENT);
+        pstmt.setString(1, id);
+        ResultSet result = pstmt.executeQuery();
+        if (!result.next()) {
+            System.out.println("record with ID = " + id + " is not obliterated");
+            throw new IllegalArgumentException("Paid flag is false");
+        }
+    }
 }

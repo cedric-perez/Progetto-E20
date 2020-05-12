@@ -35,11 +35,52 @@ public class ExitColumn {
     }
 
 
-    //Metodo che richiede la conferma di obliterazione e ritorna un booleano
+    //TODO: CONTROLLARE ORARIO DI PAGAMENTO -- METODO ANCORA BASE
+
+    /**
+     * Metodo che richiede la conferma di obliterazione
+     *
+     * @param id
+     * @return true se il ticket (a cui è associato l'id) è obliterato,false in caso contrario
+     */
     public Boolean checkObliteration(String id) {
 
-        if (id.equals("prova1")) return true; //Ticket corretto per test
-        else return false;
+        try {
+            out.println("paid:" + id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            if (answer.equals("done")) {
+                deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
+                return true;
+            }
+            else return false;
+        } catch (IOException i) {
+            return false;
+        } catch (NullPointerException n) {
+            isConnected = false;
+            return false;
+        }
+
+    }
+
+    /**
+     * Metodo che elimina il Ticket
+     *
+     * @param id
+     * @return true se il ticket (a cui è associato l'id) è stato eliminato,false in caso contrario
+     */
+    public Boolean deleteTicket(String id) {
+        try {
+            out.println("delete:" + id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            return answer.equals("done");
+        } catch (IOException i) {
+            return false;
+        } catch (NullPointerException n) {
+            isConnected = false;
+            return false;
+        }
 
     }
 
