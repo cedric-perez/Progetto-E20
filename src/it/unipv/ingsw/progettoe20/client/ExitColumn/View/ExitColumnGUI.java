@@ -1,6 +1,7 @@
 package it.unipv.ingsw.progettoe20.client.ExitColumn.View;
 
 import javax.swing.*;
+import java.awt.*;
 
 /*
   GUI principale del client ExitColumn
@@ -74,6 +75,18 @@ public class ExitColumnGUI extends javax.swing.JFrame {
         );
 
         pack();
+    }
+
+    //Metodo per richiamare errore di connessione
+
+    public void errorConnection() {
+        UIManager.put("OptionPane.background", Color.black);
+        UIManager.put("OptionPane.messageForeground", Color.WHITE);
+        UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 18));
+        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 25));
+        UIManager.getLookAndFeelDefaults().put("Panel.background", Color.black);
+        JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+
     }
 
 

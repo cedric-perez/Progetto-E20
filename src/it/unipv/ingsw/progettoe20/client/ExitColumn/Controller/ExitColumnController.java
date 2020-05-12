@@ -5,6 +5,8 @@ import it.unipv.ingsw.progettoe20.client.ExitColumn.View.ExitColumnGUI;
 import it.unipv.ingsw.progettoe20.client.ExitColumn.View.PannelCheckFalse;
 import it.unipv.ingsw.progettoe20.client.ExitColumn.View.PannelCheckTrue;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
@@ -25,8 +27,10 @@ public class ExitColumnController {
     public ExitColumnController(ExitColumnGUI gui, ExitColumn model) {
         this.gui = gui;
         this.model = model;
+        checkConnection(model.getIsConnected());
         initListener();
     }
+
 
     public void initListener() {
 
@@ -78,5 +82,17 @@ public class ExitColumnController {
 
 
     }
+
+    //Metodo che controlla connessione e nel caso chiude il client
+
+    private void checkConnection(Boolean isConnected) {
+
+        if (!isConnected) {
+            gui.errorConnection();
+            System.exit(0);
+        }
+
+    }
+
 
 }
