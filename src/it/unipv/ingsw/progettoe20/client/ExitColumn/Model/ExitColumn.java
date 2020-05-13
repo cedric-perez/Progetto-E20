@@ -45,21 +45,23 @@ public class ExitColumn {
      */
     public Boolean checkObliteration(String id) {
 
-        try {
-            out.println("paid:" + id);
-            String answer = in.readLine();
-            System.out.println(answer);
-            if (answer.equals("done")) {
-                deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
-                return true;
+        if (checkId(id)) {
+            try {
+                out.println("paid:" + id);
+                String answer = in.readLine();
+                System.out.println(answer);
+                if (answer.equals("done")) {
+                    deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
+                    return true;
+                } else return false;
+            } catch (IOException i) {
+                return false;
+            } catch (NullPointerException n) {
+                isConnected = false;
+                return false;
             }
-            else return false;
-        } catch (IOException i) {
-            return false;
-        } catch (NullPointerException n) {
-            isConnected = false;
-            return false;
         }
+        else return false;
 
     }
 
@@ -82,6 +84,27 @@ public class ExitColumn {
             return false;
         }
 
+    }
+
+    /**
+     * metodo che cerca l'id nel database
+     * @param id
+     * @return true se l'id é presente nel database, false se invece non lo è
+     */
+    public boolean checkId(String id){
+        try {
+            out.println("id:"+ id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            return answer.equals("done");
+        }
+        catch (IOException i){
+            return false;
+        }
+        catch ( NullPointerException n){
+            isConnected = false;
+            return false;
+        }
     }
 
     //getter per avvisare stato connessione con il Server

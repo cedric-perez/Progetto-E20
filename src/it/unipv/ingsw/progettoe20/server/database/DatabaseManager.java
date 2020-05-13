@@ -226,7 +226,6 @@ public class DatabaseManager {
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     public void checkPayment(String id) throws SQLException, IllegalArgumentException {
-        checkID(id);
 
         Connection connection = connectionPool.getConnection();
 
