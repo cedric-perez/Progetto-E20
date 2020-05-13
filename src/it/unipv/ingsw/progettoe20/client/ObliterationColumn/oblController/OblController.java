@@ -5,7 +5,10 @@ import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 
 import javax.swing.*;
 
-
+/**
+ * classe controller della scheramta di obliterazione
+ * avvisa anche se il server é offline quando si apre la gui
+ */
 public class OblController {
     private OblGui oblgui;
     private ObliterationColumn oc;

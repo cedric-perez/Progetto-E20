@@ -17,6 +17,7 @@ public class ObliterationColumn  {
     private BufferedReader in;
     private  PrintWriter out;
     private Boolean onlineFlag;
+    private double paymentAmount = 0;
 
     /**
      * metodo che inizializza la classe Obliteration column come client
@@ -59,13 +60,34 @@ public class ObliterationColumn  {
 
 
     /**
-     *Metodo che conferma il pagamento
+     *Metodo che permette il pagamento
      * @param id
      * @return
      */
-    public static boolean pay(String id){
+    public boolean Pay(String id){
+        try {
+            out.println("acceptpay:"+ id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            if (answer.equals("done")) {
+                return true;
+            } else return false;
+        }
+        catch (IOException i){
+            return false;
+        }
+        catch ( NullPointerException n){
+            onlineFlag = false;
+            return false;
+        }
+    }
 
-        return true;
+    /**
+     * metodo che restituisce quanto si de
+     * @return
+     */
+    public double PaymentAmount(String id){
+        return paymentAmount;
     }
 
 

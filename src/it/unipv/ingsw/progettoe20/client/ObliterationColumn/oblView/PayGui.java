@@ -65,6 +65,8 @@ public class PayGui extends JFrame {
 
     }
 
+    public JTextField getTextpay() { return textpay; }
+
     public JButton getPayb() {
         return payb;
     }

@@ -78,6 +78,14 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
+            case (Protocol.REQUEST_PAYMENT_ACCEPTED):
+                try {
+                    dbManager.setPaymentTime(parts[1]);
+                    out.println(Protocol.RESPONSE_OK);
+                } catch (IllegalArgumentException i) {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
+                }
             // A friendly ping
             case "ping":
                 out.println("pong");

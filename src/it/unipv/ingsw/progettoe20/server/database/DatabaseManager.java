@@ -168,7 +168,7 @@ public class DatabaseManager {
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     public void setPaymentTime(String id) throws SQLException, IllegalArgumentException {
-        checkID(id);
+        //checkID(id);
 
         Connection connection = connectionPool.getConnection();
 

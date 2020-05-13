@@ -31,8 +31,9 @@ public class ButtonListener implements ActionListener {
             if (oc.checkId(idcheck)) {
                 PayGui payGui = new PayGui();
                 payGui.setVisible(true);
-                PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui);
+                PaymentListener paymentListener = new PaymentListener(payGui, idcheck, oblgui, oc);
                 payGui.getPayb().addActionListener(paymentListener);
+                payGui.getTextpay().setText( String.valueOf(oc.PaymentAmount(idcheck)));
                 oblgui.setVisible(false);
                 oblgui.getIdinput().setText("");
             } else {

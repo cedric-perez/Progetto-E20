@@ -18,17 +18,18 @@ public class PaymentListener implements ActionListener {
     private PayGui paygui;
     private String id;
     private OblGui oblgui;
+    private ObliterationColumn oc;
 
-    public PaymentListener(PayGui paygui , String id , OblGui oblgui ){
+    public PaymentListener(PayGui paygui , String id , OblGui oblgui , ObliterationColumn oc ){
         this.paygui = paygui;
         this.id = id;
         this.oblgui = oblgui;
-
+        this.oc = oc;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (ObliterationColumn.pay(id)) {
+        if (oc.Pay(id)) {
             JOptionPane.showMessageDialog(null, "Payment Confirmed: Goodbye & drive safely", "Congratulations", 1, null);
             paygui.dispose();
 
