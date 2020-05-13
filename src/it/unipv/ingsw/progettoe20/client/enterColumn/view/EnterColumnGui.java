@@ -6,12 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.IOException;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+
 import javax.swing.border.Border;
 import it.unipv.ingsw.progettoe20.client.enterColumn.model.EnterColumn;
 
@@ -25,17 +20,18 @@ public class EnterColumnGui extends JFrame{
 	private JLabel ShowTicketId;
 	private JLabel wIcon1;
 	private JLabel wIcon2;
-	private Label message;
 	private BufferedImage wPic1;
 	private BufferedImage wPic2;
 	private BufferedImage wPic3;
+	private BufferedImage wPic4;
 	private JPanel panel;
+	
 
 	public EnterColumnGui(EnterColumn instance) throws IOException {
 		this.instance=instance;
 		initComponents();
 	}
-	public void initComponents() throws IOException{	
+	public void initComponents() throws IOException {
 		
 		  //setTitleGui
 		  setTitle("Enter Column Gui");
@@ -48,7 +44,6 @@ public class EnterColumnGui extends JFrame{
 	      wIcon2 = new JLabel();
 	      panel = new JPanel();
 	    
-	      message= new Label("", Label.RIGHT);
 	      
 		  //label setting
 	      
@@ -59,6 +54,7 @@ public class EnterColumnGui extends JFrame{
 		  wPic1=  ImageIO.read(this.getClass().getResource("/ParkingPic.png"));
 	      wPic2 = ImageIO.read(this.getClass().getResource("/TicketPic.png"));
 	      wPic3 = ImageIO.read(this.getClass().getResource("/CarPic.png"));
+	     
 	      wIcon1.setHorizontalAlignment(SwingConstants.RIGHT);
 	      wIcon2.setHorizontalAlignment(SwingConstants.RIGHT);
 	      wIcon1.setIcon(new ImageIcon(wPic1));
@@ -96,7 +92,16 @@ public class EnterColumnGui extends JFrame{
 	      getContentPane().add(panel);
 	       
 	}
+	public void initErrorGui() throws IOException {
+		getTicket = new JButton("");
+		getTicket.setVisible(false);
+		wPic4 = ImageIO.read(this.getClass().getResource("/ErrorPic.png"));
+	    ImageIcon icon=new ImageIcon(wPic4);		
+		UIManager.put("OptionPane.messageForeground", Color.BLACK);
+        JOptionPane.showMessageDialog(null, "Connection to server failed", "Connection Error", 1, icon);
+	}
 	
+
 	public JButton getButton() {
 		return getTicket;
 	}

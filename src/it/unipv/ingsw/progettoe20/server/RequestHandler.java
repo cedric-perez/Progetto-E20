@@ -30,7 +30,7 @@ public class RequestHandler {
      * @return true se il client ha richiesto la chiusura della connessione, false altrimenti.
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    public boolean handle(String request) throws SQLException, IllegalArgumentException {    // please find a better name, also can this be an independent class?
+    public boolean handle(String request) throws SQLException, IllegalArgumentException {
         String[] parts = splitRequest(request);
 
         switch (parts[0]) {
