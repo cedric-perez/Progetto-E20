@@ -62,7 +62,7 @@ public class ObliterationColumn  {
     /**
      *Metodo che permette il pagamento
      * @param id
-     * @return
+     * @return true se il pagamento va a buon fine, altrimenti false
      */
     public boolean Pay(String id){
         try {
@@ -85,7 +85,7 @@ public class ObliterationColumn  {
     /**
      * metodo che permette di visualizzare l'ammontare del pagamento
      * @param id
-     * @return paymentAmount
+     * @return paymentAmount(da mostrare nel display del client)
      */
     public double PaymentAmount(String id){
         return paymentAmount;

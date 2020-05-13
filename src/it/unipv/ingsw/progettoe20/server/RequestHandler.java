@@ -87,6 +87,7 @@ public class RequestHandler {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
+                break;
             // A friendly ping
             case "ping":
                 out.println("pong");
