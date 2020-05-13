@@ -18,7 +18,7 @@ public class PayGui extends JFrame {
     public PayGui(){
         super("Id confirmed");
         setSize(600,400);
-        setLocation(340,240);
+        setLocationRelativeTo(null);
         setResizable(false);
 
         //panel settings

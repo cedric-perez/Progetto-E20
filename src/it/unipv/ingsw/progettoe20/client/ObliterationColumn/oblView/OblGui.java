@@ -18,10 +18,11 @@ public class OblGui  extends JFrame {
     public OblGui(){
         super("OBLITERATION COLUMN");
         setSize(600,400);
-        setLocation(340,240);
+        //setLocation(340,240); test location
+        setLocationRelativeTo(null);
         setResizable(false);
 
-        //panel settings
+        //panel settingsgit
         panel.setLayout (null);
         panel.setBackground(new java.awt.Color(30,30 , 30));
 
