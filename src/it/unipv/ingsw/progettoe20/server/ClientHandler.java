@@ -1,7 +1,5 @@
 package it.unipv.ingsw.progettoe20.server;
 
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;

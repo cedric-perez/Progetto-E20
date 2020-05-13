@@ -78,7 +78,7 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
-             // accept payment requested
+             // Accept payment requested
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {
                     dbManager.setPaymentTime(parts[1]);

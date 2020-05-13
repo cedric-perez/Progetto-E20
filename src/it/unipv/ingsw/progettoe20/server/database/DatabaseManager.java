@@ -22,6 +22,7 @@ public class DatabaseManager {
 
     private BasicDataSource connectionPool;
 
+
     /**
      * Costruisce un nuovo DatabaseManager. Chiede la password del database, la contorlla e inizializza la connessione.
      * Il pool di connessioni viene inizializzato ad una connessione.
@@ -35,6 +36,7 @@ public class DatabaseManager {
         connectionPool.setPassword(DBConstants.PASS);
         connectionPool.setDriverClassName(DBConstants.JDBC_DRIVER);
         connectionPool.setUrl(dbUrl);
+        connectionPool.setMaxTotal(DBConstants.MAX_CONNECTIONS);
         System.out.print("Connecting...");
         connectionPool.setInitialSize(1);
         System.out.println("done");
@@ -106,6 +108,8 @@ public class DatabaseManager {
         System.out.print("Created table \n" + DBConstants.PARKED_TABLE + "...");
         stmt.executeUpdate(Queries.CREATE_TABLE);
         System.out.println("done");
+
+        connection.close();
     }
 
     /**
@@ -123,6 +127,7 @@ public class DatabaseManager {
         while (rs.next()) {
             response.add(rs.getString(1));  // 1 = first column
         }
+        connection.close();
         return response;
     }
 
@@ -147,6 +152,8 @@ public class DatabaseManager {
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Added new record with ID = " + id);
+
+        connection.close();
     }
 
     /**
@@ -168,7 +175,7 @@ public class DatabaseManager {
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     public void setPaymentTime(String id) throws SQLException, IllegalArgumentException {
-        //checkID(id);
+        checkID(id);
 
         Connection connection = connectionPool.getConnection();
 
@@ -178,6 +185,8 @@ public class DatabaseManager {
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Payment time for " + id + " set");
+
+        connection.close();
     }
 
     /**
@@ -196,8 +205,10 @@ public class DatabaseManager {
         ResultSet result = pstmt.executeQuery();
         if (!result.next()) {
             System.out.println("No record with ID = " + id + " found");
+            connection.close();
             throw new IllegalArgumentException("ID not found");
         }
+        connection.close();
     }
 
     /**
@@ -217,6 +228,8 @@ public class DatabaseManager {
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println(id + " removed from database");
+
+        connection.close();
     }
 
     /**
@@ -236,7 +249,9 @@ public class DatabaseManager {
         ResultSet result = pstmt.executeQuery();
         if (!result.next()) {
             System.out.println("record with ID = " + id + " is not obliterated");
+            connection.close();
             throw new IllegalArgumentException("Paid flag is false");
         }
+        connection.close();
     }
 }
