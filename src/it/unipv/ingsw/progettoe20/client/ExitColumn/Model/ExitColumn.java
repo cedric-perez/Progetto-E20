@@ -41,9 +41,9 @@ public class ExitColumn {
      * Metodo che richiede la conferma di obliterazione
      *
      * @param id
-     * @return true se il ticket (a cui è associato l'id) è obliterato,false in caso contrario
+     * @return Response Enum con i vari esiti del check
      */
-    public Boolean checkObliteration(String id) {
+    public ResponseEnum checkObliteration(String id) {
 
         if (checkId(id)) {
             try {
@@ -52,16 +52,16 @@ public class ExitColumn {
                 System.out.println(answer);
                 if (answer.equals("done")) {
                     deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
-                    return true;
-                } else return false;
+                    return ResponseEnum.CONFIRMED_EXIT;
+                } else return ResponseEnum.NO_PAID;
             } catch (IOException i) {
-                return false;
+                return ResponseEnum.NO_PAID;
             } catch (NullPointerException n) {
                 isConnected = false;
-                return false;
+                return ResponseEnum.NO_PAID; //TODO CHANGE WITH GENERIC ERROR
             }
         }
-        else return false;
+        else return ResponseEnum.NO_ID_FOUND;
 
     }
 

@@ -6,9 +6,9 @@ import javax.swing.*;
   Splash-panel in caso di ticket non idoneo
 */
 
-public class PannelCheckFalse extends JPanel {
+public class PannelCheckNoID extends JPanel {
 
-    public PannelCheckFalse() {
+    public PannelCheckNoID() {
         initComponents();
     }
 
@@ -29,10 +29,10 @@ public class PannelCheckFalse extends JPanel {
         jLabel3.setText("EXIT COLUMN");
         PannelloErrore.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 30));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
-        jLabel4.setText("Errore: Ticket non correttamente obliterato");
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/NoTicketPic.png")));
+        jLabel4.setText("Errore: ID Ticket non valido");
         PannelloErrore.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
 
         //impostazioni di layout

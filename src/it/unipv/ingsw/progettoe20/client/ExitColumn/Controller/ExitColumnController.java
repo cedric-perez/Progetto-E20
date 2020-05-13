@@ -1,8 +1,10 @@
 package it.unipv.ingsw.progettoe20.client.ExitColumn.Controller;
 
 import it.unipv.ingsw.progettoe20.client.ExitColumn.Model.ExitColumn;
+import it.unipv.ingsw.progettoe20.client.ExitColumn.Model.ResponseEnum;
 import it.unipv.ingsw.progettoe20.client.ExitColumn.View.ExitColumnGUI;
 import it.unipv.ingsw.progettoe20.client.ExitColumn.View.PannelCheckFalse;
+import it.unipv.ingsw.progettoe20.client.ExitColumn.View.PannelCheckNoID;
 import it.unipv.ingsw.progettoe20.client.ExitColumn.View.PannelCheckTrue;
 
 import javax.swing.*;
@@ -39,8 +41,8 @@ public class ExitColumnController {
             public void actionPerformed(ActionEvent e) {
 
                 //booleano risultato dal metodo
-                Boolean check = model.checkObliteration(gui.getjTextField1().getText());
-                if (check == true) {
+                ResponseEnum check = model.checkObliteration(gui.getjTextField1().getText());
+                if (check == ResponseEnum.CONFIRMED_EXIT) {
                     //System.out.println("corretto"); stampa di test
 
                     //cambio di pannello
@@ -60,9 +62,26 @@ public class ExitColumnController {
                     }, 3000); //tempo dello splash-panel
 
 
-                } else {
+                } else if (check == ResponseEnum.NO_PAID){
                     //System.out.println("non corretto"); stampa di test
                     gui.setContentPane(new PannelCheckFalse());
+                    gui.invalidate();
+                    gui.validate();
+                    new Timer().schedule(new TimerTask() {
+
+                        @Override
+                        public void run() {
+                            gui.setContentPane(gui.getPannello());
+                            gui.invalidate();
+                            gui.validate();
+                            gui.getjTextField1().setText("Ticket ID"); //per non far vedere il precedente ID immesso
+                        }
+                    }, 3000);
+
+                }
+                else if (check==ResponseEnum.NO_ID_FOUND){
+                    //System.out.println("non corretto"); stampa di test
+                    gui.setContentPane(new PannelCheckNoID());
                     gui.invalidate();
                     gui.validate();
                     new Timer().schedule(new TimerTask() {
