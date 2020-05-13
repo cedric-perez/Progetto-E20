@@ -85,7 +85,7 @@ public class ExitColumnGUI extends javax.swing.JFrame {
         UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 18));
         UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 25));
         UIManager.getLookAndFeelDefaults().put("Panel.background", Color.black);
-        JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+        JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic2.png")));
 
     }
 

@@ -41,25 +41,27 @@ public class ExitColumn {
      * Metodo che richiede la conferma di obliterazione
      *
      * @param id
-     * @return true se il ticket (a cui è associato l'id) è obliterato,false in caso contrario
+     * @return Response Enum con i vari esiti del check
      */
-    public Boolean checkObliteration(String id) {
+    public ResponseEnum checkObliteration(String id) {
 
-        try {
-            out.println("paid:" + id);
-            String answer = in.readLine();
-            System.out.println(answer);
-            if (answer.equals("done")) {
-                deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
-                return true;
+        if (checkId(id)) {
+            try {
+                out.println("paid:" + id);
+                String answer = in.readLine();
+                System.out.println(answer);
+                if (answer.equals("done")) {
+                    deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
+                    return ResponseEnum.CONFIRMED_EXIT;
+                } else return ResponseEnum.NO_PAID;
+            } catch (IOException i) {
+                return ResponseEnum.NO_PAID;
+            } catch (NullPointerException n) {
+                isConnected = false;
+                return ResponseEnum.NO_PAID; //TODO CHANGE WITH GENERIC ERROR
             }
-            else return false;
-        } catch (IOException i) {
-            return false;
-        } catch (NullPointerException n) {
-            isConnected = false;
-            return false;
         }
+        else return ResponseEnum.NO_ID_FOUND;
 
     }
 
@@ -82,6 +84,27 @@ public class ExitColumn {
             return false;
         }
 
+    }
+
+    /**
+     * metodo che cerca l'id nel database
+     * @param id
+     * @return true se l'id é presente nel database, false se invece non lo è
+     */
+    public boolean checkId(String id){
+        try {
+            out.println("id:"+ id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            return answer.equals("done");
+        }
+        catch (IOException i){
+            return false;
+        }
+        catch ( NullPointerException n){
+            isConnected = false;
+            return false;
+        }
     }
 
     //getter per avvisare stato connessione con il Server
