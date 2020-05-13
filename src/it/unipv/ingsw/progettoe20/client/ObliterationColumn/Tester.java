@@ -5,8 +5,9 @@ import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.Obliteratio
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 
 
-// tester momentaneo per obliterazione
-//funziona solo mettendo la stringa test come id
+/**
+ * tester per obliterazione
+ */
 public class Tester {
     public static void main(String[] args){
 

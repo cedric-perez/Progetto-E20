@@ -83,8 +83,9 @@ public class ObliterationColumn  {
     }
 
     /**
-     * metodo che restituisce quanto si de
-     * @return
+     * metodo che permette di visualizzare l'ammontare del pagamento
+     * @param id
+     * @return paymentAmount
      */
     public double PaymentAmount(String id){
         return paymentAmount;
