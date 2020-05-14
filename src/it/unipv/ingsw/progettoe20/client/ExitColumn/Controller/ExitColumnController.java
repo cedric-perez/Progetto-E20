@@ -59,7 +59,7 @@ public class ExitColumnController {
                             gui.validate();
                             gui.getjTextField1().setText("Ticket ID"); //per non far vedere il precedente ID immesso
                         }
-                    }, 3000); //tempo dello splash-panel
+                    }, 2500); //tempo dello splash-panel
 
 
                 } else if (check == ResponseEnum.NO_PAID){
@@ -76,7 +76,7 @@ public class ExitColumnController {
                             gui.validate();
                             gui.getjTextField1().setText("Ticket ID"); //per non far vedere il precedente ID immesso
                         }
-                    }, 3000);
+                    }, 2500);
 
                 }
                 else if (check==ResponseEnum.NO_ID_FOUND){
@@ -93,7 +93,7 @@ public class ExitColumnController {
                             gui.validate();
                             gui.getjTextField1().setText("Ticket ID"); //per non far vedere il precedente ID immesso
                         }
-                    }, 3000);
+                    }, 2500);
 
                 }
             }
