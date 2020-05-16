@@ -70,6 +70,7 @@ public class EnterColumnGui extends JFrame{
 	      LotAvailability.setFont(new Font("TimesRoman", Font.BOLD, 25));
 	      
 	      getTicket.setFont(new Font("TimesRoman", Font.BOLD, 18));
+	      getTicket.setBackground(new Color(143,0,255));
 	      setMinimumSize(new java.awt.Dimension(200, 300));
 	      setResizable(false); 
 	      //panel setting    
@@ -97,9 +98,15 @@ public class EnterColumnGui extends JFrame{
 		getTicket.setVisible(false);
 		wPic4 = ImageIO.read(this.getClass().getResource("/ErrorPic.png"));
 	    ImageIcon icon=new ImageIcon(wPic4);		
-		UIManager.put("OptionPane.messageForeground", Color.BLACK);
-        JOptionPane.showMessageDialog(null, "Connection to server failed", "Connection Error", 1, icon);
-	}
+    UIManager.put("OptionPane.background", Color.black);
+    UIManager.put("OptionPane.messageForeground", Color.WHITE);
+    UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 18));
+    UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 25));
+    UIManager.getLookAndFeelDefaults().put("Panel.background", Color.black);
+    JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, icon);
+
+}
+
 	
 
 	public JButton getButton() {

@@ -1,5 +1,6 @@
 package it.unipv.ingsw.progettoe20.client.enterColumn.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -25,14 +26,14 @@ private EnterColumnGui g;
 			public void actionPerformed(ActionEvent e) {
 				
 	            try {
-	            
+	              g.getButton().setEnabled(false);
+	              g.getButton().setBackground(new Color(143,0,255));
 	              if (g.getAvailability()>0) {
-	            	  String idTicket= g.getColumn().generateTicket();
-	            	  
-	            	  Boolean checkInserimento = g.getColumn().insertTicket(idTicket);
+	            	  String ticket=g.getColumn().generateTicket();
+	            	  //Boolean checkInserimento = g.getColumn().insertTicket();
 	            	  
 	            	 // if(checkInserimento==true) {
-	            	  g.setIdTicket(idTicket);
+	            	  g.setIdTicket(ticket);
 	             
 	              new Timer().schedule(new TimerTask() {
 
@@ -41,6 +42,7 @@ private EnterColumnGui g;
 	            	    	g.updateAvailability();
 	            	        g.getShowTicketId().setText(String.valueOf(""));
 	            	        g.setTransitionObject();
+	            	        g.getButton().setEnabled(true);
 	            	        }
 	            	}, 10000 );
 	              
