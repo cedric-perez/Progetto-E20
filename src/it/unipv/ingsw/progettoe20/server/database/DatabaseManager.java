@@ -139,11 +139,11 @@ public class DatabaseManager {
      * @throws IllegalArgumentException se la lunghezza dell'ID non è quella impostata.
      */
     public void newRecord(String id) throws SQLException, IllegalArgumentException {
-        checkInjection(id);
-
+    	 
         if (id.length() != DBConstants.ID_LENGTH) {
             throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
         }
+       
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
@@ -152,22 +152,8 @@ public class DatabaseManager {
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Added new record with ID = " + id);
-
         connection.close();
     }
-
-    /**
-     * Semplice controllo dei casi comuni di code injection.
-     *
-     * @param string stringa da controllare.
-     * @throws IllegalArgumentException se è stato identificato un tentativo di code injection.
-     */
-    void checkInjection(String string) throws IllegalArgumentException {
-        if (string.contains("'") || string.contains(")") || string.contains(";") || string.contains("-") || string.contains(" ")) {
-            throw new IllegalArgumentException("Nice try");
-        }
-    }
-
     /**
      * Imposta il PaymentTime di un record e ne setta il flag a true.
      *

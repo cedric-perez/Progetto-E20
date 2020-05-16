@@ -26,15 +26,14 @@ public class EnterColumn {
 	        }
 	} 
 		
-	   public Boolean insertTicket(String id) throws IOException {
-	        try {
-	        	 out.println("id:"+ id);
-	             //System.out.println(id);
-	             if (id.equals("done")) {
-	                 return true;
-	             } else return false;
-	          
-	           
+	   public Boolean insertTicket() throws IOException {
+		   try {
+	            out.println("genid");
+	            String answer = in.readLine();
+	            System.out.println(answer);
+	            return answer.equals("done");
+	        } catch (IOException i) {
+	            return false;
 	        } catch (NullPointerException n) {
 	            isConnected = false;
 	            return false;
