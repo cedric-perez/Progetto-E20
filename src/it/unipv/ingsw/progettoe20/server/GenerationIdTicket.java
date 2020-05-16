@@ -1,5 +1,5 @@
 package it.unipv.ingsw.progettoe20.server;
-import java.text.SimpleDateFormat;
+
 import java.util.Random;
 public class GenerationIdTicket {
 	private final int lungId=8;
@@ -19,14 +19,7 @@ public class GenerationIdTicket {
 		int lungCaratteri = Caratteri.length;
 		int lungNumeri = Numeri.length;
 		int lungSpeciali= Speciali.length;
-		String stringaRandom = "A";
-		
-		long timestamp = System.currentTimeMillis();
-		
-				SimpleDateFormat df = new SimpleDateFormat ("HHmm");
-				String str = df.format (timestamp);
-				stringaRandom += str;
-				
+		String stringaRandom = "A";				
 		
 		while (stringaRandom.length() < lungId) {
 

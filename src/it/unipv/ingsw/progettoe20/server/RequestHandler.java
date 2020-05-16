@@ -40,8 +40,7 @@ public class RequestHandler {
                 try {
                 	GenerationIdTicket codice = new GenerationIdTicket();
         			String generato = codice.GeneraId();
-        			
-        			dbManager.checkID(generato);
+        			//dbManager.checkID(generato);
                     dbManager.newRecord(generato); 
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
@@ -51,7 +50,7 @@ public class RequestHandler {
                 break;
             // ID existence check requested
             case (Protocol.REQUEST_ID):
-                try {System.out.println("ciao");
+                try {
                     dbManager.checkID(parts[1]);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
