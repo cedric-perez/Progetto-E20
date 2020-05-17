@@ -23,7 +23,7 @@ public class ParkingManager {
 
         try {
             // Start server
-            ServerSocket server = new ServerSocket(ServerConstants.SERVER_PORT);
+            ServerSocket server = new ServerSocket(ServerConstants.PORT);
             while (true) {
                 Socket socket = server.accept();
                 PrintWriter socketWriter = new PrintWriter(socket.getOutputStream(), true);

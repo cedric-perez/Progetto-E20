@@ -19,4 +19,8 @@ public class Protocol {
     // Responses
     public static final String RESPONSE_OK = "done";
     public static final String RESPONSE_ERROR = "error";
+
+    // Ping
+    public static final String PING = "ping";
+    public static final String PONG = "pong";
 }
