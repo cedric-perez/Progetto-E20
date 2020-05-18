@@ -19,6 +19,7 @@ public class ParkingManager {
             dbManager.initDatabase();
         } catch (SQLException sqle) {
             System.out.println("Can't initialize database!");
+            sqle.printStackTrace();
         }
 
         try {

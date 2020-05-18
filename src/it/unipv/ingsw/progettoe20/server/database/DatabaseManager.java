@@ -90,25 +90,45 @@ public class DatabaseManager {
      * @throws SQLException se ci sono problemi nell'accesso al database.
      */
     public void initDatabase() throws SQLException {
-        // Checks if database already exist
-        if (getDatabaseList().contains(DBConstants.DB_NAME)) {
-            System.out.println("Database \"" + DBConstants.DB_NAME + "\" already exist, nothing done");
-            return;
-        }
         Connection connection = connectionPool.getConnection();
+        boolean changed = false;
 
-        // Creates database
-        Statement stmt = connection.createStatement();
-        System.out.print("Creating database \"" + DBConstants.DB_NAME + "\"...");
-        stmt.executeUpdate(Queries.CREATE_DB);
-        System.out.println("done");
+        // Checks if database already exist
+        if (!getDatabaseList().contains(DBConstants.CARS_DB_NAME)) {
 
-        // Create table
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        System.out.print("Created table \n" + DBConstants.PARKED_TABLE + "...");
-        stmt.executeUpdate(Queries.CREATE_TABLE);
-        System.out.println("done");
+            // Creates database for cars
+            Statement stmt = connection.createStatement();
+            System.out.print("Creating database for cars \"" + DBConstants.CARS_DB_NAME + "\"...");
+            stmt.executeUpdate(Queries.CREATE_DB + DBConstants.CARS_DB_NAME);
+            System.out.println("done");
 
+            // Create table for cars
+            stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+            System.out.print("Creating table for cars \"" + DBConstants.CARS_TABLE + "\"...");
+            stmt.executeUpdate(Queries.CARS_CREATE_TABLE);
+            System.out.println("done");
+
+            changed = true;
+        }
+        if (!getDatabaseList().contains(DBConstants.LEVEL_DB_NAME)) {
+            // Creates database for levels
+            Statement stmt = connection.createStatement();
+            System.out.print("Creating database for levels \"" + DBConstants.LEVEL_DB_NAME + "\"...");
+            stmt.executeUpdate(Queries.CREATE_DB + DBConstants.LEVEL_DB_NAME);
+            System.out.println("done");
+
+            // Create table for levels
+            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            System.out.print("Creating table for levels \"" + DBConstants.LEVEL_TABLE + "\"...");
+            stmt.executeUpdate(Queries.LEVEL_CREATE_TABLE);
+            System.out.println("done");
+
+            changed = true;
+        }
+
+        if (!changed) {
+            System.out.println("Database already set up, nothing done");
+        }
         connection.close();
     }
 
@@ -140,15 +160,15 @@ public class DatabaseManager {
      */
     public void newRecord(String id) throws SQLException, IllegalArgumentException {
     	 
-        if (id.length() != DBConstants.ID_LENGTH) {
-            throw new IllegalArgumentException("ID length must be " + DBConstants.ID_LENGTH + "!");
+        if (id.length() != DBConstants.CARS_ID_LENGTH) {
+            throw new IllegalArgumentException("ID length must be " + DBConstants.CARS_ID_LENGTH + "!");
         }
        
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_NEWRECORD);
+        stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKING_NEWRECORD);
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Added new record with ID = " + id);
@@ -166,8 +186,8 @@ public class DatabaseManager {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_SET_PAYMENT);
+        stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKING_SET_PAYMENT);
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println("Payment time for " + id + " set");
@@ -185,8 +205,8 @@ public class DatabaseManager {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_CHECK_ID_EXISTENCE);
+        stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKING);
         pstmt.setString(1, id);
         ResultSet result = pstmt.executeQuery();
         if (!result.next()) {
@@ -209,8 +229,8 @@ public class DatabaseManager {
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_REMOVE_RECORD);
+        stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKING_REMOVE_RECORD);
         pstmt.setString(1, id);
         pstmt.executeUpdate();
         System.out.println(id + " removed from database");
@@ -223,14 +243,14 @@ public class DatabaseManager {
      *
      * @param id identificatore del record.
      * @throws SQLException se ci sono problemi nell'accesso al database.
+     * @throws IllegalArgumentException se il pagamento non è stato effettuato.
      */
     public void checkPayment(String id) throws SQLException, IllegalArgumentException {
-
         Connection connection = connectionPool.getConnection();
 
         Statement stmt = connection.createStatement();
-        stmt.execute(Queries.USE_DB + DBConstants.DB_NAME);
-        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKED_CHECK_PAYMENT);
+        stmt.execute(Queries.USE_DB + DBConstants.CARS_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.PARKING_CHECK_PAYMENT);
         pstmt.setString(1, id);
         ResultSet result = pstmt.executeQuery();
         if (!result.next()) {
@@ -238,6 +258,34 @@ public class DatabaseManager {
             connection.close();
             throw new IllegalArgumentException("Paid flag is false");
         }
+        connection.close();
+    }
+
+    /**
+     * Inserisce un nuovo livello nel database.
+     *
+     * @param name nome del livello, dev'essere un solo carattere.
+     * @param capacity numero di posti del livello.
+     * @throws SQLException se ci sono problemi nell'accesso al database.
+     * @throws IllegalArgumentException se la lunghezza del nome è inferiore a 1 oppure la capienza è < 1
+     */
+    public void newLevel(String name, int capacity) throws SQLException, IllegalArgumentException {
+        if (name.length() != 1) {
+            throw new IllegalArgumentException("Level name must be 1 character long!");
+        }
+        if (capacity < 1) {
+            throw new IllegalArgumentException("Level must have at least 1 parking!");
+        }
+        Connection connection = connectionPool.getConnection();
+
+        Statement stmt = connection.createStatement();
+        stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+        PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_NEWRECORD);
+        pstmt.setString(1, name);
+        pstmt.setInt(2, capacity);
+        pstmt.setInt(3, capacity);
+        pstmt.executeUpdate();
+
         connection.close();
     }
 }

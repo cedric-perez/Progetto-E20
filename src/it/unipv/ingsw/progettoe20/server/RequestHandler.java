@@ -72,7 +72,7 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
                 }
                 break;
-            // Controllo flag di pagamento
+            // Payment flag check
             case (Protocol.REQUEST_PAYMENT_CHECK):
                 try {
                     dbManager.checkPayment(parts[1]);
@@ -86,6 +86,16 @@ public class RequestHandler {
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {
                     dbManager.setPaymentTime(parts[1]);
+                    out.println(Protocol.RESPONSE_OK);
+                } catch (IllegalArgumentException i) {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
+                }
+                break;
+            // Create new level
+            case (Protocol.REQUEST_NEWLEVEL):
+                try {
+                    dbManager.newLevel(parts[1].substring(0,1).toUpperCase(), Integer.parseInt(parts[1].substring(1)));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
