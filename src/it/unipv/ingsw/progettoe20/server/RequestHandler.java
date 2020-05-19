@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class RequestHandler {
     private DatabaseManager dbManager;
     private PrintWriter out;
+	private GenerationIdTicket generator;
 
     /**
      * Costruisce un RequestHandler.
@@ -21,6 +22,7 @@ public class RequestHandler {
     public RequestHandler(DatabaseManager dbManager, PrintWriter out) {
         this.dbManager = dbManager;
         this.out = out;
+        
     }
 
     /**
@@ -35,19 +37,28 @@ public class RequestHandler {
       
         switch (parts[0]) {
             // New ID generation requested
-        
-            case (Protocol.REQUEST_GENERATE_ID):
-                try {
-                	GenerationIdTicket codice = new GenerationIdTicket();
-        			String generato = codice.GeneraId();
-        			//dbManager.checkID(generato);
-                    dbManager.newRecord(generato); 
-                    out.println(Protocol.RESPONSE_OK);
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
-                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
-                }
-                break;
+        case (Protocol.REQUEST_GENERATE_ID):
+        	generator=new GenerationIdTicket();
+        	String id;  	
+        	Boolean success=false;
+        	do {
+        		id = generator.GenerateId();
+        		 try {
+                 	 dbManager.checkID(id);
+                     
+                 } catch (IllegalArgumentException e) {
+                	 success= true;   
+                 }
+        	}while(!success);
+        	 try {
+             	 dbManager.newRecord(id);
+                 out.println(Protocol.RESPONSE_OK+Protocol.SEPARATOR+id);
+             } catch (IllegalArgumentException e) {
+            	 System.out.println(e.getMessage());
+                 out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());    
+             }
+        		 
+         break;	
             // ID existence check requested
             case (Protocol.REQUEST_ID):
                 try {
