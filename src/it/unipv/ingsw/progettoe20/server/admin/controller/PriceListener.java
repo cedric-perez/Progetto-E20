@@ -21,7 +21,7 @@ public class PriceListener implements ActionListener {
 
 	public PriceListener(PriceManagementGUI gui) {
 		this.gui = gui;
-		admin = new Administrator();
+		admin = Administrator.getInstance();
 	}
 
 	@Override

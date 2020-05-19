@@ -20,7 +20,7 @@ public class ParkingListener implements ActionListener {
 
 	public ParkingListener(ParkingManagementGUI gui) {
 		this.gui = gui;
-		admin = new Administrator();
+		admin = Administrator.getInstance();
 	}
 
 	@Override
@@ -40,14 +40,23 @@ public class ParkingListener implements ActionListener {
 		adminGUI.setVisible(true);
 	}
 
-	// legge il numero inserito nel field
-	public int enteredNumber() {
-		String str = gui.getField().getText();
+	// legge il nome del livello inserito nel field1
+	public String enteredLevel() {
+		String level = gui.getField().getText();
+		if (level.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please, enter the level", "Error", 1, null);
+		}
+		return level;
+	}
+
+	// legge il numero di parcheggi da aggiunger/togliere inserito in field2
+	public int enteredParkingLots() {
+		String parkingLots = gui.getField2().getText();
 		int number = 0;
-		if (str.equals("")) {
-			JOptionPane.showMessageDialog(null, "Please, enter the number", "Error", 1, null);
+		if (parkingLots.equals("")) {
+			JOptionPane.showMessageDialog(null, "Please, enter the parking lots", "Error", 1, null);
 		} else {
-			number = Integer.parseInt(str);
+			number = Integer.parseInt(parkingLots);
 		}
 		return number;
 	}
@@ -55,12 +64,13 @@ public class ParkingListener implements ActionListener {
 	// modifica il numero dei parcheggi
 	public void changeParkings() {
 		String action = (String) gui.getCombo().getSelectedItem();
-		int number = enteredNumber();
+		String level = enteredLevel();
+		int number = enteredParkingLots();
 		if (action.equals("Add parkings")) { // aggiunge parcheggi
-			int capacity = admin.addParkings(number);
+			int capacity = admin.addParkings(number, level);
 			JOptionPane.showMessageDialog(null, "available parkings: " + capacity, "Info", 1, null);
 		} else { // rimuove dei parcheggi
-			int capacity = admin.removeParkings(number);
+			int capacity = admin.removeParkings(number, level);
 			JOptionPane.showMessageDialog(null, "available parkings: " + capacity, "Info", 1, null);
 			if (capacity == -1) {
 				JOptionPane.showMessageDialog(null, "You cannot remove more parkings than there are available", "Error",
