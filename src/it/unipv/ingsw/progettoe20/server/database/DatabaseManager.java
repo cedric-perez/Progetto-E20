@@ -251,12 +251,13 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Controlla se l'id ha il flag di pagamento.
+	 * Controlla se l'id ha il flag di pagamento e se il pagamento è stato effettuato
+	 * da un tempo tempo inferiore di quanto impostato nella costante del CARS_MAX_EXIT_TIME.
 	 *
 	 * @param id identificatore del record.
 	 * @throws SQLException             se ci sono problemi nell'accesso al
 	 *                                  database.
-	 * @throws IllegalArgumentException se il pagamento non è stato effettuato.
+	 * @throws IllegalArgumentException se il pagamento non è valido (non fatto/in ritardo).
 	 */
 	public void checkPayment(String id) throws SQLException, IllegalArgumentException {
 		Connection connection = connectionPool.getConnection();
@@ -267,9 +268,9 @@ public class DatabaseManager {
 		pstmt.setString(1, id);
 		ResultSet result = pstmt.executeQuery();
 		if (!result.next()) {
-			System.out.println("record with ID = " + id + " is not obliterated");
+			System.out.println("record with ID = " + id + " is not correctly obliterated");
 			connection.close();
-			throw new IllegalArgumentException("Paid flag is false");
+			throw new IllegalArgumentException("NOT correctly obliterated");
 		}
 		connection.close();
 	}
