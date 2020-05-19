@@ -12,6 +12,10 @@ public class Queries {
             + DBConstants.CARS_SECOND_COLUMN + " DATETIME, " + DBConstants.CARS_THIRD_COLUMN + " DATETIME, "
             + DBConstants.CARS_FOURTH_COLUMN + " BOOLEAN, " + " PRIMARY KEY ( " + DBConstants.CARS_FIRST_COLUMN + " ))";
 
+    /**
+     * Start of Parking Queries
+     */
+
     static final String PARKING_NEWRECORD = "INSERT INTO " + DBConstants.CARS_TABLE + " ("
             + DBConstants.CARS_FIRST_COLUMN + ", " + DBConstants.CARS_SECOND_COLUMN + ", "
             + DBConstants.CARS_FOURTH_COLUMN + ") " + "VALUES (?, NOW(), FALSE)";
@@ -32,7 +36,13 @@ public class Queries {
             " AND TIMEDIFF(NOW() ," + DBConstants.CARS_THIRD_COLUMN
             + " )<'" + DBConstants.CARS_MAX_EXIT_TIME_HOURS + ":"
             + DBConstants.CARS_MAX_EXIT_TIME_MINUTES + ":"
-            + DBConstants.CARS_MAX_EXIT_TIME_SECONDS +"'";
+            + DBConstants.CARS_MAX_EXIT_TIME_SECONDS + "'";
+
+
+    /**
+     * Start of Level Queries
+     */
+
 
     static final String LEVEL_CREATE_TABLE = "CREATE TABLE " + DBConstants.LEVEL_TABLE + " ("
             + DBConstants.LEVEL_FIRST_COLUMN + " varchar(" + DBConstants.LEVEL_NAME_LENGTH + ") not NULL, "
@@ -45,4 +55,10 @@ public class Queries {
 
     static final String LEVEL_REMOVE_RECORD = "DELETE FORM" + DBConstants.LEVEL_TABLE + " " + "WHERE "
             + DBConstants.LEVEL_FIRST_COLUMN + " = ?";
+
+    static final String LEVEL_ADD_AVAILABILITY = " UPDATE " + DBConstants.LEVEL_TABLE
+            + " SET " + DBConstants.LEVEL_SECOND_COLUMN + " = " + DBConstants.LEVEL_SECOND_COLUMN
+            + " + 1 WHERE " + DBConstants.LEVEL_FIRST_COLUMN + " = ? ";
+
+
 }
