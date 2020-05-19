@@ -35,10 +35,10 @@ public class ExitColumn {
     }
 
 
-    //TODO: CONTROLLARE ORARIO DI PAGAMENTO -- METODO ANCORA BASE
+
 
     /**
-     * Metodo che richiede la conferma di obliterazione
+     * Metodo che richiede la conferma di corretta obliterazione
      *
      * @param id
      * @return Response Enum con i vari esiti del check

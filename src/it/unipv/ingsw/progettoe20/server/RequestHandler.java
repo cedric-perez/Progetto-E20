@@ -83,7 +83,7 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
                 }
                 break;
-            // Payment flag check
+            // Correctly obliterated check
             case (Protocol.REQUEST_PAYMENT_CHECK):
                 try {
                     dbManager.checkPayment(parts[1]);
