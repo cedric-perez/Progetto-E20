@@ -14,7 +14,9 @@ public class DBConstants {
     public static final String CARS_THIRD_COLUMN = "PaymentTime";
     public static final String CARS_FOURTH_COLUMN = "Paid";
     public static final int CARS_ID_LENGTH = 8;
-    public static final int CARS_MAX_EXIT_TIME = 30;
+    public static final int CARS_MAX_EXIT_TIME_HOURS = 0;
+    public static final int CARS_MAX_EXIT_TIME_MINUTES = 30;
+    public static final int CARS_MAX_EXIT_TIME_SECONDS = 0;
 
     public static final String LEVEL_DB_NAME = "levelsdb";
     public static final String LEVEL_TABLE = "levels";

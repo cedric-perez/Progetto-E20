@@ -30,7 +30,9 @@ public class Queries {
 
     static final String PARKING_CHECK_PAYMENT = PARKING_CHECK_PAYMENT_FLAG +
             " AND TIMEDIFF(NOW() ," + DBConstants.CARS_THIRD_COLUMN
-			+ " )<'00:" + DBConstants.CARS_MAX_EXIT_TIME + ":00'";
+            + " )<'" + DBConstants.CARS_MAX_EXIT_TIME_HOURS + ":"
+            + DBConstants.CARS_MAX_EXIT_TIME_MINUTES + ":"
+            + DBConstants.CARS_MAX_EXIT_TIME_SECONDS +"'";
 
     static final String LEVEL_CREATE_TABLE = "CREATE TABLE " + DBConstants.LEVEL_TABLE + " ("
             + DBConstants.LEVEL_FIRST_COLUMN + " varchar(" + DBConstants.LEVEL_NAME_LENGTH + ") not NULL, "
