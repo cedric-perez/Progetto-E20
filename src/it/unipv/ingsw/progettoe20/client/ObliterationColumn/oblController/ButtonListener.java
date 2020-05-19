@@ -23,6 +23,10 @@ public class ButtonListener implements ActionListener {
         this.oc = oc;
     }
 
+    /**
+     * metodo per la ricerca dell'id
+     * @param e pressione del bottone di cerca id
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String idcheck = oblgui.getIdinput().getText();

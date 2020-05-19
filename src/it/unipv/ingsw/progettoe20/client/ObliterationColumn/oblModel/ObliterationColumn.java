@@ -92,6 +92,25 @@ public class ObliterationColumn  {
     }
 
 
+    /**
+     * metodo per chiudere il socket
+     */
+    public void closeSocket() {
+        try {
+            socket.close();
+        }
+        catch (IOException i ){
+            System.out.println("Socket Error");
+        }
+        catch ( NullPointerException n) {
+            onlineFlag = false;
+        }
+    }
+
+    /**
+     * metodo per ottenere lo stato della connessione
+     * @return true se il client si é connesso al server , false se l'ultima richiesta é fallita
+     */
     public Boolean getOnlineFlag() {
         return onlineFlag;
     }

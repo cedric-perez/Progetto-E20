@@ -65,8 +65,17 @@ public class PayGui extends JFrame {
 
     }
 
+    /**
+     * metodo per impostare il display della cifra da pagare
+     * @return testo che contiene la cifra da pagare
+     */
     public JTextField getTextpay() { return textpay; }
 
+
+    /**
+     * metodo che restituisce il bottone di pagamento per gestirne gli eventi
+     * @return bottone del pagamento
+     */
     public JButton getPayb() {
         return payb;
     }

@@ -64,11 +64,18 @@ public class OblGui  extends JFrame {
 
     }
 
-
+    /**
+     * metodo per controllare l'id inserito dal cliente
+     * @return testo che contiene l'id inserito
+     */
     public JTextField getIdinput() {
         return idinput;
     }
 
+    /**
+     * metodo che restituisce il bottone di "check payments" per gestirne gli eventi
+     * @return bottone "check payments"
+     */
     public JButton getCheckb() {
         return checkb;
     }

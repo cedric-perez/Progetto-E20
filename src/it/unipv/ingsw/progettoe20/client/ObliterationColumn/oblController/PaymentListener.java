@@ -26,6 +26,11 @@ public class PaymentListener implements ActionListener {
         this.oblgui = oblgui;
         this.oc = oc;
     }
+
+    /**
+     * Metodo per accettare il pagamento
+     * @param e pressione del bottone di conferma pagamento
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
