@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
+import it.unipv.ingsw.progettoe20.server.admin.view.LevelManagementGUI;
 import it.unipv.ingsw.progettoe20.server.admin.view.ParkingManagementGUI;
 import it.unipv.ingsw.progettoe20.server.admin.view.PriceManagementGUI;
 
@@ -30,8 +31,11 @@ public class AdministratorListener implements ActionListener {
 			PriceManagementGUI priceGUI = new PriceManagementGUI();
 			priceGUI.setVisible(true);
 			adminGUI.setVisible(false);
+		} else if (event.getActionCommand().equals("Level Management")) {
+			LevelManagementGUI levelGUI = new LevelManagementGUI();
+			levelGUI.setVisible(true);
+			adminGUI.setVisible(false);
 		}
 
 	}
-
 }

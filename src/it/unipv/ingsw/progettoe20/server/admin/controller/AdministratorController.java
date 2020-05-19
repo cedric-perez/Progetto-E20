@@ -18,6 +18,7 @@ public class AdministratorController {
 		AdministratorListener adminlistener = new AdministratorListener(gui);
 		gui.getBtnParkings().addActionListener(adminlistener);
 		gui.getBtnPrices().addActionListener(adminlistener);
+		gui.getBtnLevels().addActionListener(adminlistener);
 	}
 
 }
