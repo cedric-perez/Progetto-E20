@@ -29,11 +29,11 @@ private EnterColumnGui g;
 	              g.getButton().setEnabled(false);
 	              g.getButton().setBackground(new Color(143,0,255));
 	              if (g.getAvailability()>0) {
-	            	  String ticket=g.getColumn().generateTicket();
+	            	  
 	            	  Boolean checkInserimento = g.getColumn().insertTicket();
 	            	  
 	            	 // if(checkInserimento==true) {
-	            	  g.setIdTicket(ticket);
+	            	  g.setIdTicket(g.getColumn().getIdTicket());
 	             
 	              new Timer().schedule(new TimerTask() {
 

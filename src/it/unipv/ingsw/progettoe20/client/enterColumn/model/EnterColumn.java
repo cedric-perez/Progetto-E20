@@ -11,6 +11,7 @@ public class EnterColumn {
 	private BufferedReader in;
 	private PrintWriter out;
 	private boolean isConnected=false;
+	private String answer;
 	public EnterColumn() {
 		checkServerConnection();
 	}
@@ -29,9 +30,11 @@ public class EnterColumn {
 	   public Boolean insertTicket() throws IOException {
 		   try {
 	            out.println("genid");
-	            String answer = in.readLine();
+	            answer = in.readLine();
 	            System.out.println(answer);
+	            
 	            return answer.equals("done");
+	            
 	        } catch (IOException i) {
 	            return false;
 	        } catch (NullPointerException n) {
@@ -47,8 +50,10 @@ public class EnterColumn {
 	}	
 		
 	
-	public String generateTicket() {
-		return "ID000000";
+	public String getIdTicket() {
+		int countString= answer.length();
+		String id= answer.substring(5, countString);
+		return id;
 		
 	}
 	public int getAvailability() {
