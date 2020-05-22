@@ -1,6 +1,6 @@
 package it.unipv.ingsw.progettoe20.server.admin.model;
 
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
+import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 
 /*
  * Classe principale per la gestione dell'interfaccia dell'amministratore.
@@ -14,10 +14,10 @@ public class Administrator {
 	private double minprice = 0;
 
 	private static Administrator instance;
-	private DatabaseManager databaseManager;
+	private DatabaseFacade databaseManager;
 
 	// Singleton
-	private Administrator(final DatabaseManager pDatabaseManager) {
+	private Administrator(final DatabaseFacade pDatabaseManager) {
 		databaseManager = pDatabaseManager;
 	}
 
@@ -27,7 +27,7 @@ public class Administrator {
 	}
 
 	// crea l'instanza dell'amministratore
-	public static void create(final DatabaseManager pDatabaseManager) {
+	public static void create(final DatabaseFacade pDatabaseManager) {
 		instance = new Administrator(pDatabaseManager);
 	}
 

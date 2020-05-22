@@ -7,20 +7,14 @@ import java.net.Socket;
 import java.sql.SQLException;
 
 import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
+import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 
 public class ParkingManager {
 
 	public static void main(String[] args) {
-		DatabaseManager dbManager = new DatabaseManager();
+		DatabaseFacade dbManager = new DatabaseFacade();
 
-		try {
-			// Initialize database
-			dbManager.initDatabase();
-		} catch (SQLException sqle) {
-			System.out.println("Can't initialize database!");
-			sqle.printStackTrace();
-		}
+		dbManager.initDatabase();
 
 		// creazione dell'administrator
 		Administrator.create(dbManager);

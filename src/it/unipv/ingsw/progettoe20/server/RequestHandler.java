@@ -1,17 +1,19 @@
 package it.unipv.ingsw.progettoe20.server;
 
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
+import it.unipv.ingsw.progettoe20.Protocol;
+import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
+import it.unipv.ingsw.progettoe20.server.model.Ticket;
 
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  * Verifica la presenza di comandi validi nella richiesta ed esegue l'azione corrispondente.
  */
 public class RequestHandler {
-    private DatabaseManager dbManager;
+    private DatabaseFacade dbManager;
     private PrintWriter out;
-	private GenerationIdTicket generator;
+    private GenerationIdTicket generator;
 
     /**
      * Costruisce un RequestHandler.
@@ -19,10 +21,11 @@ public class RequestHandler {
      * @param dbManager reference al DatabaseManager.
      * @param out       reference PrintWriter sulla socket associata.
      */
-    public RequestHandler(DatabaseManager dbManager, PrintWriter out) {
+    public RequestHandler(DatabaseFacade dbManager, PrintWriter out) {
         this.dbManager = dbManager;
         this.out = out;
-        
+        this.generator = new GenerationIdTicket();
+
     }
 
     /**
@@ -30,37 +33,23 @@ public class RequestHandler {
      *
      * @param request richiesta effettuata dal client.
      * @return true se il client ha richiesto la chiusura della connessione, false altrimenti.
-     * @throws SQLException se ci sono problemi nell'accesso al database.
      */
-    public boolean handle(String request) throws SQLException, IllegalArgumentException {
+    public boolean handle(String request) throws IllegalArgumentException {
         String[] parts = splitRequest(request);
-      
+        //TODO: implement commander pattern?
         switch (parts[0]) {
             // New ID generation requested
-        case (Protocol.REQUEST_GENERATE_ID):
-        	generator=new GenerationIdTicket();
-        	String id;  	
-        	Boolean success=false;
-        	do {
-        		id = generator.GenerateId();
-        		 try {
-                 	 dbManager.checkID(id);
-                     
-                 } catch (IllegalArgumentException e) {
-                	 success= true;   
-                 }
-        	}while(!success);
-        	 try {
-             	 dbManager.newRecord(id);
-                 out.println(Protocol.RESPONSE_OK+Protocol.SEPARATOR+id);
-             } catch (IllegalArgumentException e) {
-            	 System.out.println(e.getMessage());
-                 out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());    
-             }
-        		 
-         break;	
+            case (Protocol.REQUEST_GENERATE_ID):
+                String id;
+                do {
+                    id = generator.GenerateId();
+                } while (dbManager.checkID(id));
+                Ticket newTicket = new Ticket(id);
+                dbManager.updateTicket(newTicket);
+                out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
+                break;
             // ID existence check requested
-            case (Protocol.REQUEST_ID):
+            case (Protocol.REQUEST_CHECK_ID):
                 try {
                     dbManager.checkID(parts[1]);
                     out.println(Protocol.RESPONSE_OK);
@@ -76,7 +65,7 @@ public class RequestHandler {
             // Record deletion requested
             case (Protocol.REQUEST_DELETE_ID):
                 try {
-                    dbManager.removeRecord(parts[1]);
+                    dbManager.removeRecord(dbManager.getTicketById(parts[1]));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -86,17 +75,23 @@ public class RequestHandler {
             // Correctly obliterated check
             case (Protocol.REQUEST_PAYMENT_CHECK):
                 try {
-                    dbManager.checkPayment(parts[1]);
-                    out.println(Protocol.RESPONSE_OK);
+                    if (dbManager.getTicketById(parts[1]).isPaid()) {
+                        out.println(Protocol.RESPONSE_PAID_TRUE);
+                    } else {
+                        out.println(Protocol.RESPONSE_PAID_FALSE);
+                    }
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
-             // Accept payment requested
+            // Accept payment requested
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {
-                    dbManager.setPaymentTime(parts[1]);
+                    Ticket ticket = dbManager.getTicketById(parts[1]);
+                    ticket.setPaymentTime(new Timestamp(System.currentTimeMillis()));
+                    ticket.setPaid(true);
+                    dbManager.updateTicket(ticket);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
@@ -106,7 +101,7 @@ public class RequestHandler {
             // Create new level
             case (Protocol.REQUEST_NEWLEVEL):
                 try {
-                    dbManager.newLevel(parts[1].substring(0,1).toUpperCase(), Integer.parseInt(parts[1].substring(1)));
+                    dbManager.newLevel(parts[1].substring(0, 1).toUpperCase(), Integer.parseInt(parts[1].substring(1)));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());

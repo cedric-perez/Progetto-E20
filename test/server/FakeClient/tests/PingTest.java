@@ -1,6 +1,6 @@
 package server.FakeClient.tests;
 
-import it.unipv.ingsw.progettoe20.server.Protocol;
+import it.unipv.ingsw.progettoe20.Protocol;
 import server.FakeClient.utils.FailedTestException;
 import server.FakeClient.utils.TestConstants;
 

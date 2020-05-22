@@ -1,7 +1,7 @@
 package server.FakeClient.tests;
 
-import it.unipv.ingsw.progettoe20.server.Protocol;
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
+import it.unipv.ingsw.progettoe20.Protocol;
+import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import server.FakeClient.utils.FailedTestException;
 import server.FakeClient.utils.TestConstants;
 
@@ -13,9 +13,9 @@ import java.sql.SQLException;
 public class GenidTest {
     private BufferedReader in;
     private PrintWriter out;
-    private DatabaseManager dbManager;
+    private DatabaseFacade dbManager;
 
-    public GenidTest(BufferedReader in, PrintWriter out, DatabaseManager dbManager) {
+    public GenidTest(BufferedReader in, PrintWriter out, DatabaseFacade dbManager) {
         this.in = in;
         this.out = out;
         this.dbManager = dbManager;
@@ -45,8 +45,6 @@ public class GenidTest {
             dbManager.checkID(parts[1]);
         } catch (IllegalArgumentException ie) {
             throw new FailedTestException("generated ID '" + parts[1] + "' not found in DB");
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         System.out.println(TestConstants.TEST_SUCCESS);
     }
