@@ -7,16 +7,16 @@ public class DBConstants {
     public static final String USER = "root";  // for testing purposes, will change when ready
     public static String PASS;
 
-    public static final String CARS_DB_NAME = "parking";
-    public static final String CARS_TABLE = "parkedcars";
-    public static final String CARS_FIRST_COLUMN = "ID";
-    public static final String CARS_SECOND_COLUMN = "EntranceTime";
-    public static final String CARS_THIRD_COLUMN = "PaymentTime";
-    public static final String CARS_FOURTH_COLUMN = "Paid";
-    public static final int CARS_ID_LENGTH = 8;
-    public static final int CARS_MAX_EXIT_TIME_HOURS = 0;
-    public static final int CARS_MAX_EXIT_TIME_MINUTES = 30;
-    public static final int CARS_MAX_EXIT_TIME_SECONDS = 0;
+    public static final String TICKET_DB_NAME = "parking";
+    public static final String TICKET_TABLE = "parkedcars";
+    public static final String TICKET_FIRST_COLUMN = "ID";
+    public static final String TICKET_SECOND_COLUMN = "EntranceTime";
+    public static final String TICKET_THIRD_COLUMN = "PaymentTime";
+    public static final String TICKET_FOURTH_COLUMN = "Paid";
+    public static final int TICKET_ID_LENGTH = 8;
+    public static final int TICKET_MAX_EXIT_TIME_HOURS = 0;
+    public static final int TICKET_MAX_EXIT_TIME_MINUTES = 30;
+    public static final int TICKET_MAX_EXIT_TIME_SECONDS = 0;
 
     public static final String LEVEL_DB_NAME = "levelsdb";
     public static final String LEVEL_TABLE = "levels";

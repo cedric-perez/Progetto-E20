@@ -1,6 +1,6 @@
 package server.FakeClient;
 
-import it.unipv.ingsw.progettoe20.server.database.DatabaseManager;
+import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import server.FakeClient.tests.GenidTest;
 import server.FakeClient.tests.PingTest;
 import server.FakeClient.tests.ConnectionTest;
@@ -15,13 +15,8 @@ public class Main {
     //TODO: [IMPORTANT] testing on production db is a big nono, fix before exam
 
     public static void main(String[] args) {
-        DatabaseManager dbManager = new DatabaseManager();
-        try {
-            // Initialize database
-            dbManager.initDatabase();
-        } catch (SQLException sqle) {
-            System.out.println("Can't initialize database!");
-        }
+        DatabaseFacade dbManager = new DatabaseFacade();
+        dbManager.initDatabase();
 
         try {
             // Testing connection
