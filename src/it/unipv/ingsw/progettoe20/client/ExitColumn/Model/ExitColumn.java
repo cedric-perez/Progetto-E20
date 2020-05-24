@@ -7,6 +7,7 @@ package it.unipv.ingsw.progettoe20.client.ExitColumn.Model;
 */
 
 import it.unipv.ingsw.progettoe20.Protocol;
+import it.unipv.ingsw.progettoe20.client.ClientConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class ExitColumn {
 
     public ExitColumn() {
         try {
-            clientSocket = new Socket("localhost", 9000);
+            clientSocket = new Socket(ClientConstants.HOST, ClientConstants.PORT);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             isConnected = true;
