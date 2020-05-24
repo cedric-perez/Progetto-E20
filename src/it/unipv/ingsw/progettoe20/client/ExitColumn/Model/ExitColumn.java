@@ -61,7 +61,7 @@ public class ExitColumn {
                 return ResponseEnum.ERROR_GENERIC;
             } catch (NullPointerException n) {
                 isConnected = false;
-                return ResponseEnum.ERROR_GENERIC; //TODO is ok?
+                return ResponseEnum.ERROR_GENERIC; //TODO is ok??
             }
         }
         else return ResponseEnum.NO_ID_FOUND;
