@@ -52,13 +52,13 @@ public class Queries {
     /**
      * Rimuove un ticket. Necessita dei parametri presenti nella query, nello stesso ordine.
      */
-    static final String TICKET_REMOVE = "DELETE FROM " + DBConstants.TICKET_TABLE + " " + "WHERE "
+    static final String TICKET_REMOVE = "DELETE FROM " + DBConstants.TICKET_TABLE + " WHERE "
             + DBConstants.TICKET_FIRST_COLUMN + " = ?";
 
     /**
      * Restituisce il ticket scelto. Necessita dei parametri presenti nella query, nello stesso ordine.
      */
-    static final String TICKET_GET = "SELECT * FROM " + DBConstants.TICKET_TABLE + " " + "WHERE "
+    static final String TICKET_GET = "SELECT * FROM " + DBConstants.TICKET_TABLE + " WHERE "
             + DBConstants.TICKET_FIRST_COLUMN + " = ?";
 
 
@@ -71,15 +71,22 @@ public class Queries {
             + DBConstants.LEVEL_THIRD_COLUMN + ") " + "VALUES (?, ?, ?)";
 
     /**
+     * Aggiorna un livello. Necessita dei parametri presenti nella query, nello stesso ordine.
+     */
+    static final String LEVEL_UPDATE = "UPDATE " + DBConstants.LEVEL_TABLE + " SET "
+            + DBConstants.LEVEL_SECOND_COLUMN + " = ?, " + DBConstants.LEVEL_THIRD_COLUMN + " = ? "
+            + "WHERE " + DBConstants.LEVEL_FIRST_COLUMN + " = ?";
+
+    /**
      * Rimuove un livello. Necessita dei parametri presenti nella query, nello stesso ordine.
      */
-    static final String LEVEL_REMOVE = "DELETE FORM" + DBConstants.LEVEL_TABLE + " " + "WHERE "
+    static final String LEVEL_REMOVE = "DELETE FROM " + DBConstants.LEVEL_TABLE + " WHERE "
             + DBConstants.LEVEL_FIRST_COLUMN + " = ?";
 
-
-    static final String LEVEL_ADD_AVAILABILITY = " UPDATE " + DBConstants.LEVEL_TABLE
-            + " SET " + DBConstants.LEVEL_SECOND_COLUMN + " = " + DBConstants.LEVEL_SECOND_COLUMN
-            + " + 1 WHERE " + DBConstants.LEVEL_FIRST_COLUMN + " = ? ";
-
-
+    /**
+     * Restituisce il livello scelto. Necessita dei parametri presenti nella query, nello stesso ordine.
+     */
+    static final String LEVEL_GET = "SELECT * FROM " + DBConstants.LEVEL_TABLE + " " + "WHERE "
+            + DBConstants.LEVEL_FIRST_COLUMN + " = ?";
 }
+

@@ -13,6 +13,7 @@ PreparedStatement usage: https://www.javatpoint.com/PreparedStatement-interface
  */
 
 import it.unipv.ingsw.progettoe20.ErrorStrings;
+import it.unipv.ingsw.progettoe20.server.model.Level;
 import it.unipv.ingsw.progettoe20.server.model.Ticket;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -163,13 +164,11 @@ public class DatabaseFacade {
     }
 
     /**
-     * Crea un nuovo record sul database. Necessita dell'ID come chiave primaria.
-     * L'ora d'ingresso è impostata all'istante della richiesta al database.
+     * Modifica un record sul database, se non è presente, lo crea.
      *
      * @param ticket oggetto Ticket da salvare nel DB.
-     * @throws IllegalArgumentException
      */
-    public void updateTicket(Ticket ticket) throws IllegalArgumentException {
+    public void updateTicket(Ticket ticket) {
         Connection connection;
         PreparedStatement pstmt;
 
@@ -185,7 +184,7 @@ public class DatabaseFacade {
             Statement stmt = connection.createStatement();
             stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
 
-            if (checkID(ticket.getId())){
+            if (checkTicketById(ticket.getId())){
                 pstmt = connection.prepareStatement(Queries.TICKET_UPDATE);
                 pstmt.setTimestamp(1, ticket.getEntranceTime());
                 pstmt.setTimestamp(2, ticket.getPaymentTime());
@@ -210,12 +209,11 @@ public class DatabaseFacade {
     }
 
     /**
-     * Controlla che un ID sia presente nella table. Se non è presente lancia
-     * un'eccezione.
+     * Controlla che un ticket sia presente nella table. Se non è presente lancia un'eccezione.
      *
      * @param id identificatore del record.
      */
-    public boolean checkID(String id) throws IllegalArgumentException {
+    public boolean checkTicketById(String id) throws IllegalArgumentException {
         Connection connection;
         try {
             connection = connectionPool.getConnection();
@@ -239,10 +237,11 @@ public class DatabaseFacade {
      * Rimuove il ticket passato come argomento dal database.
      *
      * @param ticket oggetto Ticket da rimuovere dal DB.
+     * @throws IllegalArgumentException se il ticket non è presente nel DB.
      */
-    public void removeRecord(Ticket ticket) throws IllegalArgumentException {
+    public void removeTicket(Ticket ticket) throws IllegalArgumentException {
         try {
-            if (!checkID(ticket.getId())) {
+            if (!checkTicketById(ticket.getId())) {
                 throw new IllegalArgumentException(ErrorStrings.ID_NOT_FOUND);
             }
             Connection connection = connectionPool.getConnection();
@@ -268,7 +267,7 @@ public class DatabaseFacade {
     public Ticket getTicketById(String id) {
         Ticket ticket;
         try {
-            if (!checkID(id)) {
+            if (!checkTicketById(id)) {
                 throw new IllegalArgumentException(ErrorStrings.ID_NOT_FOUND);
             }
             Connection connection = connectionPool.getConnection();
@@ -285,7 +284,6 @@ public class DatabaseFacade {
             boolean paid = result.getBoolean(DBConstants.TICKET_FOURTH_COLUMN);
             ticket = new Ticket(id, entranceTime, paymentTime, paid);
 
-            System.out.println(entranceTime.toString() + paymentTime.toString() + paid);
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -295,89 +293,129 @@ public class DatabaseFacade {
     }
 
 
-    //TODO: update level part to new style
+    /**
+     * Modifica un record sul database, se non è presente, lo crea.
+     *
+     * @param level oggetto Level da salvare nel DB.
+     */
+    public void updateLevel(Level level) {
+        Connection connection;
+        PreparedStatement pstmt;
+
+        try {
+            connection = connectionPool.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // throw some error
+            return;
+        }
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+
+            if (checkLevelByName(level.getName())){
+                pstmt = connection.prepareStatement(Queries.LEVEL_UPDATE);
+                pstmt.setInt(1, level.getAvailable());
+                pstmt.setInt(2, level.getTotal());
+                pstmt.setString(3, level.getName());
+                pstmt.executeUpdate();
+                System.out.println("Ticket " + level.getName() + " updated successfully");
+            } else {
+                pstmt = connection.prepareStatement(Queries.LEVEL_NEW);
+                pstmt.setString(1, level.getName());
+                pstmt.setInt(2, level.getAvailable());
+                pstmt.setInt(3, level.getTotal());
+                pstmt.executeUpdate();
+                System.out.println("Ticket " + level.getName() + " created successfully");
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
-     * Aggiunge un posto al livello corrispondente a quello del ticket id.
+     * Controlla che un livello sia presente nella table. Se non è presente lancia un'eccezione.
      *
-     * @param id identificatore del record.
+     * @param name identificatore del record.
      */
-    private void addAvailability(String id) throws IllegalArgumentException {
+    public boolean checkLevelByName(String name) throws IllegalArgumentException {
         Connection connection;
         try {
             connection = connectionPool.getConnection();
 
             Statement stmt = connection.createStatement();
-
-            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_ADD_AVAILABILITY);
-            String level = id.substring(0, 1);
-            pstmt.setString(1, level);
             stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
-            pstmt.executeUpdate();
-
+            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET);
+            pstmt.setString(1, name.toUpperCase());
+            ResultSet result = pstmt.executeQuery();
+            if (!result.next()) {
+                return false;
+            }
             connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return true;
     }
 
     /**
-     * Inserisce un nuovo livello nel database.
+     * Rimuove il livello passato come argomento dal database.
      *
-     * @param name     nome del livello, dev'essere un solo carattere.
-     * @param capacity numero di posti del livello.
-     * @throws IllegalArgumentException se la lunghezza del nome o la capienza è inferiore a 1
+     * @param level oggetto Level da rimuovere dal DB.
+     * @throws IllegalArgumentException se il livello non è presente nel DB.
      */
-    public void newLevel(String name, int capacity) throws IllegalArgumentException {
-        if (name.length() != 1) {
-            throw new IllegalArgumentException("Level name must be 1 character long!");
-        }
-        if (capacity < 1) {
-            throw new IllegalArgumentException("Level must have at least 1 parking!");
-        }
-
+    public void removeLevel(Level level) throws IllegalArgumentException {
         try {
-            Connection connection = connectionPool.getConnection();
-
-            Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
-            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_NEW);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, capacity);
-            pstmt.setInt(3, capacity);
-            pstmt.executeUpdate();
-
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    /**
-     * Rimuove il record di un livello con nome uguale a name
-     *
-     * @param name del livello
-     * @throws IllegalArgumentException se la lunghezza del nome è inferiore a 1
-     */
-    public void removeLevel(String name) throws IllegalArgumentException {
-        if (name.length() != 1) {
-            throw new IllegalArgumentException("Level name must be 1 character long!");
-        }
-
-        try {
+            if (!checkLevelByName(level.getName())) {
+                throw new IllegalArgumentException(ErrorStrings.LEVEL_NOT_FOUND);
+            }
             Connection connection = connectionPool.getConnection();
 
             Statement stmt = connection.createStatement();
             stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
             PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_REMOVE);
-            pstmt.setString(1, name);
+            pstmt.setString(1, level.getName());
             pstmt.executeUpdate();
-            System.out.println("Level " + name + " removed from database");
-
+            System.out.println(level.getName() + " removed from database");
 
             connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * Restituisce un Level prelevato dal database, selezionato mediante nome.
+     * @param name identificatore del livello.
+     * @return Level richiesto.
+     */
+    public Level getLevelByName(String name) {
+        Level level;
+        try {
+            if (!checkLevelByName(name)) {
+                throw new IllegalArgumentException(ErrorStrings.LEVEL_NOT_FOUND);
+            }
+            Connection connection = connectionPool.getConnection();
+
+            Statement stmt = connection.createStatement();
+            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET);
+            pstmt.setString(1, name.toUpperCase());
+            ResultSet result = pstmt.executeQuery();
+
+            result.next();
+            int available = result.getInt(DBConstants.LEVEL_SECOND_COLUMN);
+            int total = result.getInt(DBConstants.LEVEL_THIRD_COLUMN);
+            level = new Level(name, available, total);
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return level;
     }
 }

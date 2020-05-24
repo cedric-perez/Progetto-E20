@@ -8,7 +8,6 @@ import server.FakeClient.utils.TestConstants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class GenidTest {
     private BufferedReader in;
@@ -42,7 +41,7 @@ public class GenidTest {
 
         // Check DB changes
         try {
-            dbManager.checkID(parts[1]);
+            dbManager.checkTicketById(parts[1]);
         } catch (IllegalArgumentException ie) {
             throw new FailedTestException("generated ID '" + parts[1] + "' not found in DB");
         }

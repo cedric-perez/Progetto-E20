@@ -43,7 +43,7 @@ public class RequestHandler {
                 String id;
                 do {
                     id = generator.GenerateId();
-                } while (dbManager.checkID(id));
+                } while (dbManager.checkTicketById(id));
                 Ticket newTicket = new Ticket(id);
                 dbManager.updateTicket(newTicket);
                 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
@@ -51,7 +51,7 @@ public class RequestHandler {
             // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):
                 try {
-                    dbManager.checkID(parts[1]);
+                    dbManager.checkTicketById(parts[1]);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
@@ -65,7 +65,7 @@ public class RequestHandler {
             // Record deletion requested
             case (Protocol.REQUEST_DELETE_ID):
                 try {
-                    dbManager.removeRecord(dbManager.getTicketById(parts[1]));
+                    dbManager.removeTicket(dbManager.getTicketById(parts[1]));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -92,16 +92,6 @@ public class RequestHandler {
                     ticket.setPaymentTime(new Timestamp(System.currentTimeMillis()));
                     ticket.setPaid(true);
                     dbManager.updateTicket(ticket);
-                    out.println(Protocol.RESPONSE_OK);
-                } catch (IllegalArgumentException i) {
-                    System.out.println(i.getMessage());
-                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
-                }
-                break;
-            // Create new level
-            case (Protocol.REQUEST_NEWLEVEL):
-                try {
-                    dbManager.newLevel(parts[1].substring(0, 1).toUpperCase(), Integer.parseInt(parts[1].substring(1)));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
