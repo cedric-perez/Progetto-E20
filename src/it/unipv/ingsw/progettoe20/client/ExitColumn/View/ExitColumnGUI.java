@@ -89,6 +89,17 @@ public class ExitColumnGUI extends javax.swing.JFrame {
 
     }
 
+    //metodo errori generici
+    public void errorGeneric() {
+        UIManager.put("OptionPane.background", Color.black);
+        UIManager.put("OptionPane.messageForeground", Color.WHITE);
+        UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 18));
+        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 25));
+        UIManager.getLookAndFeelDefaults().put("Panel.background", Color.black);
+        JOptionPane.showMessageDialog(null, "Generic Error occurred!", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/GenericError.png")));
+
+    }
+
 
     // Dichiarazione varibili
     private javax.swing.JButton buttonTicket;

@@ -96,6 +96,7 @@ public class ExitColumnController {
                     }, 2500);
 
                 }
+                else gui.errorGeneric();
             }
         });
 

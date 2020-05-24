@@ -58,10 +58,10 @@ public class ExitColumn {
                     return ResponseEnum.CONFIRMED_EXIT;
                 } else return ResponseEnum.NO_PAID;
             } catch (IOException i) {
-                return ResponseEnum.NO_PAID;
+                return ResponseEnum.ERROR_GENERIC;
             } catch (NullPointerException n) {
                 isConnected = false;
-                return ResponseEnum.NO_PAID; //TODO CHANGE WITH GENERIC ERROR
+                return ResponseEnum.ERROR_GENERIC; //TODO is ok?
             }
         }
         else return ResponseEnum.NO_ID_FOUND;
