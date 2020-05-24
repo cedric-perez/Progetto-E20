@@ -106,7 +106,7 @@ public class DatabaseFacade {
                 // Create table for cars
                 stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
                 System.out.print("Creating table for cars \"" + DBConstants.TICKET_TABLE + "\"...");
-                stmt.executeUpdate(Queries.CREATE_TICKETS_TABLE);
+                stmt.executeUpdate(Queries.CREATE_TABLE_TICKETS);
                 System.out.println("done");
 
                 changed = true;
@@ -125,7 +125,7 @@ public class DatabaseFacade {
             // Create table for levels
             stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
             System.out.print("Creating table for levels \"" + DBConstants.LEVEL_TABLE + "\"...");
-            stmt.executeUpdate(Queries.LEVEL_CREATE_TABLE);
+            stmt.executeUpdate(Queries.CREATE_TABLE_LEVELS);
             System.out.println("done");
 
             changed = true;
@@ -326,8 +326,7 @@ public class DatabaseFacade {
      *
      * @param name     nome del livello, dev'essere un solo carattere.
      * @param capacity numero di posti del livello.
-     * @throws IllegalArgumentException se la lunghezza del nome è inferiore a 1
-     *                                  oppure la capienza è < 1
+     * @throws IllegalArgumentException se la lunghezza del nome o la capienza è inferiore a 1
      */
     public void newLevel(String name, int capacity) throws IllegalArgumentException {
         if (name.length() != 1) {
@@ -342,7 +341,7 @@ public class DatabaseFacade {
 
             Statement stmt = connection.createStatement();
             stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
-            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_NEWRECORD);
+            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_NEW);
             pstmt.setString(1, name);
             pstmt.setInt(2, capacity);
             pstmt.setInt(3, capacity);
@@ -370,7 +369,7 @@ public class DatabaseFacade {
 
             Statement stmt = connection.createStatement();
             stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
-            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_REMOVE_RECORD);
+            PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_REMOVE);
             pstmt.setString(1, name);
             pstmt.executeUpdate();
             System.out.println("Level " + name + " removed from database");

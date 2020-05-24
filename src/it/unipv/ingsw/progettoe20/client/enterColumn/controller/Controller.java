@@ -49,7 +49,7 @@ private EnterColumnGui g;
 	            	  }
 	             // }
 	              else {
-	              g.setIdTicket("Attendi, nessuna disponibilit‡");
+	              g.setIdTicket("Attendi, nessuna disponibilit√†");
 	              }
 	            } catch (Exception ex) {
 	              g.setIdTicket("Errore");
