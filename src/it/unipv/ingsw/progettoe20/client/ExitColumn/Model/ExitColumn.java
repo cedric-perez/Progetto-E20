@@ -54,7 +54,7 @@ public class ExitColumn {
                 String answer = in.readLine();
                 System.out.println(answer);
                 if (answer.equals(Protocol.RESPONSE_PAID_TRUE)) {
-                    deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
+                    //deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
                     return ResponseEnum.CONFIRMED_EXIT;
                 } else return ResponseEnum.NO_PAID;
             } catch (IOException i) {

@@ -19,7 +19,7 @@ public class RequestHandler {
      * Costruisce un RequestHandler.
      *
      * @param dbFacade reference al DatabaseManager.
-     * @param out       reference PrintWriter sulla socket associata.
+     * @param out      reference PrintWriter sulla socket associata.
      */
     public RequestHandler(DatabaseFacade dbFacade, PrintWriter out) {
         this.dbFacade = dbFacade;
@@ -48,11 +48,14 @@ public class RequestHandler {
                 dbFacade.updateTicket(newTicket);
                 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
                 break;
-            // ID existence check requested
+            // ID existence check requested TODO: VERIFICARE CHE LA MODIFICA SIA CORRETTA
             case (Protocol.REQUEST_CHECK_ID):
                 try {
-                    dbFacade.checkTicketById(parts[1]);
-                    out.println(Protocol.RESPONSE_OK);
+                    if (dbFacade.checkTicketById(parts[1])) out.println(Protocol.RESPONSE_OK);
+                    else out.println(Protocol.RESPONSE_ERROR);
+                    //dbFacade.checkTicketById(parts[1]);
+                    //COME ERA SCRITTO PRECEDENTEMENTE
+                    //out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
