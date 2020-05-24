@@ -109,6 +109,21 @@ public class ExitColumn {
         }
     }
 
+    /**
+     * metodo per chiudere il clientSocket
+     */
+    public void closeSocket() {
+        try {
+            clientSocket.close();
+        }
+        catch (IOException i ){
+            System.out.println("Socket Error");
+        }
+        catch ( NullPointerException n) {
+            isConnected = false;
+        }
+    }
+
     //getter per avvisare stato connessione con il Server
     public Boolean getIsConnected() {
         return isConnected;

@@ -99,6 +99,15 @@ public class ExitColumnController {
             }
         });
 
+        //listener che ascolta la chiusura della grafica e chiude la socket
+
+        gui.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                model.closeSocket();
+            }
+        });
+
 
     }
 

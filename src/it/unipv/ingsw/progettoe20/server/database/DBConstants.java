@@ -14,9 +14,7 @@ public class DBConstants {
     public static final String TICKET_THIRD_COLUMN = "PaymentTime";
     public static final String TICKET_FOURTH_COLUMN = "Paid";
     public static final int TICKET_ID_LENGTH = 8;
-    public static final int TICKET_MAX_EXIT_TIME_HOURS = 0;
-    public static final int TICKET_MAX_EXIT_TIME_MINUTES = 30;
-    public static final int TICKET_MAX_EXIT_TIME_SECONDS = 0;
+
 
     public static final String LEVEL_DB_NAME = "levelsdb";
     public static final String LEVEL_TABLE = "levels";

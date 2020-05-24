@@ -75,7 +75,7 @@ public class RequestHandler {
             // Correctly obliterated check
             case (Protocol.REQUEST_PAYMENT_CHECK):
                 try {
-                    if (dbFacade.getTicketById(parts[1]).isPaid()) {
+                    if (dbFacade.getTicketById(parts[1]).obliterationCheck()) {
                         out.println(Protocol.RESPONSE_PAID_TRUE);
                     } else {
                         out.println(Protocol.RESPONSE_PAID_FALSE);
