@@ -6,6 +6,8 @@ package it.unipv.ingsw.progettoe20.client.ExitColumn.Model;
   in caso negativo richiede di recarsi alla colonnina di obliterazione
 */
 
+import it.unipv.ingsw.progettoe20.Protocol;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,7 +52,7 @@ public class ExitColumn {
                 out.println("paid:" + id);
                 String answer = in.readLine();
                 System.out.println(answer);
-                if (answer.equals("done")) {
+                if (answer.equals(Protocol.RESPONSE_PAID_TRUE)) {
                     deleteTicket(id);       //commentarlo in caso di test per prevenire cancellazione record
                     return ResponseEnum.CONFIRMED_EXIT;
                 } else return ResponseEnum.NO_PAID;
@@ -76,7 +78,7 @@ public class ExitColumn {
             out.println("delete:" + id);
             String answer = in.readLine();
             System.out.println(answer);
-            return answer.equals("done");
+            return answer.equals(Protocol.RESPONSE_OK);
         } catch (IOException i) {
             return false;
         } catch (NullPointerException n) {
@@ -96,7 +98,7 @@ public class ExitColumn {
             out.println("id:"+ id);
             String answer = in.readLine();
             System.out.println(answer);
-            return answer.equals("done");
+            return answer.equals(Protocol.RESPONSE_OK);
         }
         catch (IOException i){
             return false;

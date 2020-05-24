@@ -11,18 +11,18 @@ import java.sql.Timestamp;
  * Verifica la presenza di comandi validi nella richiesta ed esegue l'azione corrispondente.
  */
 public class RequestHandler {
-    private DatabaseFacade dbManager;
+    private DatabaseFacade dbFacade;
     private PrintWriter out;
     private GenerationIdTicket generator;
 
     /**
      * Costruisce un RequestHandler.
      *
-     * @param dbManager reference al DatabaseManager.
+     * @param dbFacade reference al DatabaseManager.
      * @param out       reference PrintWriter sulla socket associata.
      */
-    public RequestHandler(DatabaseFacade dbManager, PrintWriter out) {
-        this.dbManager = dbManager;
+    public RequestHandler(DatabaseFacade dbFacade, PrintWriter out) {
+        this.dbFacade = dbFacade;
         this.out = out;
         this.generator = new GenerationIdTicket();
 
@@ -43,15 +43,15 @@ public class RequestHandler {
                 String id;
                 do {
                     id = generator.GenerateId();
-                } while (dbManager.checkTicketById(id));
+                } while (dbFacade.checkTicketById(id));
                 Ticket newTicket = new Ticket(id);
-                dbManager.updateTicket(newTicket);
+                dbFacade.updateTicket(newTicket);
                 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
                 break;
             // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):
                 try {
-                    dbManager.checkTicketById(parts[1]);
+                    dbFacade.checkTicketById(parts[1]);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
@@ -65,7 +65,7 @@ public class RequestHandler {
             // Record deletion requested
             case (Protocol.REQUEST_DELETE_ID):
                 try {
-                    dbManager.removeTicket(dbManager.getTicketById(parts[1]));
+                    dbFacade.removeTicket(dbFacade.getTicketById(parts[1]));
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
@@ -75,7 +75,7 @@ public class RequestHandler {
             // Correctly obliterated check
             case (Protocol.REQUEST_PAYMENT_CHECK):
                 try {
-                    if (dbManager.getTicketById(parts[1]).isPaid()) {
+                    if (dbFacade.getTicketById(parts[1]).isPaid()) {
                         out.println(Protocol.RESPONSE_PAID_TRUE);
                     } else {
                         out.println(Protocol.RESPONSE_PAID_FALSE);
@@ -88,10 +88,10 @@ public class RequestHandler {
             // Accept payment requested
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {
-                    Ticket ticket = dbManager.getTicketById(parts[1]);
+                    Ticket ticket = dbFacade.getTicketById(parts[1]);
                     ticket.setPaymentTime(new Timestamp(System.currentTimeMillis()));
                     ticket.setPaid(true);
-                    dbManager.updateTicket(ticket);
+                    dbFacade.updateTicket(ticket);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
