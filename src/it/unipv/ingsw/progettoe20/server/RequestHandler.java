@@ -2,6 +2,7 @@ package it.unipv.ingsw.progettoe20.server;
 
 import it.unipv.ingsw.progettoe20.Protocol;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
+import it.unipv.ingsw.progettoe20.server.model.Level;
 import it.unipv.ingsw.progettoe20.server.model.Ticket;
 
 import java.io.PrintWriter;
@@ -66,7 +67,10 @@ public class RequestHandler {
             // Record deletion requested
             case (Protocol.REQUEST_DELETE_ID):
                 try {
+                    Level livello = dbFacade.getLevelByName(dbFacade.getTicketById(parts[1]).getLevelName());
                     dbFacade.removeTicket(dbFacade.getTicketById(parts[1]));
+                    livello.increaseAvailable();
+                    dbFacade.updateLevel(livello);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());

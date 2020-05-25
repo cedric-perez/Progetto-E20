@@ -62,6 +62,10 @@ public class Ticket {
         return (diffSeconds <= ServerConstants.TICKET_MAX_EXIT_TIME_TOTAL_SECONDS);
     }
 
+    public String getLevelName() {
+        return id.substring(0, 1);
+    }
+
     public void setPaymentTime(Timestamp paymentTime) {
         this.paymentTime = paymentTime;
     }
