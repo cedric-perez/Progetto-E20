@@ -48,14 +48,12 @@ public class RequestHandler {
                 dbFacade.updateTicket(newTicket);
                 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
                 break;
-            // ID existence check requested TODO: VERIFICARE CHE LA MODIFICA SIA CORRETTA
+            // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):
                 try {
-                    if (dbFacade.checkTicketById(parts[1])) out.println(Protocol.RESPONSE_OK);
-                    else out.println(Protocol.RESPONSE_ERROR);
-                    //dbFacade.checkTicketById(parts[1]);
-                    //COME ERA SCRITTO PRECEDENTEMENTE
-                    //out.println(Protocol.RESPONSE_OK);
+                    if (dbFacade.checkTicketById(parts[1])) {
+                        out.println(Protocol.RESPONSE_OK);
+                    } else out.println(Protocol.RESPONSE_ERROR);
                 } catch (IllegalArgumentException i) {
                     System.out.println(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());

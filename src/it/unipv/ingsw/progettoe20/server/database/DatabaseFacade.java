@@ -213,7 +213,7 @@ public class DatabaseFacade {
      *
      * @param id identificatore del record.
      */
-    public boolean checkTicketById(String id) throws IllegalArgumentException {
+    public boolean checkTicketById(String id) {
         Connection connection;
         try {
             connection = connectionPool.getConnection();
