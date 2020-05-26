@@ -1,6 +1,7 @@
 package it.unipv.ingsw.progettoe20.server.admin.model;
 
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
+import it.unipv.ingsw.progettoe20.server.model.Level;
 
 /*
  * Classe principale per la gestione dell'interfaccia dell'amministratore.
@@ -72,6 +73,7 @@ public class Administrator {
 
 	// aggiunge un livello al parcheggio
 	public void addLevel(String level, int capacity) {
+		Level newLevel = new Level(level, capacity);
 
 	}
 

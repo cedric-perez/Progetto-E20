@@ -1,6 +1,7 @@
 package it.unipv.ingsw.progettoe20.server.admin.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -33,9 +34,11 @@ public class AdministratorGUI extends JFrame {
 		// frame settings
 		getContentPane().add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(600, 400));
+		setResizable(false);
+		// setSize(600, 400);
+		// setLocation(340, 240);
 		setVisible(true);
-		setSize(600, 400);
-		setLocation(340, 240);
 		setTitle("ADMINISTRATOR GUI");
 
 		// panel settings
