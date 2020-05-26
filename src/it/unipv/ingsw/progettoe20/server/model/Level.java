@@ -23,10 +23,6 @@ public class Level {
         this.total = total;
     }
 
-    public void increaseAvailable() {
-        setAvailable(getAvailable() + 1);
-    }
-
     private boolean checkName(String name) {
         return name.length() == DBConstants.LEVEL_NAME_LENGTH;
     }
@@ -49,5 +45,13 @@ public class Level {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public void increaseAvailable() {
+        setAvailable(available += 1);
+    }
+
+    public void decreaseAvailable() {
+        setAvailable(available -= 1);
     }
 }
