@@ -11,12 +11,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Testa la connessione al server.
+ */
 public class ConnectionTest {
     private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
 
-
+    /**
+     * Stabilisce la connessione con il server.
+     *
+     * @throws FailedTestException
+     */
     public void connect() throws FailedTestException {
         System.out.println(String.format(TestConstants.TEST_TITLE, "CONNECTION"));
         try {

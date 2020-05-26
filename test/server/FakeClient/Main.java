@@ -14,6 +14,10 @@ import java.sql.SQLException;
 public class Main {
     //TODO: [IMPORTANT] testing on production db is a big nono, fix before exam
 
+    /**
+     * Lancia tutti i test.
+     * @param args
+     */
     public static void main(String[] args) {
         DatabaseFacade dbManager = new DatabaseFacade();
         dbManager.initDatabase();

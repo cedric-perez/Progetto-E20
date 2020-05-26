@@ -8,15 +8,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Testa il comando ping.
+ */
 public class PingTest {
     private BufferedReader in;
     private PrintWriter out;
 
+    /**
+     * Costruisce un PingTest.
+     *
+     * @param in connessione in lettura alla socket.
+     * @param out connessione in scrittura alla socket.
+     */
     public PingTest(BufferedReader in, PrintWriter out) {
         this.in = in;
         this.out = out;
     }
 
+    /**
+     * Effettua il test inviando "ping" alla socket. Si aspetta di ricevere "pong".
+     *
+     * @throws FailedTestException se il test fallisce.
+     */
     public void test() throws FailedTestException {
         String result;
 

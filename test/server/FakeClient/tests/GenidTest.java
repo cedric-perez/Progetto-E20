@@ -9,17 +9,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Testa la generazione dell'ID.
+ */
 public class GenidTest {
     private BufferedReader in;
     private PrintWriter out;
-    private DatabaseFacade dbManager;
+    private DatabaseFacade dbFacade;
 
-    public GenidTest(BufferedReader in, PrintWriter out, DatabaseFacade dbManager) {
+    /**
+     * Costruisce un GeindTest.
+     *
+     * @param in connessione in lettura alla socket.
+     * @param out connessione in scrittura alla socket.
+     * @param dbFacade reference a un DatabaseFacade
+     */
+    public GenidTest(BufferedReader in, PrintWriter out, DatabaseFacade dbFacade) {
         this.in = in;
         this.out = out;
-        this.dbManager = dbManager;
+        this.dbFacade = dbFacade;
     }
 
+    /**
+     * Effettua il test richiedendo la generazione di un ID. Controlla se l'ID generato è presente nel DB.
+     *
+     * @throws FailedTestException se il test fallisce.
+     */
     public void test() throws FailedTestException {
         String  result;
 
@@ -41,7 +56,7 @@ public class GenidTest {
 
         // Check DB changes
         try {
-            dbManager.checkTicketById(parts[1]);
+            dbFacade.checkTicketById(parts[1]);
         } catch (IllegalArgumentException ie) {
             throw new FailedTestException("generated ID '" + parts[1] + "' not found in DB");
         }
