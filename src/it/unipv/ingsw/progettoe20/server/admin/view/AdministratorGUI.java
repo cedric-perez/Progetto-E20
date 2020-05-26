@@ -36,7 +36,7 @@ public class AdministratorGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(600, 400));
 		setResizable(false);
-		setLocation(340, 240);
+		setLocationRelativeTo(null);
 		setVisible(true);
 		setTitle("ADMINISTRATOR GUI");
 

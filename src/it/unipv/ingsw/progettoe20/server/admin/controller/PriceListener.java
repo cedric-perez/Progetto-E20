@@ -72,6 +72,6 @@ public class PriceListener implements ActionListener {
 			gui.getField().setText("");
 			JOptionPane.showMessageDialog(null, "New minimum price: " + newprice + "euro", "Info", 1, null);
 		}
-		System.out.println("8");
+
 	}
 }
