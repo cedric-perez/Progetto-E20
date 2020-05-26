@@ -80,12 +80,11 @@ public class DatabaseFacade {
 
     /**
      * Inizializza il database, se non presente. Controlla la presenza del database,
-     * se assente crea il database e la table.
+     * se assente crea il database e le table.
      */
     public void initDatabase() {
         Connection connection;
         ArrayList<String> dbList;
-        boolean changed = false;
 
         try {
             connection = connectionPool.getConnection();
@@ -94,48 +93,32 @@ public class DatabaseFacade {
             e.printStackTrace();
             return;
         }
-
+        // TODO remove "use db" everywhere
         // Checks if database already exist
         if (!dbList.contains(DBConstants.TICKET_DB_NAME)) {
             try {
-                // Creates database for cars
+                // Creates database
                 Statement stmt = connection.createStatement();
-                System.out.print("Creating database for cars \"" + DBConstants.TICKET_DB_NAME + "\"...");
+                System.out.print("Creating database \"" + DBConstants.TICKET_DB_NAME + "\"...");
                 stmt.executeUpdate(Queries.CREATE_DB + DBConstants.TICKET_DB_NAME);
                 System.out.println("done");
 
-                // Create table for cars
+                // Create table for tickets
                 stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
-                System.out.print("Creating table for cars \"" + DBConstants.TICKET_TABLE + "\"...");
+                System.out.print("Creating table for tickets \"" + DBConstants.TICKET_TABLE + "\"...");
                 stmt.executeUpdate(Queries.CREATE_TABLE_TICKETS);
                 System.out.println("done");
 
-                changed = true;
+                // Create table for levels
+                stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
+                System.out.print("Creating table for levels \"" + DBConstants.LEVEL_TABLE + "\"...");
+                stmt.executeUpdate(Queries.CREATE_TABLE_LEVELS);
+                System.out.println("done");
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        if (!dbList.contains(DBConstants.LEVEL_DB_NAME)) {
-            try {
-            // Creates database for levels
-            Statement stmt = connection.createStatement();
-            System.out.print("Creating database for levels \"" + DBConstants.LEVEL_DB_NAME + "\"...");
-            stmt.executeUpdate(Queries.CREATE_DB + DBConstants.LEVEL_DB_NAME);
-            System.out.println("done");
-
-            // Create table for levels
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
-            System.out.print("Creating table for levels \"" + DBConstants.LEVEL_TABLE + "\"...");
-            stmt.executeUpdate(Queries.CREATE_TABLE_LEVELS);
-            System.out.println("done");
-
-            changed = true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (!changed) {
+        } else {
             System.out.println("Database already set up, nothing done");
         }
         try {
@@ -312,7 +295,7 @@ public class DatabaseFacade {
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
 
             if (checkLevelByName(level.getName())){
                 pstmt = connection.prepareStatement(Queries.LEVEL_UPDATE);
@@ -347,7 +330,7 @@ public class DatabaseFacade {
             connection = connectionPool.getConnection();
 
             Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
             PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET);
             pstmt.setString(1, name.toUpperCase());
             ResultSet result = pstmt.executeQuery();
@@ -375,7 +358,7 @@ public class DatabaseFacade {
             Connection connection = connectionPool.getConnection();
 
             Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
             PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_REMOVE);
             pstmt.setString(1, level.getName());
             pstmt.executeUpdate();
@@ -401,7 +384,7 @@ public class DatabaseFacade {
             Connection connection = connectionPool.getConnection();
 
             Statement stmt = connection.createStatement();
-            stmt.execute(Queries.USE_DB + DBConstants.LEVEL_DB_NAME);
+            stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
             PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET);
             pstmt.setString(1, name.toUpperCase());
             ResultSet result = pstmt.executeQuery();

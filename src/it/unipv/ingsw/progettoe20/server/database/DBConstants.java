@@ -15,8 +15,6 @@ public class DBConstants {
     public static final String TICKET_FOURTH_COLUMN = "Paid";
     public static final int TICKET_ID_LENGTH = 8;
 
-
-    public static final String LEVEL_DB_NAME = "levelsdb";
     public static final String LEVEL_TABLE = "levels";
     public static final String LEVEL_FIRST_COLUMN = "Name";
     public static final String LEVEL_SECOND_COLUMN = "Available";
