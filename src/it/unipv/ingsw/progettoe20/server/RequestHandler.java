@@ -50,14 +50,9 @@ public class RequestHandler {
                 break;
             // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):
-                try {
-                    if (dbFacade.checkTicketById(parts[1])) {
-                        out.println(Protocol.RESPONSE_OK);
-                    } else out.println(Protocol.RESPONSE_ERROR);
-                } catch (IllegalArgumentException i) {
-                    System.out.println(i.getMessage());
-                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
-                }
+                if (dbFacade.checkTicketById(parts[1])) {
+                    out.println(Protocol.RESPONSE_OK);
+                } else out.println(Protocol.RESPONSE_ERROR);
                 break;
             // Pay amount calculation requested
             case (Protocol.REQUEST_PAY_AMOUNT):
