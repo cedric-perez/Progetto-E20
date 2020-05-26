@@ -1,6 +1,7 @@
 package server.FakeClient;
 
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
+import server.FakeClient.tests.DeleteTest;
 import server.FakeClient.tests.GenidTest;
 import server.FakeClient.tests.PingTest;
 import server.FakeClient.tests.ConnectionTest;
@@ -19,8 +20,9 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        DatabaseFacade dbManager = new DatabaseFacade();
-        dbManager.initDatabase();
+        DatabaseFacade dbFacade = new DatabaseFacade();
+        String generatedTicket;
+        dbFacade.initDatabase();
 
         try {
             // Testing connection
@@ -34,8 +36,12 @@ public class Main {
             pingTest.test();
 
             // Testing genid
-            GenidTest genidTest = new GenidTest(in, out, dbManager);
-            genidTest.test();
+            GenidTest genidTest = new GenidTest(in, out, dbFacade);
+            generatedTicket = genidTest.test();
+
+            // Testing delete
+            DeleteTest deleteTest = new DeleteTest(in, out, dbFacade);
+            deleteTest.test(generatedTicket);
 
         } catch (FailedTestException e) {
             System.out.println(String.format(TestConstants.TEST_FAIL, e.getMessage()));
