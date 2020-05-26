@@ -23,6 +23,10 @@ public class Level {
         this.total = total;
     }
 
+    public void increaseAvailable() {
+        setAvailable(getAvailable() + 1);
+    }
+
     private boolean checkName(String name) {
         return name.length() == DBConstants.LEVEL_NAME_LENGTH;
     }
