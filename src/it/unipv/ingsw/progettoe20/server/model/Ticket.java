@@ -77,4 +77,13 @@ public class Ticket {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
+
+    /**
+     * serve per calcolare l'ammontare da pagare
+     * @return differenza di tempo in minuti tra entrata e uscita (in double)
+     */
+    public double TimeDiff(){
+       return  ( paymentTime.getTime() - entranceTime.getTime())/60000.0 ;
+    }
+
 }

@@ -57,7 +57,14 @@ public class RequestHandler {
                 break;
             // Pay amount calculation requested
             case (Protocol.REQUEST_PAY_AMOUNT):
-                // TODO
+                // TODO serve un modo di confrontare la timediff dell'omonimo metodo del ticket con dei double nella tabella delle tariffe che corrsispondono agli intervalli di tempo prestabiliti
+                try{
+
+                } catch(IllegalArgumentException i)
+                {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
+                }
                 break;
             // Record deletion requested
             case (Protocol.REQUEST_DELETE_ID):
