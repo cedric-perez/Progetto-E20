@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
 
 import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
+import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 
 public class ParkingManager {
@@ -16,8 +16,9 @@ public class ParkingManager {
 
 		dbManager.initDatabase();
 
-		// creazione dell'administrator
+		// Creazione dell'administrator e della sua GUI
 		Administrator.create(dbManager);
+		AdministratorGUI adminGui = new AdministratorGUI();
 
 		try {
 			// Start server
