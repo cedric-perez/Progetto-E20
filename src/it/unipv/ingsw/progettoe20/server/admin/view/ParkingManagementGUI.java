@@ -45,7 +45,6 @@ public class ParkingManagementGUI extends JFrame {
 		// frame settings
 		getContentPane().add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
 		setSize(600, 400);
 		setLocation(340, 240);
 		setTitle("PARKING MANAGEMENT GUI");
