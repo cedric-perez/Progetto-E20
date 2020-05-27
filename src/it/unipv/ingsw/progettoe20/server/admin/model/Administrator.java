@@ -15,42 +15,74 @@ public class Administrator {
 	private double minprice = 0;
 
 	private static Administrator instance;
-	private DatabaseFacade databaseManager;
+	private DatabaseFacade databaseFacade;
 
 	// Singleton
-	private Administrator(final DatabaseFacade pDatabaseManager) {
-		databaseManager = pDatabaseManager;
+	private Administrator(final DatabaseFacade pDatabaseFacade) {
+		databaseFacade = pDatabaseFacade;
 	}
 
-	// per ottenere l'istanza dell'amministratore
+	/*
+	 * Restituisce l'istanza dell'amministratore
+	 */
 	public static Administrator getInstance() {
 		return instance;
 	}
 
-	// crea l'instanza dell'amministratore
+	/*
+	 * Crea l'unica instanza dell'amministratore
+	 */
 	public static void create(final DatabaseFacade pDatabaseManager) {
 		instance = new Administrator(pDatabaseManager);
 	}
 
-	// aggiunge nuovi posti al parcheggio
-	public int addParkings(int n, String level) {
-		int capacity = getCapacityByLevel(level);
-		capacity += n;
-		return capacity;
+	/*
+	 * Aggiunge nuovi posti al parcheggio
+	 *
+	 * @param name nome del livello a cui aggiungere i parcheggi
+	 *
+	 * @param n numbero di parcheggi da aggiungere
+	 *
+	 * @return newCapacity nuova disponibilità totale del livello
+	 */
+	public int addParkings(String name, int n) {
+		Level level = databaseFacade.getLevelByName(name);
+		int newCapacity = level.getTotal() + n;
+
+		level.setTotal(newCapacity);
+		databaseFacade.updateLevel(level);
+		return newCapacity;
 	}
 
-	// toglie posti al parcheggio
-	public int removeParkings(int n, String level) {
-		int capacity = getCapacityByLevel(level);
-		if (capacity - n >= 0) {
-			capacity -= n;
-			return capacity;
+	/*
+	 * Toglie posti al parcheggio
+	 *
+	 * @param level nome del livello a cui togliere i parcheggi
+	 *
+	 * @param n numbero di parcheggi da togliere
+	 *
+	 * @return newCapacity nuova disponibilità totale del livello
+	 */
+	public int removeParkings(String name, int n) {
+		Level level = databaseFacade.getLevelByName(name);
+		int newCapacity = level.getTotal() - n;
+		if (newCapacity < 0) {
+			// Se cerca di togliere più parcheggi di quelli presenti
+			throw new IllegalArgumentException("Impossible! You want to remove too many parking lots");
 		} else {
-			return -1; // se si tolgono più parcheggi di quelli presenti restituisce -1
+			level.setTotal(newCapacity);
+			databaseFacade.updateLevel(level);
 		}
+		return newCapacity;
 	}
 
-	// modifica le tariffe
+	/*
+	 * Modifica le tariffe
+	 *
+	 * @param newprice nuovo prezzo
+	 *
+	 * @param type quale prezzo da modificare
+	 */
 	public void changePrice(double newprice, priceType type) {
 		switch (type) {
 		case HOURLYPRICE:
@@ -66,19 +98,26 @@ public class Administrator {
 
 	}
 
-	public int getCapacityByLevel(String level) {
-		// TODO Auto-generated method stub
-		return 0;
+	/*
+	 * Aggiunge un livello al parcheggio
+	 *
+	 * @param level nome del nuovo livello
+	 *
+	 * @param capacity numbero di parcheggi dentro il nuovo livello
+	 */
+	public void addLevel(String name, int capacity) {
+		Level newLevel = new Level(name, capacity);
+		databaseFacade.updateLevel(newLevel);
 	}
 
-	// aggiunge un livello al parcheggio
-	public void addLevel(String level, int capacity) {
-		Level newLevel = new Level(level, capacity);
-
+	/*
+	 * Rimuove un livello al parcheggio se presente
+	 *
+	 * @param name nome del livello da togliere
+	 */
+	public void removeLevel(String name) {
+		Level level = databaseFacade.getLevelByName(name);
+		databaseFacade.removeLevel(level);
 	}
 
-	// rimuove un livello al parcheggio se presente
-	public void removeLevel(String level) {
-
-	}
 }

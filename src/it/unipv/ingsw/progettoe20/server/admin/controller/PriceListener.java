@@ -27,15 +27,20 @@ public class PriceListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 
-		if (event.getActionCommand().equals("Home")) { // se si preme home
+		if (event.getActionCommand().equals("Home")) {
+			// Se si preme il bottone di home
 			changeGUI();
-		} else { // se preme confirm
+		} else {
+			// Se preme il bottone di confirm
 			changePrices();
 		}
 
 	}
 
-	// torna a AdministratorGUI
+	/*
+	 * Torna alla GUI dell'Administrator
+	 *
+	 */
 	public void changeGUI() {
 		AdministratorGUI adminGUI = new AdministratorGUI();
 		AdministratorController admincontroller = new AdministratorController(adminGUI);
@@ -43,31 +48,45 @@ public class PriceListener implements ActionListener {
 		adminGUI.setVisible(true);
 	}
 
-	// ricava il numero inserito nel field
+	/*
+	 * Legge la nuova tariffa inserita nel JTextField
+	 *
+	 * @return number nuova tariffa inserita
+	 *
+	 */
 	public double enteredNumber() {
 		String str = gui.getField().getText();
 		double number = 0.0;
+
 		if (str.equals("")) {
+			// Se non viene inserito nessun numero
 			JOptionPane.showMessageDialog(null, "Please, enter the number", "Error", 1, null);
-		} else {
-			number = Double.parseDouble(str);
+			throw new IllegalArgumentException("Impossible! Enter the number");
 		}
+
+		number = Double.parseDouble(str);
 		return number;
 	}
 
-	// modifica i valori delle tariffe
+	/*
+	 * Modifica i valori delle tariffe in base a quanto scelto nella combo box
+	 */
 	public void changePrices() {
 		double newprice = enteredNumber();
 		String action = (String) gui.getCombo().getSelectedItem();
-		if (action.equals("Hourly price")) { // modifica la tariffa oraria
+
+		if (action.equals("Hourly price")) {
+			// Modifica la tariffa oraria
 			admin.changePrice(newprice, priceType.HOURLYPRICE);
 			gui.getField().setText("");
 			JOptionPane.showMessageDialog(null, "New hourly price : " + newprice + " euro", "Info", 1, null);
-		} else if (action.equals("Maximum price")) { // modifica la tariffa massima
+		} else if (action.equals("Maximum price")) {
+			// Modifica la tariffa massima
 			admin.changePrice(newprice, priceType.MAXIMUMPRICE);
 			gui.getField().setText("");
 			JOptionPane.showMessageDialog(null, "New maximum price : " + newprice + "euro", "Info", 1, null);
-		} else { // modifica la tariffa minima
+		} else {
+			// Modifica la tariffa minima
 			admin.changePrice(newprice, priceType.MINIMUMPRICE);
 			gui.getField().setText("");
 			JOptionPane.showMessageDialog(null, "New minimum price: " + newprice + "euro", "Info", 1, null);

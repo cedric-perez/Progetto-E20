@@ -25,14 +25,19 @@ public class ParkingListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		if (event.getActionCommand().equals("Home")) { // se si preme home
+		if (event.getActionCommand().equals("Home")) {
+			// Se preme il bottone di home
 			changeGUI();
-		} else { // se si preme confirm
+		} else {
+			// Se preme il bottone di confirm
 			changeParkings();
 		}
 	}
 
-	// torna a AdministratorGUI
+	/*
+	 * Torna alla GUI dell'Administrator
+	 *
+	 */
 	public void changeGUI() {
 		AdministratorGUI adminGUI = new AdministratorGUI();
 		AdministratorController admincontroller = new AdministratorController(adminGUI);
@@ -40,42 +45,61 @@ public class ParkingListener implements ActionListener {
 		adminGUI.setVisible(true);
 	}
 
-	// legge il nome del livello inserito nel field1
+	/*
+	 * Legge il nome del livello inserito nel JTextField
+	 *
+	 * @return name nome livello richiesto
+	 *
+	 */
 	public String enteredLevel() {
-		String level = gui.getField().getText();
-		if (level.equals("")) {
+		String name = gui.getField().getText();
+
+		if (name.equals("")) {
+			// Se non viene inserito nessun nome
 			JOptionPane.showMessageDialog(null, "Please, enter the level", "Error", 1, null);
+			throw new IllegalArgumentException("Impossible! Enter the level name");
 		}
-		return level;
+
+		return name;
 	}
 
-	// legge il numero di parcheggi da aggiunger/togliere inserito in field2
+	/*
+	 * Legge il numero di parcheggi inseriti nel JTextField
+	 *
+	 * @return number numero di parcheggi inseriti
+	 *
+	 */
 	public int enteredParkingLots() {
 		String parkingLots = gui.getField2().getText();
 		int number = 0;
+
 		if (parkingLots.equals("")) {
+			// Se non viene inserito nessun numero
 			JOptionPane.showMessageDialog(null, "Please, enter the parking lots", "Error", 1, null);
-		} else {
-			number = Integer.parseInt(parkingLots);
+			throw new IllegalArgumentException("Impossible! Enter the parking lots");
 		}
+
+		number = Integer.parseInt(parkingLots);
 		return number;
 	}
 
-	// modifica il numero dei parcheggi
+	/*
+	 * Modifica il numero di parcheggi in base a quanto scelto nella combo box
+	 *
+	 */
 	public void changeParkings() {
 		String action = (String) gui.getCombo().getSelectedItem();
-		String level = enteredLevel();
+		String name = enteredLevel();
 		int number = enteredParkingLots();
-		if (action.equals("Add parkings")) { // aggiunge parcheggi
-			int capacity = admin.addParkings(number, level);
+
+		if (action.equals("Add parkings")) {
+			// Aggiunge parcheggi
+			int capacity = admin.addParkings(name, number);
 			JOptionPane.showMessageDialog(null, "available parkings: " + capacity, "Info", 1, null);
-		} else { // rimuove dei parcheggi
-			int capacity = admin.removeParkings(number, level);
+		} else {
+			// Rimuove dei parcheggi
+			int capacity = admin.removeParkings(name, number);
 			JOptionPane.showMessageDialog(null, "available parkings: " + capacity, "Info", 1, null);
-			if (capacity == -1) {
-				JOptionPane.showMessageDialog(null, "You cannot remove more parkings than there are available", "Error",
-						1, null);
-			}
 		}
 	}
 }

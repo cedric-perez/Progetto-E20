@@ -41,7 +41,7 @@ public class LevelManagementGUI extends JFrame {
 		confirm = new JButton("Confirm");
 		home = new JButton("Home");
 
-		String[] items = { "Add level", "Remove level", "Change parking lots" };
+		String[] items = { "Add level", "Remove level" };
 		combo = new JComboBox<>(items);
 
 		// frame settings
