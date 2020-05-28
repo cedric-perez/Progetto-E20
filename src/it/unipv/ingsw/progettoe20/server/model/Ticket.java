@@ -59,7 +59,7 @@ public class Ticket {
         long diff = callTime.getTime() - paymentTime.getTime();
         long diffSeconds = TimeUnit.MILLISECONDS.toSeconds(diff);
 
-        return (diffSeconds <= ServerConstants.TICKET_MAX_EXIT_TIME_TOTAL_SECONDS);
+        return (diffSeconds <= DBConstants.TICKET_MAX_EXIT_TIME_TOTAL_SECONDS);
     }
 
     public String getLevelName() {
