@@ -23,6 +23,11 @@ public class DBConstants {
 	public static final int LEVEL_NAME_LENGTH = 1;
 
 	public static final String PRICES_TABLE = "prices";
-    public static final String PRICES_FIRST_COLUMN = "Minutes";
-    public static final String PRICES_SECOND_COLUMN = "Price";
+	public static final String PRICES_FIRST_COLUMN = "Minutes";
+	public static final String PRICES_SECOND_COLUMN = "Price";
+
+	public static final int MINUTES_HOURLY = 60;
+	public static final int MINUTES_MINIMUM = 30;
+	public static final int MINUTES_MAXIMUM = 480; // 8 ore
+
 }

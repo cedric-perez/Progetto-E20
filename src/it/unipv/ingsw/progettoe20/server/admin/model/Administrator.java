@@ -1,7 +1,9 @@
 package it.unipv.ingsw.progettoe20.server.admin.model;
 
+import it.unipv.ingsw.progettoe20.server.database.DBConstants;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import it.unipv.ingsw.progettoe20.server.model.Level;
+import it.unipv.ingsw.progettoe20.server.model.Price;
 
 /*
  * Classe principale per la gestione dell'interfaccia dell'amministratore.
@@ -86,13 +88,16 @@ public class Administrator {
 	public void changePrice(double newprice, priceType type) {
 		switch (type) {
 		case HOURLYPRICE:
-			hourlyprice = newprice;
+			// I minuti base per la tariffa oraria sono 60
+			Price newPrice1 = new Price(DBConstants.MINUTES_HOURLY, newprice, type);
 			break;
 		case MAXIMUMPRICE:
-			maxprice = newprice;
+			// I minuti base per la tariffa massima sono 60*8h = 480
+			Price newPrice2 = new Price(DBConstants.MINUTES_MAXIMUM, newprice, type);
 			break;
 		case MINIMUMPRICE:
-			minprice = newprice;
+			// I minuti base per la tariffa minima sono 30
+			Price newPrice3 = new Price(DBConstants.MINUTES_MINIMUM, newprice, type);
 			break;
 		}
 
