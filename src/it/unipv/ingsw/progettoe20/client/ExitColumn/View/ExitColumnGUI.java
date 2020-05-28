@@ -18,6 +18,9 @@ public class ExitColumnGUI extends javax.swing.JFrame {
 
     private void initComponents() {
 
+        this.setTitle("Parking Exit Column");
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ParkingPic.png")));
+
         pannello = new javax.swing.JPanel(); //pannello principale
         buttonTicket = new javax.swing.JButton(); //bottone inserisci ticket
         jTextField1 = new javax.swing.JTextField(); //campo per inserire il ticket
