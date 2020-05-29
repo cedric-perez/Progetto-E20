@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -423,4 +424,37 @@ public class DatabaseFacade {
 		}
 		return level;
 	}
+	/**
+	 * Restituisce un Level prelevato dal database, selezionato mediante nome.
+	 *
+	 * @param name identificatore del livello.
+	 * @return LevelList.
+	 */
+	public List<Level> getLevelList() {
+		Level level;
+		List<Level> levelList= new ArrayList<Level>();
+		try {
+			Connection connection = connectionPool.getConnection();
+
+			Statement stmt = connection.createStatement();
+			stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
+			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET_TOTAL);
+			ResultSet result = pstmt.executeQuery();
+			while(result.next()==true) {
+			String name= result.getString(DBConstants.LEVEL_FIRST_COLUMN);
+			int available = result.getInt(DBConstants.LEVEL_SECOND_COLUMN);
+			int total = result.getInt(DBConstants.LEVEL_THIRD_COLUMN);
+			level = new Level(name, available, total);
+			levelList.add(level);
+			}
+			
+
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return levelList;
+	}
+	
 }

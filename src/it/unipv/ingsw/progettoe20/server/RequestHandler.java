@@ -15,7 +15,7 @@ public class RequestHandler {
     private DatabaseFacade dbFacade;
     private PrintWriter out;
     private GenerationIdTicket generator;
-
+    
     /**
      * Costruisce un RequestHandler.
      *
@@ -25,7 +25,7 @@ public class RequestHandler {
     public RequestHandler(DatabaseFacade dbFacade, PrintWriter out) {
         this.dbFacade = dbFacade;
         this.out = out;
-        this.generator = new GenerationIdTicket();
+        this.generator = new GenerationIdTicket(dbFacade);
 
     }
 
@@ -45,9 +45,13 @@ public class RequestHandler {
                 do {
                     id = generator.GenerateId();
                 } while (dbFacade.checkTicketById(id));
+               //se non ci sono posti disponibili in tutti i livelli?
                 Ticket newTicket = new Ticket(id);
                 dbFacade.updateTicket(newTicket);
-                out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
+                Level level= dbFacade.getLevelByName(generator.getAvailableLevel());
+                level.decreaseAvailable();
+                dbFacade.updateLevel(level);
+                out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id );
                 break;
             // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):

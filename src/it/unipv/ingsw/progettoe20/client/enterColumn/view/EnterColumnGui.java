@@ -1,35 +1,50 @@
 package it.unipv.ingsw.progettoe20.client.enterColumn.view;
 
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.border.Border;
+
 import it.unipv.ingsw.progettoe20.client.enterColumn.model.EnterColumn;
 
 
 
-public class EnterColumnGui extends JFrame{
+public class EnterColumnGui extends JFrame implements Observer{
 
-	private EnterColumn instance;
+	private EnterColumn column;
 	private JButton getTicket;
 	private JLabel LotAvailability;
 	private JLabel ShowTicketId;
 	private JLabel wIcon1;
 	private JLabel wIcon2;
+	private JLabel lotLabel;
+	private JLabel levelLabel;
 	private BufferedImage wPic1;
 	private BufferedImage wPic2;
 	private BufferedImage wPic3;
 	private BufferedImage wPic4;
-	private JPanel panel;
-	
+	private JPanel panelTop;
+	private JPanel panelSud;
 
-	public EnterColumnGui(EnterColumn instance) throws IOException {
-		this.instance=instance;
+	public EnterColumnGui(EnterColumn column) throws IOException {
+		this.column=column;
+		
 		initComponents();
+		setAvailability();
 	}
 	public void initComponents() throws IOException {
 		
@@ -38,60 +53,74 @@ public class EnterColumnGui extends JFrame{
 		  
 		  //components declaration
 		  
+		  levelLabel=new JLabel();
+		  lotLabel=new JLabel();
 	      LotAvailability = new JLabel();
 	      ShowTicketId = new JLabel();
 	      wIcon1 = new JLabel();
 	      wIcon2 = new JLabel();
-	      panel = new JPanel();
-	    
+	      panelTop = new JPanel();
+	      panelSud =new JPanel();
+	      panelTop = new JPanel();
 	      
 		  //label setting
 	      
-	      setAvailability();
 	      LotAvailability.setHorizontalAlignment(SwingConstants.CENTER); 
+	      levelLabel.setHorizontalAlignment(SwingConstants.CENTER); 
+	      ShowTicketId.setHorizontalAlignment(SwingConstants.CENTER); 
+	      //setting Button
+	      getTicket = new JButton("Dispense your Ticket");
 	      
 	      //icon setting
 		  wPic1=  ImageIO.read(this.getClass().getResource("/ParkingPic.png"));
 	      wPic2 = ImageIO.read(this.getClass().getResource("/TicketPic.png"));
-	      wPic3 = ImageIO.read(this.getClass().getResource("/CarPic.png"));
-	     
-	      wIcon1.setHorizontalAlignment(SwingConstants.RIGHT);
-	      wIcon2.setHorizontalAlignment(SwingConstants.RIGHT);
-	      wIcon1.setIcon(new ImageIcon(wPic1));
-	      //setting Button
-	    
-	      getTicket = new JButton("Dispense your Ticket");
+	      wPic3 = ImageIO.read(this.getClass().getResource("/CarPic.png"));	     
 	      
-	      //components setting
-	      Font f = new Font("TimesRoman", Font.BOLD+Font.ITALIC, 20);
+	      //Components Alignment
+	      wIcon1.setHorizontalAlignment(SwingConstants.CENTER);
+	      wIcon2.setHorizontalAlignment(SwingConstants.RIGHT);
+	      wIcon1.setIcon(new ImageIcon(wPic1));    
+	      
+	      //Background/Foreground Settings
+	      LotAvailability.setForeground(new java.awt.Color(143,0,255));
+	      levelLabel.setForeground(Color.WHITE);
+	      ShowTicketId.setForeground(Color.WHITE);
+	      getTicket.setBackground(new Color(143,0,255));
+	      panelSud.setBackground(new Color(92,92,92));  
+	      panelTop.setBackground(new Color(92,92,92)); 
+	      //Font Settings
+	      Font f = new Font("TimesRoman", Font.BOLD+Font.ITALIC, 20);  
+	      LotAvailability.setFont(new Font("TimesRoman", Font.BOLD, 25));
+	      getTicket.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
+	      ShowTicketId.setFont(new Font("TimesRoman", Font.BOLD,16));
+	      levelLabel.setFont(new Font("TimesRoman", Font.BOLD,16));
+	      panelSud.setFont(new Font("TimesRoman", Font.BOLD, 20));
+	      panelTop.setFont(new Font("TimesRoman", Font.BOLD, 20));
+	      //Border Settings
 	      Border bWhiteLine = BorderFactory.createLineBorder(Color.white, 4, true); 
 	      LotAvailability.setBorder(bWhiteLine);
-	      LotAvailability.setForeground(new java.awt.Color(143,0,255));
-	      LotAvailability.setFont(new Font("TimesRoman", Font.BOLD, 25));
-	      
-	      getTicket.setFont(new Font("TimesRoman", Font.BOLD, 18));
-	      getTicket.setBackground(new Color(143,0,255));
-	      setMinimumSize(new java.awt.Dimension(200, 300));
-	      setResizable(false); 
+	     
 	      //panel setting    
-	      panel.setFont(f);
-	      panel.setBackground(new Color(92,92,92));      
-	      panel.setLocation(100, 100);
-	      panel.setLayout(new GridLayout(5, 2, 0, 50));
-	      panel.add(wIcon1);
-	      panel.add(new Label("Enter Column ", Label.LEFT));
-	     
-	      panel.add(new Label(" Lot available: ", Label.RIGHT));
-	      panel.add(LotAvailability);	// indicazione posti disponibili
-	      panel.add(new Label("", Label.RIGHT));
-	      panel.add(getTicket);
-	     
-	      panel.add(wIcon2);
-	      panel.add(ShowTicketId);// indicazione del codice cliente generato 
+	      setMinimumSize(new java.awt.Dimension(400, 500));
+	      setResizable(false); 
+	      Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		  setLocation((int)(dim.getWidth()-this.getWidth())/2, (int) (dim.getHeight()-this.getHeight())/2);
+		      
+	          
+		  //Layout Settings
+    
+	      panelTop.setLayout(new BorderLayout());  
+	      panelTop.add(wIcon1,BorderLayout.NORTH);
+	      panelTop.add((new Label("Lot available:  ", Label.RIGHT)),BorderLayout.WEST);
+	      panelTop.add(LotAvailability,BorderLayout.CENTER);
+	      panelTop.add(getTicket,BorderLayout.SOUTH);  
+	      panelSud.setLayout(new BorderLayout());
+	      panelSud.add(levelLabel,BorderLayout.NORTH);
+	      panelSud.add(wIcon2, BorderLayout.WEST);
+	      panelSud.add(ShowTicketId, BorderLayout.CENTER); 
+	      getContentPane().add(panelTop,BorderLayout.NORTH);
+	      getContentPane().add(panelSud,BorderLayout.CENTER);
 	      
-	      
-	      getContentPane().add(panel);
-	       
 	}
 	public void initErrorGui() throws IOException {
 		getTicket = new JButton("");
@@ -112,14 +141,14 @@ public class EnterColumnGui extends JFrame{
 	public JButton getButton() {
 		return getTicket;
 	}
-	public EnterColumn getColumn() {
-		return instance;
-	}
+	
 	public void setAvailability() {
-		this.LotAvailability.setText(String.valueOf(instance.getAvailability()).toString());
-		
+		this.LotAvailability.setText(String.valueOf(this.column.getAvailability()).toString());
 	}
 	
+	public void setLevelTicket(String text) {
+		this.levelLabel.setText("Please, Go to "+ text +" level!");
+	}
 	public int getAvailability() {
 		return Integer.parseInt(LotAvailability.getText());
 	}
@@ -135,12 +164,18 @@ public class EnterColumnGui extends JFrame{
 		
 		
 	}
-	public void updateAvailability() {
-		this.instance.reduceAvailability();
-		
-		setAvailability();
-	}
+	
 	public JLabel getShowTicketId() {
 		return this.ShowTicketId;
+	}
+	
+	
+
+	@Override
+	public void update(Observable o, Object arg) {
+	
+	    LotAvailability.setText(String.format("%d", ((EnterColumn) o).getAvailability()));
+	    repaint();
+		
 	}
 }

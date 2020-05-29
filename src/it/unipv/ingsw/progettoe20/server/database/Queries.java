@@ -104,4 +104,9 @@ public class Queries {
 	 */
 	static final String LEVEL_GET = "SELECT * FROM " + DBConstants.LEVEL_TABLE + " " + "WHERE "
 			+ DBConstants.LEVEL_FIRST_COLUMN + " = ?";
+	/**
+	 * Restituisce lista di livelli. Necessita dei parametri presenti nella query,
+	 * nello stesso ordine.
+	 */
+	static final String LEVEL_GET_TOTAL = "SELECT * FROM " + DBConstants.LEVEL_TABLE;
 }

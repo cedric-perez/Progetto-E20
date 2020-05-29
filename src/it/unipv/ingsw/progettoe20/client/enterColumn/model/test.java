@@ -13,7 +13,8 @@ public class test {
 		public static void main(String[] args) throws IOException {
 		 EnterColumn A1= new EnterColumn();
 		 EnterColumnGui gui= new EnterColumnGui(A1);
-		 Controller c= new Controller(gui);
+		 A1.addObserver(gui);
+		 Controller c= new Controller(gui, A1);
 		 gui.setVisible(true);
 		 gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	     gui.pack(); 
