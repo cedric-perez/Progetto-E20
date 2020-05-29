@@ -33,7 +33,7 @@ public class AdministratorGUI extends JFrame {
 
 		// frame settings
 		getContentPane().add(panel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setMinimumSize(new Dimension(600, 400));
 		setResizable(false);
 		setLocationRelativeTo(null);

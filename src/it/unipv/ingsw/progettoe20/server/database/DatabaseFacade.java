@@ -29,6 +29,7 @@ import it.unipv.ingsw.progettoe20.server.model.Ticket;
  */
 public class DatabaseFacade {
 	// TODO: this class should be splitted according to patterns
+	private static DatabaseFacade dbFacade = null;
 	private BasicDataSource connectionPool;
 
 	/**
@@ -36,7 +37,7 @@ public class DatabaseFacade {
 	 * controlla e inizializza la connessione. Il pool di connessioni viene
 	 * inizializzato ad una connessione.
 	 */
-	public DatabaseFacade() {
+	private DatabaseFacade() {
 		passwordInit();
 
 		String dbUrl = DBConstants.DB_URL;
@@ -49,6 +50,13 @@ public class DatabaseFacade {
 		System.out.print("Connecting...");
 		connectionPool.setInitialSize(1);
 		System.out.println("done");
+	}
+
+	public static DatabaseFacade getInstance() {
+		if (dbFacade == null) {
+			dbFacade = new DatabaseFacade();
+		}
+		return dbFacade;
 	}
 
 	/**

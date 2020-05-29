@@ -5,20 +5,20 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import it.unipv.ingsw.progettoe20.ErrorStrings;
 import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
 import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
+import it.unipv.ingsw.progettoe20.server.cli.CommandLineInterface;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 
 public class ParkingManager {
 
 	public static void main(String[] args) {
-		DatabaseFacade dbManager = new DatabaseFacade();
+		DatabaseFacade dbManager = DatabaseFacade.getInstance();
+		CommandLineInterface cli = new CommandLineInterface();
 
 		dbManager.initDatabase();
-
-		// Creazione dell'administrator e della sua GUI
-		Administrator.create(dbManager);
-		AdministratorGUI adminGui = new AdministratorGUI();
+		cli.start();
 
 		try {
 			// Start server
@@ -32,7 +32,7 @@ public class ParkingManager {
 				clientHandler.start();
 			}
 		} catch (IOException e) {
-			System.out.println("Can't start server!");
+			System.out.println(ErrorStrings.SERVER_START_FAIL);
 		}
 	}
 }

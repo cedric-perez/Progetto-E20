@@ -20,8 +20,9 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        DatabaseFacade dbFacade = new DatabaseFacade();
+        DatabaseFacade dbFacade = DatabaseFacade.getInstance();
         String generatedTicket;
+
         dbFacade.initDatabase();
 
         try {
