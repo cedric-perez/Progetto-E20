@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ExitColumn {
 
@@ -21,23 +22,46 @@ public class ExitColumn {
     private Boolean isConnected;
     private BufferedReader in;
     private PrintWriter out;
+    private String inputType;
 
     /**
      * Costruttore del client Exit column
      */
 
-    public ExitColumn() {
+    public ExitColumn(String inputType) {
         try {
+            this.inputType = inputType; //gli viene passato dal tester (args[0])
             clientSocket = new Socket(ClientConstants.HOST, ClientConstants.PORT);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             isConnected = true;
+            checkInputType(); //verifica se viene utilizzata GUI o cli
         } catch (IOException i) {
             isConnected = false;
         }
     }
 
+    /**
+     * Metodo che verifica la metodologia di input (GUI o cli)
+     *
+     */
+    public void checkInputType() {
+        if (inputType.equals("cli")) {
+            String insertText = "";
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
 
+                System.out.println("Hai scelto la modlità command line input, inserisci il TicketID o exit per terminare.");
+                insertText = scanner.next();
+                if (insertText.equals("exit")) break; //Viene chiamata l'uscita
+                checkObliteration(insertText);
+            }
+            System.out.println("Hai terminato l'esecuzione");
+            System.exit(0);
+
+        } else System.out.println("GUI avviata");
+
+    }
 
 
     /**
@@ -63,8 +87,7 @@ public class ExitColumn {
                 isConnected = false;
                 return ResponseEnum.ERROR_GENERIC; //TODO is ok??
             }
-        }
-        else return ResponseEnum.NO_ID_FOUND;
+        } else return ResponseEnum.NO_ID_FOUND;
 
     }
 
@@ -91,20 +114,19 @@ public class ExitColumn {
 
     /**
      * metodo che cerca l'id nel database
+     *
      * @param id
      * @return true se l'id é presente nel database, false se invece non lo è
      */
-    public boolean checkId(String id){
+    public boolean checkId(String id) {
         try {
-            out.println("id:"+ id);
+            out.println("id:" + id);
             String answer = in.readLine();
             System.out.println(answer);
             return answer.equals(Protocol.RESPONSE_OK);
-        }
-        catch (IOException i){
+        } catch (IOException i) {
             return false;
-        }
-        catch ( NullPointerException n){
+        } catch (NullPointerException n) {
             isConnected = false;
             return false;
         }
@@ -116,11 +138,9 @@ public class ExitColumn {
     public void closeSocket() {
         try {
             clientSocket.close();
-        }
-        catch (IOException i ){
+        } catch (IOException i) {
             System.out.println("Socket Error");
-        }
-        catch ( NullPointerException n) {
+        } catch (NullPointerException n) {
             isConnected = false;
         }
     }
