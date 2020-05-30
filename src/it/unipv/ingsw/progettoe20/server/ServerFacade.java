@@ -10,14 +10,19 @@ import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
 import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
 import it.unipv.ingsw.progettoe20.server.cli.CommandLineInterface;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
-
+	//TODO needs better log management
 public class ServerFacade {
+	private DatabaseFacade dbManager;
+	private CommandLineInterface cli;
 
-	public static void start() {
-		DatabaseFacade dbManager = DatabaseFacade.getInstance();
-		CommandLineInterface cli = new CommandLineInterface();
+	public void init() {
+		dbManager = DatabaseFacade.getInstance();
+		cli = new CommandLineInterface();
 
 		dbManager.initDatabase();
+	}
+
+	public void start() {
 		cli.start();
 
 		try {
@@ -34,5 +39,9 @@ public class ServerFacade {
 		} catch (IOException e) {
 			System.out.println(ErrorStrings.SERVER_START_FAIL);
 		}
+	}
+
+	public DatabaseFacade getDbManager() {
+		return dbManager;
 	}
 }

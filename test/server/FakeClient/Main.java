@@ -21,9 +21,11 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        ServerFacade.start();
+        ServerFacade serverFacade = new ServerFacade();
+        serverFacade.init();
+        DatabaseFacade dbFacade = serverFacade.getDbManager();
+        new Thread(serverFacade::start).start();
 
-        DatabaseFacade dbFacade = DatabaseFacade.getInstance();
         String generatedTicket;
 
         try {
