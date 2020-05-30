@@ -11,9 +11,9 @@ import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
 import it.unipv.ingsw.progettoe20.server.cli.CommandLineInterface;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 
-public class ParkingManager {
+public class ServerFacade {
 
-	public static void main(String[] args) {
+	public static void start() {
 		DatabaseFacade dbManager = DatabaseFacade.getInstance();
 		CommandLineInterface cli = new CommandLineInterface();
 

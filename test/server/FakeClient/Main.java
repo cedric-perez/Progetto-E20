@@ -1,5 +1,6 @@
 package server.FakeClient;
 
+import it.unipv.ingsw.progettoe20.server.ServerFacade;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import server.FakeClient.tests.DeleteTest;
 import server.FakeClient.tests.GenidTest;
@@ -20,10 +21,10 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
+        ServerFacade.start();
+
         DatabaseFacade dbFacade = DatabaseFacade.getInstance();
         String generatedTicket;
-
-        dbFacade.initDatabase();
 
         try {
             // Testing connection
