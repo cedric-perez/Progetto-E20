@@ -67,7 +67,7 @@ public class EnterColumnGui extends JFrame implements Observer{
 	      
 	      LotAvailability.setHorizontalAlignment(SwingConstants.CENTER); 
 	      levelLabel.setHorizontalAlignment(SwingConstants.CENTER); 
-	      ShowTicketId.setHorizontalAlignment(SwingConstants.CENTER); 
+	      ShowTicketId.setHorizontalAlignment(SwingConstants.LEFT); 
 	      //setting Button
 	      getTicket = new JButton("Dispense your Ticket");
 	      
@@ -92,8 +92,8 @@ public class EnterColumnGui extends JFrame implements Observer{
 	      Font f = new Font("TimesRoman", Font.BOLD+Font.ITALIC, 20);  
 	      LotAvailability.setFont(new Font("TimesRoman", Font.BOLD, 25));
 	      getTicket.setFont(new Font("TimesRoman", Font.BOLD, 18)); 
-	      ShowTicketId.setFont(new Font("TimesRoman", Font.BOLD,16));
-	      levelLabel.setFont(new Font("TimesRoman", Font.BOLD,16));
+	      ShowTicketId.setFont(new Font("TimesRoman", Font.BOLD,20));
+	      levelLabel.setFont(new Font("TimesRoman", Font.BOLD,20));
 	      panelSud.setFont(new Font("TimesRoman", Font.BOLD, 20));
 	      panelTop.setFont(new Font("TimesRoman", Font.BOLD, 20));
 	      //Border Settings
@@ -169,7 +169,9 @@ public class EnterColumnGui extends JFrame implements Observer{
 		return this.ShowTicketId;
 	}
 	
-	
+	public void setLevelLabel(String text) {
+		this.levelLabel.setText("Please, go to "+text+" level!");
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
