@@ -325,14 +325,14 @@ public class DatabaseFacade {
 				pstmt.setInt(2, level.getTotal());
 				pstmt.setString(3, level.getName());
 				pstmt.executeUpdate();
-				System.out.println("Ticket " + level.getName() + " updated successfully");
+				System.out.println("Level" + level.getName() + " updated successfully");
 			} else {
 				pstmt = connection.prepareStatement(Queries.LEVEL_NEW);
 				pstmt.setString(1, level.getName());
 				pstmt.setInt(2, level.getAvailable());
 				pstmt.setInt(3, level.getTotal());
 				pstmt.executeUpdate();
-				System.out.println("Ticket " + level.getName() + " created successfully");
+				System.out.println("Level " + level.getName() + " created successfully");
 			}
 			connection.close();
 		} catch (SQLException e) {

@@ -15,7 +15,6 @@ import it.unipv.ingsw.progettoe20.client.enterColumn.view.EnterColumnGui;
 public class Controller {
 private EnterColumnGui g;
 private EnterColumn model;
-private int reduceAv;
 	public Controller( EnterColumnGui g, EnterColumn model) throws IOException {
 		this.g=g;
 		this.model=model;
@@ -36,20 +35,25 @@ private int reduceAv;
 	              if (g.getAvailability()>0) {
 	            	  
 	            Boolean checkIdGeneration = model.genTicket();
+	            if (checkIdGeneration) {
+	            	
+	            
 	            g.setIdTicket(model.getIdTicket());
-	             
+	            g.setLevelLabel(model.getIdTicket().substring(0,1));
 	              new Timer().schedule(new TimerTask() {
 
 	            	    @Override
 	            	    public void run() { 
-	            	    	reduceAv=model.getAvailability()-1;
-	            	    	model.setAvailability(reduceAv);
+	            	    	model.setAvailability();
+	            	        model.setAvailability(model.getAvailability());
 	            	        g.getShowTicketId().setText(String.valueOf(""));
 	            	        g.setTransitionObject();
 	            	        g.getButton().setEnabled(true);
+	            	        model.setAvailability();
+	            	        model.setAvailability(model.getAvailability());
 	            	        }
 	            	}, 10000 );
-	             }
+	             }}
 	            	  
 	              else {
 	              g.setIdTicket("Attendi, nessuna disponibilità");

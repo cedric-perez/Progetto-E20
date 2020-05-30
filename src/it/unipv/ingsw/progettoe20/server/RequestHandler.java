@@ -7,6 +7,8 @@ import it.unipv.ingsw.progettoe20.server.model.Ticket;
 
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Verifica la presenza di comandi validi nella richiesta ed esegue l'azione corrispondente.
@@ -15,7 +17,7 @@ public class RequestHandler {
     private DatabaseFacade dbFacade;
     private PrintWriter out;
     private GenerationIdTicket generator;
-    
+    private List<Level>levelList;
     /**
      * Costruisce un RequestHandler.
      *
@@ -96,6 +98,24 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
+                // Correctly Total Availability
+            case (Protocol.REQUEST_TOTAL_AVAILABILITY):
+                try {
+                	levelList= new ArrayList<Level>();
+            		levelList= dbFacade.getLevelList();
+            		int contLevel=levelList.size();
+            		int i=0,totalLot=0;
+            		do {
+            			totalLot+=levelList.get(i).getAvailable();
+            			i++;
+            		}while(i<contLevel);
+            		 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + totalLot );
+                } catch (IllegalArgumentException i) {
+                    System.out.println(i.getMessage());
+                    out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
+                }
+                break;
+            
             // Accept payment requested
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {

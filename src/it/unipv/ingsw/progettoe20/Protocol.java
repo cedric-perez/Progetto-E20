@@ -16,7 +16,7 @@ public class Protocol {
     public static final String REQUEST_PAYMENT_CHECK = "paid"; //restituisce paid:true o paid:false
     public static final String REQUEST_PAYMENT_ACCEPTED = "acceptpay";
     public static final String REQUEST_NEWLEVEL = "newlevel";
-
+    public static final String REQUEST_TOTAL_AVAILABILITY = "parkinglot";
     // Responses
     public static final String RESPONSE_OK = "done";
     public static final String RESPONSE_ERROR = "error";

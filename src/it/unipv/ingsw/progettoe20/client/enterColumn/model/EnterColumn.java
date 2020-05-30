@@ -9,15 +9,25 @@ import java.net.Socket;
 
 
 public class EnterColumn extends Observable{
-	private int availlability=100;
+	private int totalLot;
 	private BufferedReader in;
 	private PrintWriter out;
 	private boolean isConnected=false;
 	private String answer;
 	private Socket clientSocket;
+	 /**
+     * costruttore  
+     */
 	public EnterColumn()  {
 		checkServerConnection();
+		setAvailability();
 	}
+	
+	 /**
+     * metodo che imposta la connessione al database
+     *
+     * @return true se il database è connesso
+     */
 	public void checkServerConnection() {
 		
 		   try {
@@ -29,6 +39,11 @@ public class EnterColumn extends Observable{
 	            isConnected = false;
 	        }
 	} 
+	
+	 /**
+     * metodo che chiude la socket
+     *
+     */
 	 public void closeSocket() {
 	        try {
 	            clientSocket.close();
@@ -40,13 +55,23 @@ public class EnterColumn extends Observable{
 	            isConnected = false;
 	        }
 	    }	
-	   public Boolean genTicket() throws IOException {
+	 
+	 /**
+	     * metodo che manda la richiesta per la generazione del Ticket
+	     *
+	     * @param id
+	     * @return true se l'id è stato generato correttamente, false se invece non lo Ã¨
+	     */
+	 
+	 public Boolean genTicket() throws IOException {
 		   try {
 	            out.println("genid");
 	            answer = in.readLine();
 	            System.out.println(answer);
-	            
-	            return answer.equals("done");
+	            String id=answer.substring(5,answer.length());
+	            if(answer.equals("done:"+id)) 
+	            {return true;}
+	            else {return false;}
 	            
 	        } catch (IOException i) {
 	            return false;
@@ -56,11 +81,42 @@ public class EnterColumn extends Observable{
 	        }
 			
 
-	    }
+	 }
+	 
+	 /**
+	     * metodo che controlla la connessione
+	     *
+	     */
+	 
 	public boolean getIsConn() {
 		
 		return this.isConnected;
 	}	
+		
+	
+	 /**
+     * metodo che manda la richiesta di aggiornamento dei posti disponibili del parcheggio
+     * @return true se la richiesta è stata portata a termine correttamente, false se invece non lo Ã¨
+     */
+	
+	public Boolean setAvailability() {
+		 try {
+	            out.println("parkinglot");
+	            answer = in.readLine();
+	            
+	            String stringLot=answer.substring(5,answer.length());
+	            totalLot=Integer.parseInt(stringLot);
+	            if(answer.equals("done:"+ totalLot)) 
+	            {return true;}
+	            else {return false;}
+	            
+	        } catch (IOException i) {
+	            return false;
+	        } catch (NullPointerException n) {
+	            isConnected = false;
+	            return false;
+	        }
+	    }
 		
 	
 	public String getIdTicket() {
@@ -70,11 +126,11 @@ public class EnterColumn extends Observable{
 		
 	}
 	public int getAvailability() {
-		return this.availlability;
+		return this.totalLot;
 	}
 
 	public void setAvailability(int availability) {
-	    this.availlability=availability;
+	    this.totalLot=availability;
 	    this.setChanged();
 	    this.notifyObservers();
 		
