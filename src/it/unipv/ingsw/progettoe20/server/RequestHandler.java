@@ -68,7 +68,7 @@ public class RequestHandler {
 
                 } catch(IllegalArgumentException i)
                 {
-                    System.out.println(i.getMessage());
+                    Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
@@ -81,7 +81,7 @@ public class RequestHandler {
                     dbFacade.updateLevel(livello);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+                    Logger.log(e.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + e.getMessage());
                 }
                 break;
@@ -94,14 +94,14 @@ public class RequestHandler {
                         out.println(Protocol.RESPONSE_PAID_FALSE);
                     }
                 } catch (IllegalArgumentException i) {
-                    System.out.println(i.getMessage());
+                    Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
                 // Correctly Total Availability
             case (Protocol.REQUEST_TOTAL_AVAILABILITY):
                 try {
-                	levelList= new ArrayList<Level>();
+                	levelList= new ArrayList<>();
             		levelList= dbFacade.getLevelList();
             		int contLevel=levelList.size();
             		int i=0,totalLot=0;
@@ -111,7 +111,7 @@ public class RequestHandler {
             		}while(i<contLevel);
             		 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + totalLot );
                 } catch (IllegalArgumentException i) {
-                    System.out.println(i.getMessage());
+                    Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
@@ -125,7 +125,7 @@ public class RequestHandler {
                     dbFacade.updateTicket(ticket);
                     out.println(Protocol.RESPONSE_OK);
                 } catch (IllegalArgumentException i) {
-                    System.out.println(i.getMessage());
+                    Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;

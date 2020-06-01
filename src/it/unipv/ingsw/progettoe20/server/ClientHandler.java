@@ -40,7 +40,7 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException ie) {
-            System.out.println(ie.getMessage());
+            Logger.log(ie.getMessage());
         }
 
         try {

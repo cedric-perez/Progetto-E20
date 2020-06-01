@@ -1,5 +1,6 @@
 package server.FakeClient;
 
+import it.unipv.ingsw.progettoe20.Protocol;
 import it.unipv.ingsw.progettoe20.server.ServerFacade;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import server.FakeClient.tests.DeleteTest;
@@ -47,6 +48,8 @@ public class Main {
             DeleteTest deleteTest = new DeleteTest(in, out, dbFacade);
             deleteTest.test(generatedTicket);
 
+            // End
+            System.exit(0);
         } catch (FailedTestException e) {
             System.out.println(String.format(TestConstants.TEST_FAIL, e.getMessage()));
         }

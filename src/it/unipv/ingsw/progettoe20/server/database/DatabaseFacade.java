@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import it.unipv.ingsw.progettoe20.server.Logger;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /*  Resources
@@ -196,7 +197,7 @@ public class DatabaseFacade {
 				pstmt.setBoolean(3, ticket.isPaid());
 				pstmt.setString(4, ticket.getId());
 				pstmt.executeUpdate();
-				System.out.println("Ticket " + ticket.getId() + " updated successfully");
+				Logger.log("Ticket " + ticket.getId() + " updated successfully");
 			} else {
 				pstmt = connection.prepareStatement(Queries.TICKET_NEW);
 				pstmt.setString(1, ticket.getId());
@@ -204,7 +205,7 @@ public class DatabaseFacade {
 				pstmt.setTimestamp(3, ticket.getPaymentTime());
 				pstmt.setBoolean(4, ticket.isPaid());
 				pstmt.executeUpdate();
-				System.out.println("Ticket " + ticket.getId() + " created successfully");
+				Logger.log("Ticket " + ticket.getId() + " created successfully");
 			}
 
 			connection.close();
@@ -257,7 +258,7 @@ public class DatabaseFacade {
 			PreparedStatement pstmt = connection.prepareStatement(Queries.TICKET_REMOVE);
 			pstmt.setString(1, ticket.getId());
 			pstmt.executeUpdate();
-			System.out.println(ticket.getId() + " removed from database");
+			Logger.log(ticket.getId() + " removed from database");
 
 			connection.close();
 		} catch (SQLException e) {
@@ -325,14 +326,14 @@ public class DatabaseFacade {
 				pstmt.setInt(2, level.getTotal());
 				pstmt.setString(3, level.getName());
 				pstmt.executeUpdate();
-				System.out.println("Level" + level.getName() + " updated successfully");
+				Logger.log("Level" + level.getName() + " updated successfully");
 			} else {
 				pstmt = connection.prepareStatement(Queries.LEVEL_NEW);
 				pstmt.setString(1, level.getName());
 				pstmt.setInt(2, level.getAvailable());
 				pstmt.setInt(3, level.getTotal());
 				pstmt.executeUpdate();
-				System.out.println("Level " + level.getName() + " created successfully");
+				Logger.log("Level " + level.getName() + " created successfully");
 			}
 			connection.close();
 		} catch (SQLException e) {
@@ -384,7 +385,7 @@ public class DatabaseFacade {
 			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_REMOVE);
 			pstmt.setString(1, level.getName());
 			pstmt.executeUpdate();
-			System.out.println(level.getName() + " removed from database");
+			Logger.log(level.getName() + " removed from database");
 
 			connection.close();
 		} catch (SQLException e) {
@@ -427,12 +428,11 @@ public class DatabaseFacade {
 	/**
 	 * Restituisce un Level prelevato dal database, selezionato mediante nome.
 	 *
-	 * @param name identificatore del livello.
 	 * @return LevelList.
 	 */
 	public List<Level> getLevelList() {
 		Level level;
-		List<Level> levelList= new ArrayList<Level>();
+		List<Level> levelList= new ArrayList<>();
 		try {
 			Connection connection = connectionPool.getConnection();
 
@@ -440,7 +440,7 @@ public class DatabaseFacade {
 			stmt.execute(Queries.USE_DB + DBConstants.TICKET_DB_NAME);
 			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET_TOTAL);
 			ResultSet result = pstmt.executeQuery();
-			while(result.next()==true) {
+			while(result.next()) {
 			String name= result.getString(DBConstants.LEVEL_FIRST_COLUMN);
 			int available = result.getInt(DBConstants.LEVEL_SECOND_COLUMN);
 			int total = result.getInt(DBConstants.LEVEL_THIRD_COLUMN);

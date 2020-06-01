@@ -37,7 +37,7 @@ public class ServerFacade {
 				clientHandler.start();
 			}
 		} catch (IOException e) {
-			System.out.println(ErrorStrings.SERVER_START_FAIL);
+			Logger.log(ErrorStrings.SERVER_START_FAIL);
 		}
 	}
 

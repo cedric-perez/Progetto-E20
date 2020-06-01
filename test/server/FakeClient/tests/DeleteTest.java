@@ -34,9 +34,10 @@ public class DeleteTest {
      */
     public void test(String generated) throws FailedTestException {
         String  result;
+        String id = generated.replace(Protocol.RESPONSE_OK + Protocol.SEPARATOR, "");
 
         System.out.println(String.format(TestConstants.TEST_TITLE, Protocol.REQUEST_DELETE_ID.toUpperCase()));
-        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + generated);
+        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
 
         try {
             result = in.readLine();
@@ -46,8 +47,8 @@ public class DeleteTest {
         }
 
         // Check correct response format
-        if (!result.equals(Protocol.RESPONSE_ERROR)) {
-            throw new FailedTestException("expected '" + Protocol.RESPONSE_OK + ":ID' got '" + result + "'");
+        if (!result.equals(Protocol.RESPONSE_OK)) {
+            throw new FailedTestException("expected '" + Protocol.RESPONSE_OK + "' got '" + result + "'");
         }
 
         // Check DB changes
