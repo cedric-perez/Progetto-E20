@@ -1,4 +1,4 @@
-package server.FakeClient.utils;
+package test.server.FakeClient.utils;
 
 /**
  * Eccezione personalizzata per i fallimenti dei test.

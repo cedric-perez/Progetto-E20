@@ -1,15 +1,15 @@
-package server.FakeClient;
+package test.server.FakeClient;
 
 import it.unipv.ingsw.progettoe20.Protocol;
 import it.unipv.ingsw.progettoe20.server.Logger;
 import it.unipv.ingsw.progettoe20.server.ServerFacade;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
-import server.FakeClient.tests.DeleteTest;
-import server.FakeClient.tests.GenidTest;
-import server.FakeClient.tests.PingTest;
-import server.FakeClient.tests.ConnectionTest;
-import server.FakeClient.utils.FailedTestException;
-import server.FakeClient.utils.TestConstants;
+import test.server.FakeClient.tests.DeleteTest;
+import test.server.FakeClient.tests.GenidTest;
+import test.server.FakeClient.tests.PingTest;
+import test.server.FakeClient.tests.ConnectionTest;
+import test.server.FakeClient.utils.FailedTestException;
+import test.server.FakeClient.utils.TestConstants;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
