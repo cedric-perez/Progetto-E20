@@ -1,19 +1,17 @@
-package test.server.FakeClient;
+package server.FakeClient;
 
-import it.unipv.ingsw.progettoe20.Protocol;
 import it.unipv.ingsw.progettoe20.server.Logger;
 import it.unipv.ingsw.progettoe20.server.ServerFacade;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
-import test.server.FakeClient.tests.DeleteTest;
-import test.server.FakeClient.tests.GenidTest;
-import test.server.FakeClient.tests.PingTest;
-import test.server.FakeClient.tests.ConnectionTest;
-import test.server.FakeClient.utils.FailedTestException;
-import test.server.FakeClient.utils.TestConstants;
+import server.FakeClient.tests.DeleteTest;
+import server.FakeClient.tests.GenidTest;
+import server.FakeClient.tests.PingTest;
+import server.FakeClient.tests.ConnectionTest;
+import server.FakeClient.utils.FailedTestException;
+import server.FakeClient.utils.TestConstants;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class Main {
     //TODO: [IMPORTANT] testing on production db is a big nono, fix before exam

@@ -1,8 +1,8 @@
-package test.server.FakeClient.tests;
+package server.FakeClient.tests;
 
 import it.unipv.ingsw.progettoe20.server.ServerConstants;
-import test.server.FakeClient.utils.FailedTestException;
-import test.server.FakeClient.utils.TestConstants;
+import server.FakeClient.utils.FailedTestException;
+import server.FakeClient.utils.TestConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
