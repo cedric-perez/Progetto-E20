@@ -34,6 +34,7 @@ public class Logger {
      * Close the file.
      */
     public static void close() {
+        writer.flush();
         writer.close();
     }
 
