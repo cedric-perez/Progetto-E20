@@ -110,7 +110,6 @@ public class DatabaseFacade {
 			e.printStackTrace();
 			return;
 		}
-		// TODO remove "use db" everywhere
 		// Checks if database already exist
 		if (!dbList.contains(DBConstants.DB_NAME)) {
 			try {
