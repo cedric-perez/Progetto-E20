@@ -15,12 +15,6 @@ public class Queries {
 	static final String CREATE_DB = "CREATE DATABASE "; // with PreparedStatement don't work because of ''
 
 	/**
-	 * Sposta la posizione in un database. Necessita di una stringa consecutiva che
-	 * specifichi il nome del database.
-	 */
-	static final String USE_DB = "USE "; // same
-
-	/**
 	 * Crea la tabella dei ticket.
 	 */
 	static final String CREATE_TABLE_TICKETS = "CREATE TABLE " + DBConstants.TICKET_TABLE + " ("

@@ -2,13 +2,13 @@ package it.unipv.ingsw.progettoe20.server.database;
 
 public class DBConstants {
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	public static final String DB_URL = "jdbc:mysql://pusi77.ddns.net:33077"; // for testing purposes, will change when
+	public static final String DB_NAME = "parking";
+	public static final String DB_URL = "jdbc:mysql://pusi77.ddns.net:33077/" + DB_NAME;
 																				// ready
 	public static final int MAX_CONNECTIONS = 32; // MariaDB max should be 150 concurrent connections
-	public static final String USER = "root"; // for testing purposes, will change when ready
+	public static final String USER = "root";
 	public static String PASS;
-
-	public static final String TICKET_DB_NAME = "parking";
+	
 	public static final String TICKET_TABLE = "parkedcars";
 	public static final String TICKET_FIRST_COLUMN = "ID";
 	public static final String TICKET_SECOND_COLUMN = "EntranceTime";
