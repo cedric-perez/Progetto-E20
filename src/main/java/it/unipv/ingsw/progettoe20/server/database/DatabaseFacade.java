@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.unipv.ingsw.progettoe20.server.Logger;
+import it.unipv.ingsw.progettoe20.server.model.Price;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /*  Resources
@@ -415,7 +416,7 @@ public class DatabaseFacade {
 		return level;
 	}
 	/**
-	 * Restituisce un Level prelevato dal database, selezionato mediante nome.
+	 * Restituisce la lista di Level presenti nel database.
 	 *
 	 * @return LevelList.
 	 */
@@ -426,7 +427,7 @@ public class DatabaseFacade {
 			Connection connection = connectionPool.getConnection();
 
 			Statement stmt = connection.createStatement();
-			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET_TOTAL);
+			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET_LIST);
 			ResultSet result = pstmt.executeQuery();
 			while(result.next()) {
 			String name= result.getString(DBConstants.LEVEL_FIRST_COLUMN);
@@ -444,5 +445,153 @@ public class DatabaseFacade {
 		}
 		return levelList;
 	}
-	
+
+	/**
+	 * Modifica un record sul database, se non è presente, lo crea.
+	 *
+	 * @param price oggetto Price da salvare nel DB.
+	 */
+	public void updatePrice(Price price) {
+		Connection connection;
+		PreparedStatement pstmt;
+		try {
+			connection = connectionPool.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw some error
+			return;
+		}
+
+		try {
+			Statement stmt = connection.createStatement();
+
+			if (checkPriceByMinutes(price.getMinutes())) {
+				pstmt = connection.prepareStatement(Queries.PRICES_UPDATE);
+				pstmt.setDouble(1, price.getPrice());
+				pstmt.setInt(2, price.getMinutes());
+				pstmt.executeUpdate();
+				Logger.log("Price for " + price.getMinutes() + " minutes updated successfully");
+			} else {
+				pstmt = connection.prepareStatement(Queries.PRICES_NEW);
+				pstmt.setInt(1, price.getMinutes());
+				pstmt.setDouble(2, price.getPrice());
+				pstmt.executeUpdate();
+				Logger.log("Price for " + price.getMinutes() + " minutes created successfully");
+			}
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Controlla che una tariffa sia presente nella table. Se non è presente lancia
+	 * un'eccezione.
+	 *
+	 * @param minutes identificatore del record.
+	 */
+	public boolean checkPriceByMinutes(int minutes) throws IllegalArgumentException {
+		Connection connection;
+
+		try {
+			connection = connectionPool.getConnection();
+
+			Statement stmt = connection.createStatement();
+			ResultSet result = stmt.executeQuery(Queries.PRICES_GET_LIST);
+			while (result.next()) {
+				if (result.getInt(DBConstants.PRICES_FIRST_COLUMN) == minutes) {
+					return true;
+				}
+			}
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * Rimuove la tariffa passata come argomento dal database.
+	 *
+	 * @param price oggetto Price da rimuovere dal DB.
+	 * @throws IllegalArgumentException se il livello non è presente nel DB.
+	 */
+	public void removePrice(Price price) throws IllegalArgumentException {
+		try {
+			if (!checkPriceByMinutes(price.getMinutes())) {
+				throw new IllegalArgumentException(ErrorStrings.PRICE_NOT_FOUND);
+			}
+			Connection connection = connectionPool.getConnection();
+
+			Statement stmt = connection.createStatement();
+			PreparedStatement pstmt = connection.prepareStatement(Queries.PRICES_REMOVE);
+			pstmt.setInt(1, price.getMinutes());
+			pstmt.executeUpdate();
+			Logger.log("Price for " + price.getMinutes() + " minutes removed from database");
+
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Restituisce un Price prelevato dal database, selezionato mediante minutaggio.
+	 *
+	 * @param minutes identificatore della tariffa.
+	 * @return Level richiesto.
+	 */
+	public Price getPricelByMinutes(int minutes) {
+		Price price;
+		try {
+			if (!checkPriceByMinutes(minutes)) {
+				throw new IllegalArgumentException(ErrorStrings.PRICE_NOT_FOUND);
+			}
+			Connection connection = connectionPool.getConnection();
+
+			Statement stmt = connection.createStatement();
+			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET);
+			pstmt.setInt(1, minutes);
+			ResultSet result = pstmt.executeQuery();
+
+			result.next();
+			double dbPrice = result.getDouble(DBConstants.PRICES_SECOND_COLUMN);
+			price = new Price(minutes, dbPrice);
+
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return price;
+	}
+	/**
+	 * Restituisce la lista di Price presenti nel database.
+	 *
+	 * @return LevelList.
+	 */
+	public List<Price> getPriceList() {
+		Price price;
+		List<Price> priceList= new ArrayList<>();
+		try {
+			Connection connection = connectionPool.getConnection();
+
+			Statement stmt = connection.createStatement();
+			PreparedStatement pstmt = connection.prepareStatement(Queries.PRICES_GET_LIST);
+			ResultSet result = pstmt.executeQuery();
+			while(result.next()) {
+				int minutes = result.getInt(DBConstants.PRICES_FIRST_COLUMN);
+				double dbPrice = result.getDouble(DBConstants.PRICES_SECOND_COLUMN);
+				price = new Price(minutes, dbPrice);
+				priceList.add(price);
+			}
+
+
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return priceList;
+	}
 }

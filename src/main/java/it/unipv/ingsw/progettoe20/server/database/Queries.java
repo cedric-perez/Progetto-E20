@@ -98,9 +98,37 @@ public class Queries {
 	 */
 	static final String LEVEL_GET = "SELECT * FROM " + DBConstants.LEVEL_TABLE + " " + "WHERE "
 			+ DBConstants.LEVEL_FIRST_COLUMN + " = ?";
+
 	/**
-	 * Restituisce lista di livelli. Necessita dei parametri presenti nella query,
-	 * nello stesso ordine.
+	 * Restituisce la lista dei livelli.
 	 */
-	static final String LEVEL_GET_TOTAL = "SELECT * FROM " + DBConstants.LEVEL_TABLE;
+	static final String LEVEL_GET_LIST = "SELECT * FROM " + DBConstants.LEVEL_TABLE;
+
+// PRICE QUERIES
+	/**
+	 * Crea una nuova tariffa. Necessita dei parametri presenti nella query, nello
+	 * stesso ordine.
+	 */
+	static final String PRICES_NEW = "INSERT INTO " + DBConstants.PRICES_TABLE + " (" + DBConstants.PRICES_FIRST_COLUMN
+			+ ", " + DBConstants.PRICES_SECOND_COLUMN + ") "
+			+ "VALUES (?, ?)";
+
+	/**
+	 * Aggiorna una tariffa. Necessita dei parametri presenti nella query, nello
+	 * stesso ordine.
+	 */
+	static final String PRICES_UPDATE = "UPDATE " + DBConstants.PRICES_TABLE + " SET " + DBConstants.PRICES_SECOND_COLUMN
+			+ " = ? " + "WHERE " + DBConstants.PRICES_FIRST_COLUMN + " = ?";
+
+	/**
+	 * Rimuove una tariffa. Necessita dei parametri presenti nella query, nello
+	 * stesso ordine.
+	 */
+	static final String PRICES_REMOVE = "DELETE FROM " + DBConstants.PRICES_TABLE + " WHERE "
+			+ DBConstants.PRICES_FIRST_COLUMN + " = ?";
+
+	/**
+	 * Restituisce la lista delle tariffe.
+	 */
+	static final String PRICES_GET_LIST = "SELECT * FROM " + DBConstants.PRICES_TABLE;
 }

@@ -6,12 +6,10 @@ public class Price {
 
 	private int minutes;
 	private double price;
-	private priceType type;
 
-	public Price(int minutes, double price, priceType type) {
+	public Price(int minutes, double price) {
 		this.minutes = minutes;
 		this.price = price;
-		this.type = type;
 	}
 
 	public int getMinutes() {
@@ -22,9 +20,6 @@ public class Price {
 		return price;
 	}
 
-	public priceType getType() {
-		return type;
-	}
 
 	public void setMinutes(int minutes) {
 		this.minutes = minutes;
@@ -34,7 +29,4 @@ public class Price {
 		this.price = price;
 	}
 
-	public void setType(priceType type) {
-		this.type = type;
-	}
 }

@@ -10,7 +10,7 @@ import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
 import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
 import it.unipv.ingsw.progettoe20.server.cli.CommandLineInterface;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
-	//TODO needs better log management
+
 public class ServerFacade {
 	private DatabaseFacade dbManager;
 	private CommandLineInterface cli;
