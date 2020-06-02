@@ -37,25 +37,38 @@ public class DeleteTest {
         String id = generated.replace(Protocol.RESPONSE_OK + Protocol.SEPARATOR, "");
 
         System.out.println(String.format(TestConstants.TEST_TITLE, Protocol.REQUEST_DELETE_ID.toUpperCase()));
-        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
 
+        // TEST 1: check real ticket
+        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
         try {
             result = in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
-
         // Check correct response format
         if (!result.equals(Protocol.RESPONSE_OK)) {
             throw new FailedTestException("expected '" + Protocol.RESPONSE_OK + "' got '" + result + "'");
         }
-
         // Check DB changes
         if (dbFacade.checkTicketById(generated)) {
             throw new FailedTestException("deleted ID '" + generated + "' found in DB");
-        } else {
-            System.out.println(TestConstants.TEST_SUCCESS);
         }
+
+        // TEST 2: check ticket not present
+        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
+        try {
+            result = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        // Check correct response format
+        if (!result.contains(Protocol.RESPONSE_ERROR)) {
+            throw new FailedTestException("expected '" + Protocol.RESPONSE_ERROR + "' got '" + result + "'");
+        }
+
+
+        System.out.println(TestConstants.TEST_SUCCESS);
     }
 }
