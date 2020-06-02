@@ -43,7 +43,6 @@ public class PriceListener implements ActionListener {
 	 */
 	public void changeGUI() {
 		AdministratorGUI adminGUI = new AdministratorGUI();
-		AdministratorController admincontroller = new AdministratorController(adminGUI);
 		gui.setVisible(false);
 		adminGUI.setVisible(true);
 	}
@@ -79,18 +78,21 @@ public class PriceListener implements ActionListener {
 		if (action.equals("Hourly price")) {
 			// Se si vuole modificare la tariffa oraria
 			minutes = DBConstants.MINUTES_HOURLY;
+
 		} else if (action.equals("Maximum price")) {
 			// Se si vuole modificare la tariffa massima
 			minutes = DBConstants.MINUTES_MAXIMUM;
+
 		} else {
 			// Se si vuole modificare la tariffa minima
 			minutes = DBConstants.MINUTES_MINIMUM;
+
 		}
 
 		// Modifica della tariffa
 		admin.changePrice(newprice, minutes);
 		gui.getField().setText("");
-		JOptionPane.showMessageDialog(null, "New price : " + newprice + " euro", "Info", 1, null);
+		JOptionPane.showMessageDialog(null, "Price: " + newprice + " euro", "Info", 1, null);
 
 	}
 }

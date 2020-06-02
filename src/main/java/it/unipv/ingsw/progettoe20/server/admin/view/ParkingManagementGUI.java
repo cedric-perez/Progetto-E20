@@ -44,9 +44,9 @@ public class ParkingManagementGUI extends JFrame {
 
 		// frame settings
 		getContentPane().add(panel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
-		setLocation(340, 240);
+		setLocationRelativeTo(null);
 		setTitle("PARKING MANAGEMENT GUI");
 
 		// panel settings
@@ -66,12 +66,12 @@ public class ParkingManagementGUI extends JFrame {
 		title.setForeground(new Color(196, 10, 255));
 
 		// inserthere1 settings
-		inserthereLevel.setFont(new Font(Font.MONOSPACED, 1, 12));
+		inserthereLevel.setFont(new Font(Font.MONOSPACED, 1, 16));
 		inserthereLevel.setForeground(new Color(196, 10, 255));
 		inserthereLevel.setAlignmentX(LEFT_ALIGNMENT);
 
 		// inserthere2 settings
-		insertherePLots.setFont(new Font(Font.MONOSPACED, 1, 12));
+		insertherePLots.setFont(new Font(Font.MONOSPACED, 1, 16));
 		insertherePLots.setForeground(new Color(196, 10, 255));
 		insertherePLots.setAlignmentX(LEFT_ALIGNMENT);
 
