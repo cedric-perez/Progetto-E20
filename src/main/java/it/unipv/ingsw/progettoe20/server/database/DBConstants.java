@@ -23,7 +23,7 @@ public class DBConstants {
 
 	public static final String PRICES_TABLE = "prices";
 	public static final String PRICES_FIRST_COLUMN = "Minutes";
-	public static final String PRICES_SECOND_COLUMN = "Price";
+	public static final String PRICES_SECOND_COLUMN = "Prices";
 
 	// Minuti per la tariffa oraria
 	public static final int MINUTES_HOURLY = 60;

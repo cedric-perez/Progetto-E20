@@ -76,6 +76,7 @@ public class PriceListener implements ActionListener {
 		int minutes;
 
 		if (action.equals("Hourly price")) {
+			System.out.println("1");
 			// Se si vuole modificare la tariffa oraria
 			minutes = DBConstants.MINUTES_HOURLY;
 
@@ -93,6 +94,5 @@ public class PriceListener implements ActionListener {
 		admin.changePrice(newprice, minutes);
 		gui.getField().setText("");
 		JOptionPane.showMessageDialog(null, "Price: " + newprice + " euro", "Info", 1, null);
-
 	}
 }
