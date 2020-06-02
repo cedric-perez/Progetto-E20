@@ -26,7 +26,7 @@ public class EnterColumn extends Observable{
 	 /**
      * metodo che imposta la connessione al database
      *
-     * @return true se il database è connesso
+     * @return true se il database ï¿½ connesso
      */
 	public void checkServerConnection() {
 		
@@ -59,8 +59,8 @@ public class EnterColumn extends Observable{
 	 /**
 	     * metodo che manda la richiesta per la generazione del Ticket
 	     *
-	     * @param id
-	     * @return true se l'id è stato generato correttamente, false se invece non lo Ã¨
+	     * @param
+	     * @return true se l'id Ã¨ stato generato correttamente, false se invece non lo Ã¨
 	     */
 	 
 	 public Boolean genTicket() throws IOException {
@@ -96,7 +96,7 @@ public class EnterColumn extends Observable{
 	
 	 /**
      * metodo che manda la richiesta di aggiornamento dei posti disponibili del parcheggio
-     * @return true se la richiesta è stata portata a termine correttamente, false se invece non lo Ã¨
+     * @return true se la richiesta ï¿½ stata portata a termine correttamente, false se invece non lo Ã¨
      */
 	
 	public Boolean setAvailability() {

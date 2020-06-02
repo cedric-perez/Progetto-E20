@@ -9,7 +9,7 @@ import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
  * tester per obliterazione
  */
 public class Tester {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ObliterationColumn oc = new ObliterationColumn();
         OblGui oblgui = new OblGui();

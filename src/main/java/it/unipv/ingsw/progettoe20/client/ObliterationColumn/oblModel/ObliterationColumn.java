@@ -1,5 +1,7 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel;
 
+import it.unipv.ingsw.progettoe20.client.ClientConstants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,24 +13,24 @@ import java.net.Socket;
  * Si occupa quindi di confermare che la transazione, identificata dal id del ticket
  * é andata a buon fine
  */
-public class ObliterationColumn  {
+public class ObliterationColumn {
 
     private Socket socket;
     private BufferedReader in;
-    private  PrintWriter out;
+    private PrintWriter out;
     private Boolean onlineFlag;
     private double paymentAmount = 0;
 
     /**
      * metodo che inizializza la classe Obliteration column come client
      */
-    public ObliterationColumn()  {
+    public ObliterationColumn() {
         try {
-            socket = new Socket("localhost", 9000);
+            socket = new Socket(ClientConstants.HOST, ClientConstants.PORT);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             onlineFlag = true;
-        } catch(IOException i){
+        } catch (IOException i) {
             System.out.println("rip");
             onlineFlag = false;
         }
@@ -37,22 +39,21 @@ public class ObliterationColumn  {
 
     /**
      * metodo che cerca l'id nel database
+     *
      * @param id
      * @return true se l'id é presente nel database, false se invece non viene trovato
      */
-    public boolean checkId(String id){
+    public boolean checkId(String id) {
         try {
-            out.println("id:"+ id);
+            out.println("id:" + id);
             String answer = in.readLine();
             System.out.println(answer);
             if (answer.equals("done")) {
                 return true;
             } else return false;
-        }
-        catch (IOException i){
+        } catch (IOException i) {
             return false;
-        }
-        catch ( NullPointerException n){
+        } catch (NullPointerException n) {
             onlineFlag = false;
             return false;
         }
@@ -60,23 +61,22 @@ public class ObliterationColumn  {
 
 
     /**
-     *Metodo che permette il pagamento
+     * Metodo che permette il pagamento
+     *
      * @param id
      * @return true se il pagamento va a buon fine, altrimenti false
      */
-    public boolean Pay(String id){
+    public boolean Pay(String id) {
         try {
-            out.println("acceptpay:"+ id);
+            out.println("acceptpay:" + id);
             String answer = in.readLine();
             System.out.println(answer);
             if (answer.equals("done")) {
                 return true;
             } else return false;
-        }
-        catch (IOException i){
+        } catch (IOException i) {
             return false;
-        }
-        catch ( NullPointerException n){
+        } catch (NullPointerException n) {
             onlineFlag = false;
             return false;
         }
@@ -84,10 +84,11 @@ public class ObliterationColumn  {
 
     /**
      * metodo che permette di visualizzare l'ammontare del pagamento
+     *
      * @param id
      * @return paymentAmount(da mostrare nel display del client)
      */
-    public double PaymentAmount(String id){
+    public double PaymentAmount(String id) {
         return paymentAmount;
     }
 
@@ -98,17 +99,16 @@ public class ObliterationColumn  {
     public void closeSocket() {
         try {
             socket.close();
-        }
-        catch (IOException i ){
+        } catch (IOException i) {
             System.out.println("Socket Error");
-        }
-        catch ( NullPointerException n) {
+        } catch (NullPointerException n) {
             onlineFlag = false;
         }
     }
 
     /**
      * metodo per ottenere lo stato della connessione
+     *
      * @return true se il client si é connesso al server , false se l'ultima richiesta é fallita
      */
     public Boolean getOnlineFlag() {
