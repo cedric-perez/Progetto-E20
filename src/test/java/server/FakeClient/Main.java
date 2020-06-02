@@ -3,10 +3,7 @@ package server.FakeClient;
 import it.unipv.ingsw.progettoe20.server.Logger;
 import it.unipv.ingsw.progettoe20.server.ServerFacade;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
-import server.FakeClient.tests.DeleteTest;
-import server.FakeClient.tests.GenidTest;
-import server.FakeClient.tests.PingTest;
-import server.FakeClient.tests.ConnectionTest;
+import server.FakeClient.tests.*;
 import server.FakeClient.utils.FailedTestException;
 import server.FakeClient.utils.TestConstants;
 
@@ -42,6 +39,10 @@ public class Main {
             // Testing genid
             GenidTest genidTest = new GenidTest(in, out, dbFacade);
             generatedTicket = genidTest.test();
+
+            // Testing payment
+            PaymentTest paymentTest = new PaymentTest(in, out, dbFacade);
+            paymentTest.test(generatedTicket);
 
             // Testing delete
             DeleteTest deleteTest = new DeleteTest(in, out, dbFacade);

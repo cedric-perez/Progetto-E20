@@ -22,7 +22,7 @@ public class GenidTest {
      *
      * @param in connessione in lettura alla socket.
      * @param out connessione in scrittura alla socket.
-     * @param dbFacade reference a un DatabaseFacade
+     * @param dbFacade reference a un DatabaseFacade.
      */
     public GenidTest(BufferedReader in, PrintWriter out, DatabaseFacade dbFacade) {
         this.in = in;
@@ -60,6 +60,8 @@ public class GenidTest {
         } else {
             System.out.println(TestConstants.TEST_SUCCESS);
         }
-        return result;
+
+
+        return result.replace(Protocol.RESPONSE_OK + Protocol.SEPARATOR, "");
     }
 }

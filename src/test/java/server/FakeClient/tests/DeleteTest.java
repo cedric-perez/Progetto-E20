@@ -19,7 +19,7 @@ public class DeleteTest {
      *
      * @param in connessione in lettura alla socket.
      * @param out connessione in scrittura alla socket.
-     * @param dbFacade reference a un DatabaseFacade
+     * @param dbFacade reference a un DatabaseFacade.
      */
     public DeleteTest(BufferedReader in, PrintWriter out, DatabaseFacade dbFacade) {
         this.in = in;
@@ -34,12 +34,11 @@ public class DeleteTest {
      */
     public void test(String generated) throws FailedTestException {
         String  result;
-        String id = generated.replace(Protocol.RESPONSE_OK + Protocol.SEPARATOR, "");
 
         System.out.println(String.format(TestConstants.TEST_TITLE, Protocol.REQUEST_DELETE_ID.toUpperCase()));
 
         // TEST 1: check real ticket
-        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
+        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + generated);
         try {
             result = in.readLine();
         } catch (IOException e) {
@@ -56,7 +55,7 @@ public class DeleteTest {
         }
 
         // TEST 2: check ticket not present
-        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + id);
+        out.println(Protocol.REQUEST_DELETE_ID + Protocol.SEPARATOR + generated);
         try {
             result = in.readLine();
         } catch (IOException e) {
