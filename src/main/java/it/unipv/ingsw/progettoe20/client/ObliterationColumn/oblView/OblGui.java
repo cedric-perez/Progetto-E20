@@ -58,7 +58,7 @@ public class OblGui  extends JFrame {
 
         getContentPane().add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setVisible(false);
 
 
 

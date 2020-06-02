@@ -56,6 +56,7 @@ public class ObliterationColumn {
                 return true;
             } else return false;
         } catch (IOException i) {
+            onlineFlag = false;
             return false;
         } catch (NullPointerException n) {
             onlineFlag = false;
@@ -79,6 +80,7 @@ public class ObliterationColumn {
                 return true;
             } else return false;
         } catch (IOException i) {
+            onlineFlag = false;
             return false;
         } catch (NullPointerException n) {
             onlineFlag = false;
@@ -99,6 +101,7 @@ public class ObliterationColumn {
             System.out.println(answer);
             return answer;
         } catch (IOException i) {
+            onlineFlag = false;
             return "errore";
         } catch (NullPointerException n) {
             onlineFlag = false;

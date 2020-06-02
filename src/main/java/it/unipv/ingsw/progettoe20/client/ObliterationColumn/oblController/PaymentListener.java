@@ -1,10 +1,10 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController;
 
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.MessagePanel;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.PayGui;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,7 +36,7 @@ public class PaymentListener implements ActionListener {
 
         if (oc.getOnlineFlag()) {
             if (oc.Pay(id)) {
-                JOptionPane.showMessageDialog(null, "Payment Confirmed: Goodbye & drive safely", "Congratulations", 1, null);
+                new MessagePanel("Payment Confirmed: Goodbye & drive safely", "Congratulations", new javax.swing.ImageIcon(getClass().getResource("/CarPic.png")));
                 paygui.dispose();
 
 
@@ -44,7 +44,7 @@ public class PaymentListener implements ActionListener {
                 oblgui.getIdinput().setText("");
                 oblgui.getIdinput().requestFocus();
             } else {
-                JOptionPane.showMessageDialog(null, "An error occurred: failed payment", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+                new MessagePanel("An error occurred: failed payment", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
                 paygui.dispose();
 
                 oblgui.setVisible(true);
@@ -53,7 +53,7 @@ public class PaymentListener implements ActionListener {
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+            new MessagePanel("An error occurred: connection to server failed", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic2.png")));
             System.exit(0);
         }
     }

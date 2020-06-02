@@ -1,9 +1,8 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController;
 
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.MessagePanel;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
-
-import javax.swing.*;
 
 /**
  * classe controller della scheramta di obliterazione
@@ -29,10 +28,12 @@ public class OblController {
          * controlla che il client sia connesso al server, altrimenti lo chiude
          */
         if (oc.getOnlineFlag() == false) {
-            JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+            new MessagePanel("An error occurred: connection to server failed", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic2.png")));
             oc.closeSocket();
             System.exit(0);
         }
+
+        oblgui.setVisible(true);
         /**
          * chiude il socket all'uscita
          */

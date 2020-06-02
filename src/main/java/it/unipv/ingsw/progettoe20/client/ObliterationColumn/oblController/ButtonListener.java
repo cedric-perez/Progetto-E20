@@ -1,10 +1,10 @@
 package it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblController;
 
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblModel.ObliterationColumn;
+import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.MessagePanel;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.OblGui;
 import it.unipv.ingsw.progettoe20.client.ObliterationColumn.oblView.PayGui;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,12 +42,12 @@ public class ButtonListener implements ActionListener {
                 oblgui.setVisible(false);
                 oblgui.getIdinput().setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "An error occurred: id may be wrong or any payment has already been made", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+                new MessagePanel("An error occurred: id may be wrong", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
                 oblgui.getIdinput().setText("");
                 oblgui.getIdinput().requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "An error occurred: connection to server failed", "Error", 1, new javax.swing.ImageIcon(getClass().getResource("/ErrorPic.png")));
+            new MessagePanel("An error occurred: connection to server failed", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic2.png")));
             System.exit(0);
         }
     }
