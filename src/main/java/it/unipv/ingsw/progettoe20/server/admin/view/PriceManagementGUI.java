@@ -42,9 +42,9 @@ public class PriceManagementGUI extends JFrame {
 
 		// frame settings
 		getContentPane().add(panel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
-		setLocation(340, 240);
+		setLocationRelativeTo(null);
 		setTitle("PRICE MANAGEMENT GUI");
 
 		// panel settings
@@ -60,7 +60,7 @@ public class PriceManagementGUI extends JFrame {
 		title.setForeground(new Color(196, 10, 255));
 
 		// inserthere settings
-		insertherePrice.setFont(new Font(Font.MONOSPACED, 1, 12));
+		insertherePrice.setFont(new Font(Font.MONOSPACED, 1, 16));
 		insertherePrice.setForeground(new Color(196, 10, 255));
 		insertherePrice.setAlignmentX(LEFT_ALIGNMENT);
 
@@ -78,7 +78,7 @@ public class PriceManagementGUI extends JFrame {
 		price.setForeground(new Color(196, 10, 255));
 
 		// combobox settings
-		combo.setFont(new Font(Font.MONOSPACED, 0, 24));
+		combo.setFont(new Font(Font.MONOSPACED, 0, 16));
 
 		// locations settings
 		title.setBounds(275, 10, 500, 40);

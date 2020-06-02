@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import it.unipv.ingsw.progettoe20.server.Logger;
-import it.unipv.ingsw.progettoe20.server.model.Price;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /*  Resources
@@ -24,7 +22,9 @@ PreparedStatement usage: https://www.javatpoint.com/PreparedStatement-interface
  */
 
 import it.unipv.ingsw.progettoe20.ErrorStrings;
+import it.unipv.ingsw.progettoe20.server.Logger;
 import it.unipv.ingsw.progettoe20.server.model.Level;
+import it.unipv.ingsw.progettoe20.server.model.Price;
 import it.unipv.ingsw.progettoe20.server.model.Ticket;
 
 /**
@@ -415,6 +415,7 @@ public class DatabaseFacade {
 		}
 		return level;
 	}
+
 	/**
 	 * Restituisce la lista di Level presenti nel database.
 	 *
@@ -422,21 +423,20 @@ public class DatabaseFacade {
 	 */
 	public List<Level> getLevelList() {
 		Level level;
-		List<Level> levelList= new ArrayList<>();
+		List<Level> levelList = new ArrayList<>();
 		try {
 			Connection connection = connectionPool.getConnection();
 
 			Statement stmt = connection.createStatement();
 			PreparedStatement pstmt = connection.prepareStatement(Queries.LEVEL_GET_LIST);
 			ResultSet result = pstmt.executeQuery();
-			while(result.next()) {
-			String name= result.getString(DBConstants.LEVEL_FIRST_COLUMN);
-			int available = result.getInt(DBConstants.LEVEL_SECOND_COLUMN);
-			int total = result.getInt(DBConstants.LEVEL_THIRD_COLUMN);
-			level = new Level(name, available, total);
-			levelList.add(level);
+			while (result.next()) {
+				String name = result.getString(DBConstants.LEVEL_FIRST_COLUMN);
+				int available = result.getInt(DBConstants.LEVEL_SECOND_COLUMN);
+				int total = result.getInt(DBConstants.LEVEL_THIRD_COLUMN);
+				level = new Level(name, available, total);
+				levelList.add(level);
 			}
-			
 
 			connection.close();
 		} catch (SQLException e) {
@@ -565,6 +565,7 @@ public class DatabaseFacade {
 		}
 		return price;
 	}
+
 	/**
 	 * Restituisce la lista di Price presenti nel database.
 	 *
@@ -572,20 +573,19 @@ public class DatabaseFacade {
 	 */
 	public List<Price> getPriceList() {
 		Price price;
-		List<Price> priceList= new ArrayList<>();
+		List<Price> priceList = new ArrayList<>();
 		try {
 			Connection connection = connectionPool.getConnection();
 
 			Statement stmt = connection.createStatement();
 			PreparedStatement pstmt = connection.prepareStatement(Queries.PRICES_GET_LIST);
 			ResultSet result = pstmt.executeQuery();
-			while(result.next()) {
+			while (result.next()) {
 				int minutes = result.getInt(DBConstants.PRICES_FIRST_COLUMN);
 				double dbPrice = result.getDouble(DBConstants.PRICES_SECOND_COLUMN);
 				price = new Price(minutes, dbPrice);
 				priceList.add(price);
 			}
-
 
 			connection.close();
 		} catch (SQLException e) {

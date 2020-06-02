@@ -95,7 +95,6 @@ public class LevelListener implements ActionListener {
 	 */
 	public void changeGUI() {
 		AdministratorGUI adminGUI = new AdministratorGUI();
-		AdministratorController admincontroller = new AdministratorController(adminGUI);
 		gui.setVisible(false);
 		adminGUI.setVisible(true);
 	}

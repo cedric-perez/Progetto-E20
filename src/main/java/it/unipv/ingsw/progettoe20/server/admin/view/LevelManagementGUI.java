@@ -46,9 +46,9 @@ public class LevelManagementGUI extends JFrame {
 
 		// frame settings
 		getContentPane().add(panel);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
-		setLocation(340, 240);
+		setLocationRelativeTo(null);
 		setTitle("LEVEL MANAGEMENT GUI");
 
 		// panel settings

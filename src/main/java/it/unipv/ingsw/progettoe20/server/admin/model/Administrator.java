@@ -1,6 +1,5 @@
 package it.unipv.ingsw.progettoe20.server.admin.model;
 
-import it.unipv.ingsw.progettoe20.server.database.DBConstants;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import it.unipv.ingsw.progettoe20.server.model.Level;
 import it.unipv.ingsw.progettoe20.server.model.Price;
@@ -85,21 +84,9 @@ public class Administrator {
 	 *
 	 * @param type quale prezzo da modificare
 	 */
-	public void changePrice(double newprice, int minutes) {
-		if (minutes == DBConstants.MINUTES_HOURLY) {
-			// Modifica della tariffa oraria
-			Price newPrice1 = new Price(DBConstants.MINUTES_HOURLY, newprice);
-		} else if (minutes == DBConstants.MINUTES_MAXIMUM) {
-			// Modifica della tariffa massima
-			Price newPrice2 = new Price(DBConstants.MINUTES_MAXIMUM, newprice);
-		} else if (minutes == DBConstants.MINUTES_MINIMUM) {
-			// Modifica della tariffa minima
-			Price newPrice3 = new Price(DBConstants.MINUTES_MINIMUM, newprice);
-		} else {
-			// Se si cerca di modificare una tariffa con un valore dei minuti non corretto
-			throw new IllegalArgumentException("Impossible! No match with that value");
-		}
-
+	public void changePrice(double price, int minutes) {
+		Price newPrice = new Price(minutes, price);
+		databaseFacade.updatePrice(newPrice);
 	}
 
 	/*
