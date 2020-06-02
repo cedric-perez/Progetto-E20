@@ -21,7 +21,7 @@ import it.unipv.ingsw.progettoe20.server.admin.controller.LevelListener;
 
 public class LevelManagementGUI extends JFrame {
 
-	private JLabel title, inserthere, inserthere2;
+	private JLabel title, inserthereLevel, insertherePLots;
 	private JPanel panel, panel1, panel2;
 	private JTextField levelname, parkinglots;
 	private JComboBox<String> combo;
@@ -34,8 +34,8 @@ public class LevelManagementGUI extends JFrame {
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		title = new JLabel("LEVEL MANAGEMENT");
-		inserthere = new JLabel("Level name:  ");
-		inserthere2 = new JLabel("Parking lots:");
+		inserthereLevel = new JLabel("Level name:  ");
+		insertherePLots = new JLabel("Parking lots:");
 		levelname = new JTextField(10);
 		parkinglots = new JTextField(10);
 		confirm = new JButton("Confirm");
@@ -68,14 +68,14 @@ public class LevelManagementGUI extends JFrame {
 		title.setForeground(new Color(196, 10, 255));
 
 		// inserthere settings
-		inserthere.setFont(new Font(Font.MONOSPACED, 1, 16));
-		inserthere.setForeground(new Color(196, 10, 255));
-		inserthere.setAlignmentX(LEFT_ALIGNMENT);
+		inserthereLevel.setFont(new Font(Font.MONOSPACED, 1, 16));
+		inserthereLevel.setForeground(new Color(196, 10, 255));
+		inserthereLevel.setAlignmentX(LEFT_ALIGNMENT);
 
 		// inserthere2 settings
-		inserthere2.setFont(new Font(Font.MONOSPACED, 1, 16));
-		inserthere2.setForeground(new Color(196, 10, 255));
-		inserthere2.setAlignmentX(LEFT_ALIGNMENT);
+		insertherePLots.setFont(new Font(Font.MONOSPACED, 1, 16));
+		insertherePLots.setForeground(new Color(196, 10, 255));
+		insertherePLots.setAlignmentX(LEFT_ALIGNMENT);
 
 		// confirm settings
 		confirm.setFont(new Font(Font.MONOSPACED, 1, 20));
@@ -86,12 +86,12 @@ public class LevelManagementGUI extends JFrame {
 		home.setBackground(new Color(222, 177, 255));
 
 		// levelname settings
-		levelname.setFont(new Font(Font.MONOSPACED, 0, 24));
+		levelname.setFont(new Font(Font.MONOSPACED, 0, 12));
 		levelname.setAlignmentX(RIGHT_ALIGNMENT);
 		levelname.setForeground(new Color(196, 10, 255));
 
 		// parkinglots settings
-		parkinglots.setFont(new Font(Font.MONOSPACED, 0, 24));
+		parkinglots.setFont(new Font(Font.MONOSPACED, 0, 12));
 		parkinglots.setAlignmentX(RIGHT_ALIGNMENT);
 		parkinglots.setForeground(new Color(196, 10, 255));
 
@@ -113,10 +113,10 @@ public class LevelManagementGUI extends JFrame {
 		panel.add(confirm);
 		panel.add(home);
 
-		panel1.add(inserthere);
+		panel1.add(inserthereLevel);
 		panel1.add(levelname);
 
-		panel2.add(inserthere2);
+		panel2.add(insertherePLots);
 		panel2.add(parkinglots);
 
 		// listener settings

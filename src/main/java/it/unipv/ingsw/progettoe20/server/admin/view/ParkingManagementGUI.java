@@ -20,8 +20,8 @@ import it.unipv.ingsw.progettoe20.server.admin.controller.ParkingListener;
 public class ParkingManagementGUI extends JFrame {
 
 	private JComboBox<String> combo;
-	private JTextField field1, field2;
-	private JLabel title, inserthere1, inserthere2;
+	private JTextField levelname, parkinglots;
+	private JLabel title, inserthereLevel, insertherePLots;
 	private JPanel panel, panel2, panel3;
 	private JButton confirm, home;
 	private ParkingListener listener;
@@ -32,10 +32,10 @@ public class ParkingManagementGUI extends JFrame {
 		panel2 = new JPanel();
 		panel3 = new JPanel();
 		title = new JLabel("PARKING MANAGEMENT");
-		inserthere1 = new JLabel("Level name:  ");
-		inserthere2 = new JLabel("Parking lots:");
-		field1 = new JTextField(10);
-		field2 = new JTextField(10);
+		inserthereLevel = new JLabel("Level name:  ");
+		insertherePLots = new JLabel("Parking lots:");
+		levelname = new JTextField(10);
+		parkinglots = new JTextField(10);
 		confirm = new JButton("Confirm");
 		home = new JButton("Home");
 
@@ -66,14 +66,14 @@ public class ParkingManagementGUI extends JFrame {
 		title.setForeground(new Color(196, 10, 255));
 
 		// inserthere1 settings
-		inserthere1.setFont(new Font(Font.MONOSPACED, 1, 16));
-		inserthere1.setForeground(new Color(196, 10, 255));
-		inserthere1.setAlignmentX(LEFT_ALIGNMENT);
+		inserthereLevel.setFont(new Font(Font.MONOSPACED, 1, 12));
+		inserthereLevel.setForeground(new Color(196, 10, 255));
+		inserthereLevel.setAlignmentX(LEFT_ALIGNMENT);
 
 		// inserthere2 settings
-		inserthere2.setFont(new Font(Font.MONOSPACED, 1, 16));
-		inserthere2.setForeground(new Color(196, 10, 255));
-		inserthere2.setAlignmentX(LEFT_ALIGNMENT);
+		insertherePLots.setFont(new Font(Font.MONOSPACED, 1, 12));
+		insertherePLots.setForeground(new Color(196, 10, 255));
+		insertherePLots.setAlignmentX(LEFT_ALIGNMENT);
 
 		// confirm settings
 		confirm.setFont(new Font(Font.MONOSPACED, 1, 20));
@@ -84,14 +84,14 @@ public class ParkingManagementGUI extends JFrame {
 		home.setBackground(new Color(222, 177, 255));
 
 		// field1 settings
-		field1.setFont(new Font(Font.MONOSPACED, 0, 24));
-		field1.setAlignmentX(RIGHT_ALIGNMENT);
-		field1.setForeground(new Color(196, 10, 255));
+		levelname.setFont(new Font(Font.MONOSPACED, 0, 12));
+		levelname.setAlignmentX(RIGHT_ALIGNMENT);
+		levelname.setForeground(new Color(196, 10, 255));
 
 		// field2 settings
-		field2.setFont(new Font(Font.MONOSPACED, 0, 24));
-		field2.setAlignmentX(RIGHT_ALIGNMENT);
-		field2.setForeground(new Color(196, 10, 255));
+		parkinglots.setFont(new Font(Font.MONOSPACED, 0, 12));
+		parkinglots.setAlignmentX(RIGHT_ALIGNMENT);
+		parkinglots.setForeground(new Color(196, 10, 255));
 
 		// combobox settings
 		combo.setFont(new Font(Font.MONOSPACED, 0, 16));
@@ -111,11 +111,11 @@ public class ParkingManagementGUI extends JFrame {
 		panel.add(confirm);
 		panel.add(home);
 
-		panel2.add(inserthere1);
-		panel2.add(field1);
+		panel2.add(inserthereLevel);
+		panel2.add(levelname);
 
-		panel3.add(inserthere2);
-		panel3.add(field2);
+		panel3.add(insertherePLots);
+		panel3.add(parkinglots);
 
 		// listener settings
 		listener = new ParkingListener(this);
@@ -132,11 +132,11 @@ public class ParkingManagementGUI extends JFrame {
 	}
 
 	public JTextField getField() {
-		return field1;
+		return levelname;
 	}
 
 	public JTextField getField2() {
-		return field2;
+		return parkinglots;
 	}
 
 	public JButton getConfirm() {

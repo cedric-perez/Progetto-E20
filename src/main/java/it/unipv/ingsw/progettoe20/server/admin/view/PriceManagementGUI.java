@@ -21,8 +21,8 @@ import it.unipv.ingsw.progettoe20.server.admin.controller.PriceListener;
 public class PriceManagementGUI extends JFrame {
 
 	private JComboBox<String> combo;
-	private JTextField field;
-	private JLabel title, inserthere;
+	private JTextField price;
+	private JLabel title, insertherePrice;
 	private JPanel panel, panel2;
 	private JButton confirm, home;
 	private PriceListener listener;
@@ -32,8 +32,8 @@ public class PriceManagementGUI extends JFrame {
 		panel = new JPanel();
 		panel2 = new JPanel();
 		title = new JLabel("PRICE MANAGEMENT");
-		inserthere = new JLabel("Insert here:  ");
-		field = new JTextField(10);
+		insertherePrice = new JLabel("Price:  ");
+		price = new JTextField(10);
 		confirm = new JButton("Change");
 		home = new JButton("Home");
 
@@ -60,9 +60,9 @@ public class PriceManagementGUI extends JFrame {
 		title.setForeground(new Color(196, 10, 255));
 
 		// inserthere settings
-		inserthere.setFont(new Font(Font.MONOSPACED, 1, 16));
-		inserthere.setForeground(new Color(196, 10, 255));
-		inserthere.setAlignmentX(LEFT_ALIGNMENT);
+		insertherePrice.setFont(new Font(Font.MONOSPACED, 1, 12));
+		insertherePrice.setForeground(new Color(196, 10, 255));
+		insertherePrice.setAlignmentX(LEFT_ALIGNMENT);
 
 		// confirm settings
 		confirm.setFont(new Font(Font.MONOSPACED, 1, 20));
@@ -73,12 +73,12 @@ public class PriceManagementGUI extends JFrame {
 		home.setBackground(new Color(222, 177, 255));
 
 		// textfield settings
-		field.setFont(new Font(Font.MONOSPACED, 0, 24));
-		field.setAlignmentX(RIGHT_ALIGNMENT);
-		field.setForeground(new Color(196, 10, 255));
+		price.setFont(new Font(Font.MONOSPACED, 0, 12));
+		price.setAlignmentX(RIGHT_ALIGNMENT);
+		price.setForeground(new Color(196, 10, 255));
 
 		// combobox settings
-		combo.setFont(new Font(Font.MONOSPACED, 0, 16));
+		combo.setFont(new Font(Font.MONOSPACED, 0, 24));
 
 		// locations settings
 		title.setBounds(275, 10, 500, 40);
@@ -94,8 +94,8 @@ public class PriceManagementGUI extends JFrame {
 		panel.add(confirm);
 		panel.add(home);
 
-		panel2.add(inserthere);
-		panel2.add(field);
+		panel2.add(insertherePrice);
+		panel2.add(price);
 
 		// listener settings
 		listener = new PriceListener(this);
@@ -108,7 +108,7 @@ public class PriceManagementGUI extends JFrame {
 	}
 
 	public JTextField getField() {
-		return field;
+		return price;
 	}
 
 	public JButton getConfirm() {
