@@ -157,6 +157,9 @@ public class EnterColumnGui extends JFrame implements Observer{
 		this.wIcon2.setIcon( new ImageIcon(wPic2));
 		this.ShowTicketId.setText(" Ticket ID is:"+ code);
 	}
+	public void setEmptyLevLabel() {
+		this.levelLabel.setText("");
+	}
 	public void setTransitionObject() {
 		ImageIcon img= new ImageIcon(wPic3);
 		img.getImage().flush();
