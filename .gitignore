@@ -1,8 +1,10 @@
 # Compiled class file
 *.class
+/target/
 
 # Log file
 *.log
+ServerLOGS
 
 # BlueJ files
 *.ctxt
@@ -32,4 +34,4 @@ hs_err_pid*
 .classpath
 .settings
 
-/target/
+
