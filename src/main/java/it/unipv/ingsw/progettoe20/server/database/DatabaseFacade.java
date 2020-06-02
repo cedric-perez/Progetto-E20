@@ -89,7 +89,6 @@ public class DatabaseFacade {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
 			System.out.println("Password is incorrect, please try again");
 			return false;
 		}

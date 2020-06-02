@@ -5,6 +5,7 @@
 # Log file
 *.log
 ServerLOGS
+ServerLOGS.old
 
 # BlueJ files
 *.ctxt
