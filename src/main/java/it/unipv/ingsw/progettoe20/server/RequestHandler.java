@@ -3,11 +3,13 @@ package it.unipv.ingsw.progettoe20.server;
 import it.unipv.ingsw.progettoe20.Protocol;
 import it.unipv.ingsw.progettoe20.server.database.DatabaseFacade;
 import it.unipv.ingsw.progettoe20.server.model.Level;
+import it.unipv.ingsw.progettoe20.server.model.Price;
 import it.unipv.ingsw.progettoe20.server.model.Ticket;
 
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +19,8 @@ public class RequestHandler {
     private DatabaseFacade dbFacade;
     private PrintWriter out;
     private GenerationIdTicket generator;
-    private List<Level>levelList;
+    private List<Level> levelList;
+
     /**
      * Costruisce un RequestHandler.
      *
@@ -47,13 +50,13 @@ public class RequestHandler {
                 do {
                     id = generator.GenerateId();
                 } while (dbFacade.checkTicketById(id));
-               //se non ci sono posti disponibili in tutti i livelli?
+                //se non ci sono posti disponibili in tutti i livelli?
                 Ticket newTicket = new Ticket(id);
                 dbFacade.updateTicket(newTicket);
-                Level level= dbFacade.getLevelByName(generator.getAvailableLevel());
+                Level level = dbFacade.getLevelByName(generator.getAvailableLevel());
                 level.decreaseAvailable();
                 dbFacade.updateLevel(level);
-                out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id );
+                out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + id);
                 break;
             // ID existence check requested
             case (Protocol.REQUEST_CHECK_ID):
@@ -63,11 +66,12 @@ public class RequestHandler {
                 break;
             // Pay amount calculation requested
             case (Protocol.REQUEST_PAY_AMOUNT):
-                // TODO serve un modo di confrontare la timediff dell'omonimo metodo del ticket con dei double nella tabella delle tariffe che corrsispondono agli intervalli di tempo prestabiliti
-                try{
+                try {
+                    if (dbFacade.checkTicketById(parts[1])) {
+                        out.println(getPaymentAmount(parts[1]));
+                    } else out.println(Protocol.RESPONSE_ERROR);
 
-                } catch(IllegalArgumentException i)
-                {
+                } catch (IllegalArgumentException i) {
                     Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
@@ -98,28 +102,29 @@ public class RequestHandler {
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
-                // Correctly Total Availability
+            // Correctly Total Availability
             case (Protocol.REQUEST_TOTAL_AVAILABILITY):
                 try {
-                	levelList= new ArrayList<>();
-            		levelList= dbFacade.getLevelList();
-            		int contLevel=levelList.size();
-            		int i=0,totalLot=0;
-            		do {
-            			totalLot+=levelList.get(i).getAvailable();
-            			i++;
-            		}while(i<contLevel);
-            		 out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + totalLot );
+                    levelList = new ArrayList<>();
+                    levelList = dbFacade.getLevelList();
+                    int contLevel = levelList.size();
+                    int i = 0, totalLot = 0;
+                    do {
+                        totalLot += levelList.get(i).getAvailable();
+                        i++;
+                    } while (i < contLevel);
+                    out.println(Protocol.RESPONSE_OK + Protocol.SEPARATOR + totalLot);
                 } catch (IllegalArgumentException i) {
                     Logger.log(i.getMessage());
                     out.println(Protocol.RESPONSE_ERROR + Protocol.SEPARATOR + i.getMessage());
                 }
                 break;
-            
+
             // Accept payment requested
             case (Protocol.REQUEST_PAYMENT_ACCEPTED):
                 try {
                     Ticket ticket = dbFacade.getTicketById(parts[1]);
+                    ticket.setEntranceTime(new Timestamp(System.currentTimeMillis()));
                     ticket.setPaymentTime(new Timestamp(System.currentTimeMillis()));
                     ticket.setPaid(true);
                     dbFacade.updateTicket(ticket);
@@ -152,5 +157,28 @@ public class RequestHandler {
             }
         }
         return parts;
+    }
+
+    /**
+     * Metodo che fa il calcolo del prezzo
+     *
+     * @param id
+     * @return
+     */
+    private double getPaymentAmount(String id) {
+        Ticket ticke = dbFacade.getTicketById(id);
+        List<Price> pricelist = dbFacade.getPriceList();
+        Collections.sort(pricelist);
+        double payamount = 0.0;
+        for (Price p : pricelist) {
+            if (ticke.TimeDiff() > p.getMinutes()) {
+                System.out.println(p);
+                payamount = p.getPrice();
+            } else {
+                break;
+            }
+        }
+        if (payamount == 0.0) payamount = pricelist.get(0).getPrice();
+        return payamount;
     }
 }

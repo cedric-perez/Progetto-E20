@@ -92,8 +92,18 @@ public class ObliterationColumn {
      * @param id
      * @return paymentAmount(da mostrare nel display del client)
      */
-    public double PaymentAmount(String id) {
-        return paymentAmount;
+    public String PaymentAmount(String id) {
+        try {
+            out.println("payamount:" + id);
+            String answer = in.readLine();
+            System.out.println(answer);
+            return answer;
+        } catch (IOException i) {
+            return "errore";
+        } catch (NullPointerException n) {
+            onlineFlag = false;
+            return "errore";
+        }
     }
 
 

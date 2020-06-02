@@ -1,6 +1,5 @@
 package it.unipv.ingsw.progettoe20.server.model;
 
-import it.unipv.ingsw.progettoe20.server.ServerConstants;
 import it.unipv.ingsw.progettoe20.server.database.DBConstants;
 
 import java.sql.Timestamp;
@@ -70,6 +69,10 @@ public class Ticket {
         this.paymentTime = paymentTime;
     }
 
+    public void setEntranceTime(Timestamp entranceTime) {
+        this.entranceTime = entranceTime;
+    }
+
     public boolean isPaid() {
         return paid;
     }
@@ -80,10 +83,11 @@ public class Ticket {
 
     /**
      * serve per calcolare l'ammontare da pagare
+     *
      * @return differenza di tempo in minuti tra entrata e uscita (in double)
      */
-    public double TimeDiff(){
-       return  ( paymentTime.getTime() - entranceTime.getTime())/60000.0 ;
+    public double TimeDiff() {
+        return (System.currentTimeMillis() - entranceTime.getTime()) / 60000.0;
     }
 
 }
