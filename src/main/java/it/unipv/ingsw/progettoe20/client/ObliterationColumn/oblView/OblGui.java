@@ -24,7 +24,7 @@ public class OblGui  extends JFrame {
 
         //panel settingsgit
         panel.setLayout (null);
-        panel.setBackground(new java.awt.Color(30,30 , 30));
+        panel.setBackground(new java.awt.Color(30, 30, 30));
 
         //input settings
         idinput.setFont(new java.awt.Font("Tahoma", 0, 18));

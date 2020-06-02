@@ -54,6 +54,7 @@ public class PaymentListener implements ActionListener {
             }
         } else {
             new MessagePanel("An error occurred: connection to server failed", "Error", new javax.swing.ImageIcon(getClass().getResource("/ErrorPic2.png")));
+            oc.closeSocket();
             System.exit(0);
         }
     }

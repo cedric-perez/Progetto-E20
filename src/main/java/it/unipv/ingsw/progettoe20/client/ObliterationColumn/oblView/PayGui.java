@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *Classe che rappresenta la schermata di accettazione del pagamento
+ * Classe che rappresenta la schermata di accettazione del pagamento
  */
 
 public class PayGui extends JFrame {
@@ -15,32 +15,33 @@ public class PayGui extends JFrame {
     private JTextField textpay = new JTextField();
     private JLabel titlelabel = new JLabel("PAYMENT STATION");
 
-    public PayGui(){
+    public PayGui() {
         super("Id confirmed");
-        setSize(600,400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setResizable(false);
 
         //panel settings
-        panel.setLayout (null);
-        panel.setBackground(new java.awt.Color(30,30 , 30));
+        panel.setLayout(null);
+        panel.setBackground(new java.awt.Color(30, 30, 30));
 
         //location settings
-        textpay.setBounds(140,180,300,30);
-        payb.setBounds(190,230,200,40);
-        paylabel.setBounds(195,130,200,40);
-        titlelabel.setBounds(25,10,500,40);
+        textpay.setBounds(140, 180, 300, 30);
+        payb.setBounds(190, 230, 200, 40);
+        paylabel.setBounds(195, 130, 200, 40);
+        titlelabel.setBounds(25, 10, 500, 40);
 
         //textpay settings
 
 
         textpay.setFont(new java.awt.Font("Tahoma", 0, 18));
-        textpay.setSize(300 , 30);;
+        textpay.setSize(300, 30);
+        ;
         textpay.setEditable(false);
         textpay.setBackground(Color.black);
         textpay.setForeground(Color.cyan);
-            // test andra sostituito con i dati contenuti dal database
-        textpay.setText("You have to pay: " +"test");
+        // test andra sostituito con i dati contenuti dal database
+        textpay.setText("You have to pay: " + "test");
 
         //button settings
         payb.setFont(new java.awt.Font("Courier", 0, 18));
@@ -51,7 +52,7 @@ public class PayGui extends JFrame {
 
         //titlelabel settings
         titlelabel.setFont(new java.awt.Font("Algerian", 0, 28));
-        titlelabel.setForeground(new java.awt.Color(196,10 , 255));
+        titlelabel.setForeground(new java.awt.Color(196, 10, 255));
         titlelabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ParkingPic.png")));
 
         panel.add(paylabel);
@@ -67,13 +68,17 @@ public class PayGui extends JFrame {
 
     /**
      * metodo per impostare il display della cifra da pagare
+     *
      * @return testo che contiene la cifra da pagare
      */
-    public JTextField getTextpay() { return textpay; }
+    public JTextField getTextpay() {
+        return textpay;
+    }
 
 
     /**
      * metodo che restituisce il bottone di pagamento per gestirne gli eventi
+     *
      * @return bottone del pagamento
      */
     public JButton getPayb() {
