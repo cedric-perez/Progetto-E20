@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import it.unipv.ingsw.progettoe20.server.admin.model.Administrator;
-import it.unipv.ingsw.progettoe20.server.admin.model.priceType;
 import it.unipv.ingsw.progettoe20.server.admin.view.AdministratorGUI;
 import it.unipv.ingsw.progettoe20.server.admin.view.PriceManagementGUI;
+import it.unipv.ingsw.progettoe20.server.database.DBConstants;
 
 /*
  * Listener che che controlla le operazioni effettuate nella schermata del PriceManagementGUI
@@ -74,23 +74,23 @@ public class PriceListener implements ActionListener {
 	public void changePrices() {
 		double newprice = enteredNumber();
 		String action = (String) gui.getCombo().getSelectedItem();
+		int minutes;
 
 		if (action.equals("Hourly price")) {
-			// Modifica la tariffa oraria
-			admin.changePrice(newprice, priceType.HOURLYPRICE);
-			gui.getField().setText("");
-			JOptionPane.showMessageDialog(null, "New hourly price : " + newprice + " euro", "Info", 1, null);
+			// Se si vuole modificare la tariffa oraria
+			minutes = DBConstants.MINUTES_HOURLY;
 		} else if (action.equals("Maximum price")) {
-			// Modifica la tariffa massima
-			admin.changePrice(newprice, priceType.MAXIMUMPRICE);
-			gui.getField().setText("");
-			JOptionPane.showMessageDialog(null, "New maximum price : " + newprice + "euro", "Info", 1, null);
+			// Se si vuole modificare la tariffa massima
+			minutes = DBConstants.MINUTES_MAXIMUM;
 		} else {
-			// Modifica la tariffa minima
-			admin.changePrice(newprice, priceType.MINIMUMPRICE);
-			gui.getField().setText("");
-			JOptionPane.showMessageDialog(null, "New minimum price: " + newprice + "euro", "Info", 1, null);
+			// Se si vuole modificare la tariffa minima
+			minutes = DBConstants.MINUTES_MINIMUM;
 		}
+
+		// Modifica della tariffa
+		admin.changePrice(newprice, minutes);
+		gui.getField().setText("");
+		JOptionPane.showMessageDialog(null, "New price : " + newprice + " euro", "Info", 1, null);
 
 	}
 }

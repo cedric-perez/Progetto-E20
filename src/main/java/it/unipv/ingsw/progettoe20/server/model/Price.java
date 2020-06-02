@@ -1,7 +1,5 @@
 package it.unipv.ingsw.progettoe20.server.model;
 
-import it.unipv.ingsw.progettoe20.server.admin.model.priceType;
-
 public class Price {
 
 	private int minutes;
@@ -19,7 +17,6 @@ public class Price {
 	public double getPrice() {
 		return price;
 	}
-
 
 	public void setMinutes(int minutes) {
 		this.minutes = minutes;

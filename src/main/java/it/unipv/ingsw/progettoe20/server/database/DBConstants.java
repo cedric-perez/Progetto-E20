@@ -7,7 +7,7 @@ public class DBConstants {
 	public static final int MAX_CONNECTIONS = 32; // MariaDB max should be 150 concurrent connections
 	public static final String USER = "root";
 	public static String PASS;
-	
+
 	public static final String TICKET_TABLE = "parkedcars";
 	public static final String TICKET_FIRST_COLUMN = "ID";
 	public static final String TICKET_SECOND_COLUMN = "EntranceTime";
@@ -25,17 +25,19 @@ public class DBConstants {
 	public static final String PRICES_FIRST_COLUMN = "Minutes";
 	public static final String PRICES_SECOND_COLUMN = "Price";
 
+	// Minuti per la tariffa oraria
 	public static final int MINUTES_HOURLY = 60;
+	// Minuti per la tariffa minima
 	public static final int MINUTES_MINIMUM = 30;
-	public static final int MINUTES_MAXIMUM = 480; // 8 ore
+	// Minuti per la tariffa massima (8 ore)
+	public static final int MINUTES_MAXIMUM = 480;
 
 	public static final int TICKET_MAX_EXIT_TIME_DAYS = 0;
 	public static final int TICKET_MAX_EXIT_TIME_HOURS = 0;
 	public static final int TICKET_MAX_EXIT_TIME_MINUTES = 30;
 	public static final int TICKET_MAX_EXIT_TIME_SECONDS = 0;
-	public static final long TICKET_MAX_EXIT_TIME_TOTAL_SECONDS = TICKET_MAX_EXIT_TIME_SECONDS +
-			(TICKET_MAX_EXIT_TIME_MINUTES * 60) +
-			(TICKET_MAX_EXIT_TIME_HOURS * 60 * 60) +
-			(TICKET_MAX_EXIT_TIME_DAYS * 24 * 60 * 60);
+	public static final long TICKET_MAX_EXIT_TIME_TOTAL_SECONDS = TICKET_MAX_EXIT_TIME_SECONDS
+			+ TICKET_MAX_EXIT_TIME_MINUTES * 60 + TICKET_MAX_EXIT_TIME_HOURS * 60 * 60
+			+ TICKET_MAX_EXIT_TIME_DAYS * 24 * 60 * 60;
 
 }
