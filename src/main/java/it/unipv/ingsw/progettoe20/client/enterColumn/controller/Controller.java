@@ -50,6 +50,7 @@ private EnterColumn model;
 	            	        g.setTransitionObject();
 	            	        g.getButton().setEnabled(true);
 	            	        model.setAvailability();
+	            	        g.setEmptyLevLabel();
 	            	        model.setAvailability(model.getAvailability());
 	            	        }
 	            	}, 10000 );
