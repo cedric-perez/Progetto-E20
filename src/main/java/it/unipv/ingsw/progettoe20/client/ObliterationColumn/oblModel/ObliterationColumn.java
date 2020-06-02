@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Questa classe Rappresenta la colonna di pagamento del parcheggio
@@ -20,16 +21,19 @@ public class ObliterationColumn {
     private PrintWriter out;
     private Boolean onlineFlag;
     private double paymentAmount = 0;
+    private String inputType;
 
     /**
      * metodo che inizializza la classe Obliteration column come client
      */
-    public ObliterationColumn() {
+    public ObliterationColumn(String inputType) {
         try {
             socket = new Socket(ClientConstants.HOST, ClientConstants.PORT);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             onlineFlag = true;
+            this.inputType = inputType;
+            checkInputType();
         } catch (IOException i) {
             System.out.println("rip");
             onlineFlag = false;
@@ -104,6 +108,43 @@ public class ObliterationColumn {
         } catch (NullPointerException n) {
             onlineFlag = false;
         }
+    }
+
+    /**
+     * Metodo che verifica la metodologia di input (GUI o cli)
+     */
+    public void checkInputType() {
+        if (inputType.equals("cli")) {
+            cli();
+        } else System.out.println("GUI avviata");
+
+    }
+
+    /**
+     * Metodo che rappresenta l'interfaccia testuale
+     */
+    private void cli() {
+        String insertText = "";
+        String acceptText = "";
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+
+            System.out.println("Hai scelto la modlità command line input, inserisci il TicketID o exit per terminare.");
+            insertText = scanner.next();
+            if (insertText.equals("exit")) break;
+            if (checkId(insertText)) {
+                System.out.println("accettare il pagamento di " + "$" + paymentAmount + " (inserisci si per procedere).");
+                acceptText = scanner.next();
+                if (acceptText.equals("si")) {
+                    Pay(insertText);
+                    System.out.println("pagamento accettato");
+                } else System.out.println("pagamento rifiutato");
+            }
+
+        }
+        System.out.println("Hai terminato l'esecuzione");
+        scanner.close();
+        System.exit(0);
     }
 
     /**
